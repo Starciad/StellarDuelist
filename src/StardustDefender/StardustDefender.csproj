@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- IMPORTS -->
+	<Import Project="../Targets/Project_Compilation.targets" />
+	<Import Project="../Targets/Project_Settings.targets" />
+	<Import Project="../Targets/Project_Infos.targets" />
+
+	<!-- HEADER -->
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<RollForward>Major</RollForward>
+		<AssemblyName>StardustDefender</AssemblyName>
+		<DefineConstants>WindowsDX</DefineConstants>
+	</PropertyGroup>
+	
+	<!-- SYSTEM -->
+	<PropertyGroup>
+		<ApplicationManifest>Content/app.manifest</ApplicationManifest>
+		<ApplicationIcon>Content/Icon.ico</ApplicationIcon>
+	</PropertyGroup>
+
+	<!-- DEPENDENCIES -->
+	<ItemGroup>
+		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
+		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+	</ItemGroup>
+
+	<!-- TARGETS -->
+	<Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+		<Message Text="[ Restoring Dotnet Tools ]" Importance="high" />
+		<Exec Command="dotnet tool restore" />
+	</Target>
+</Project>
