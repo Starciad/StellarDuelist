@@ -14,6 +14,7 @@ namespace StardustDefender.Effects
         internal Vector2 Position { get; set; }
         internal Vector2 Scale { get; set; }
         internal float Rotation { get; set; }
+        internal Color Color { get; set; }
 
         private SAnimation _animation;
 
@@ -29,7 +30,7 @@ namespace StardustDefender.Effects
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(_animation.Texture, Position, _animation.TextureRectangle, Color.White, Rotation, new Vector2(_animation.SpriteScale / 2), Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(_animation.Texture, Position, _animation.TextureRectangle, Color, Rotation, new Vector2(_animation.SpriteScale / 2), Scale, SpriteEffects.None, 0f);
         }
 
         private void OnFinished()

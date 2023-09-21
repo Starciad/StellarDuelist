@@ -63,11 +63,11 @@ namespace StardustDefender.Managers
         }
         internal static SEffect Create<T>(Vector2 position, Vector2 scale) where T : SEffectTemplate
         {
-            return Create<T>(position, scale, 0f);
+            return Create<T>(position, scale, 0f, Color.White);
         }
-        internal static SEffect Create<T>(Vector2 position, Vector2 scale, float rotation) where T : SEffectTemplate
+        internal static SEffect Create<T>(Vector2 position, Vector2 scale, float rotation, Color color) where T : SEffectTemplate
         {
-            return Create(typeof(T), position, scale, rotation);
+            return Create(typeof(T), position, scale, rotation, color);
         }
 
         internal static SEffect Create(Type type)
@@ -80,9 +80,9 @@ namespace StardustDefender.Managers
         }
         internal static SEffect Create(Type type, Vector2 position, Vector2 scale)
         {
-            return Create(type, position, scale, 0f);
+            return Create(type, position, scale, 0f, Color.White);
         }
-        internal static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation)
+        internal static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation, Color color)
         {
             SEffect effect = effectPool.Get() ?? new();
 
@@ -90,6 +90,7 @@ namespace StardustDefender.Managers
             effect.Position = position;
             effect.Scale = scale;
             effect.Rotation = rotation;
+            effect.Color = color;
 
             effects.Add(effect);
             return effect;

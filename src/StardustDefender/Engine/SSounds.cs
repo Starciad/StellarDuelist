@@ -17,6 +17,7 @@ namespace StardustDefender.Engine
 
             // Inputs
             soundEffects.Add("Player_Movement", SContent.Sounds.Load<SoundEffect>("Input/player_movement"));
+            soundEffects.Add("Player_Upgrade", SContent.Sounds.Load<SoundEffect>("Input/player_upgrade"));
 
             // Explosion
             soundEffects.Add("Explosion_01", SContent.Sounds.Load<SoundEffect>("Explosion/Explosion_01"));

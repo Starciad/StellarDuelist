@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 using System;
 using StardustDefender.Extensions;
+using StardustDefender.Managers;
+using StardustDefender.Effects.Common;
 
 namespace StardustDefender.Entities.Items
 {
@@ -48,6 +50,9 @@ namespace StardustDefender.Entities.Items
         }
         internal void Destroy()
         {
+            SEffectsManager.Create<SImpactEffect>(Position, new(1), 0f, Color.Yellow);
+            SSounds.Play("Player_Upgrade");
+
             SItemsManager.Remove(this);
         }
 
