@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
-	<Import Project="../Targets/Project_Compilation.targets" />
-	<Import Project="../Targets/Project_Settings.targets" />
-	<Import Project="../Targets/Project_Infos.targets" />
+	<Import Project="../Targets/Windows/Project_Compilation.targets" />
+	<Import Project="../Targets/Windows/Project_Settings.targets" />
+	<Import Project="../Targets/Windows/Project_Infos.targets" />
 
 	<!-- HEADER -->
 	<PropertyGroup>

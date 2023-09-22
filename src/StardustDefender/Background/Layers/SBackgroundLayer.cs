@@ -40,7 +40,7 @@ namespace StardustDefender.Background.Layers
 
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(Texture, Position                                          , TextureRectangle, Color.White);
+            SGraphics.SpriteBatch.Draw(Texture, Position, TextureRectangle, Color.White);
             SGraphics.SpriteBatch.Draw(Texture, Position - new Vector2(0, TextureRectangle.Height), TextureRectangle, Color.White);
         }
     }

@@ -1,6 +1,4 @@
-﻿using SharpDX.Direct3D9;
-
-using StardustDefender.Collections;
+﻿using StardustDefender.Collections;
 using StardustDefender.Projectiles;
 
 using System.Collections.Generic;

@@ -76,7 +76,7 @@ namespace StardustDefender.Camera
         {
             return Matrix.Invert(GetViewMatrix());
         }
-        
+
         private static Matrix GetProjectionMatrix(Matrix viewMatrix)
         {
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, SScreen.Width, SScreen.Height, 0, -1, 0);
