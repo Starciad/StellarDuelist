@@ -9,34 +9,41 @@ namespace StardustDefender.Engine
     internal static class STextures
     {
         private static readonly Dictionary<string, Texture2D> textures = new();
+        private static readonly (string, string)[] assets = new (string, string)[]
+        {
+            // PLAYER
+            ("PLAYER_Spaceship", "Player/Spaceship"),
+
+            // ENEMIES
+            ("ENEMIES_Aliens", "Enemies/Aliens"),
+
+            // PROJECTILES
+            ("PROJECTILES_Bullets", "Projectiles/Bullets"),
+
+            // EFFECTS
+            ("EFFECTS_Impact", "Effects/Impact"),
+            ("EFFECTS_Explosion", "Effects/Explosion"),
+
+            // BACKGROUND
+            ("BACKGROUND_01", "Backgrounds/Background_01"),
+
+            // UI
+            ("UI_Logo", "UI/Logo/StardustDefenderLogo"),
+            ("UI_SolidBackground", "UI/Backgrounds/SolidBackground"),
+
+            // TEXTS
+            ("TEXTS_Paused", "UI/Texts/Paused"),
+
+            // ITEMS
+            ("ITEMS_Upgrades", "Items/Upgrades"),
+        };
 
         internal static void Load()
         {
-            // Players
-            textures.Add("Player_1", SContent.Sprites.Load<Texture2D>("Player/Spaceship"));
-
-            // Enemies
-            textures.Add("Aliens", SContent.Sprites.Load<Texture2D>("Enemies/Aliens"));
-
-            // Projectiles
-            textures.Add("Bullets", SContent.Sprites.Load<Texture2D>("Projectiles/Bullets"));
-
-            // Effects
-            textures.Add("Effects_Impact", SContent.Sprites.Load<Texture2D>("Effects/Impact"));
-            textures.Add("Effects_Explosion", SContent.Sprites.Load<Texture2D>("Effects/Explosion"));
-
-            // Background
-            textures.Add("Background_01", SContent.Sprites.Load<Texture2D>("Backgrounds/Background_01"));
-
-            // UI
-            textures.Add("UI_Logo", SContent.Sprites.Load<Texture2D>("UI/Logo/StardustDefenderLogo"));
-            textures.Add("UI_SolidBackground", SContent.Sprites.Load<Texture2D>("UI/Backgrounds/SolidBackground"));
-
-            // Texts
-            textures.Add("UI_Paused", SContent.Sprites.Load<Texture2D>("UI/Texts/Paused"));
-
-            // Items
-            textures.Add("Upgrades", SContent.Sprites.Load<Texture2D>("Items/Upgrades"));
+            foreach ((string, string) asset in assets)
+            {
+                textures.Add(asset.Item1, SContent.Sprites.Load<Texture2D>(asset.Item2));
+            }
         }
 
         internal static Texture2D GetTexture(string id)
