@@ -21,11 +21,11 @@ namespace StardustDefender.GUI.Common
 
         protected override void OnInitialize()
         {
-            backgroundTexture = STextures.GetTexture("UI_SolidBackground");
-            pausedTexture = STextures.GetTexture("TEXTS_Paused");
+            this.backgroundTexture = STextures.GetTexture("UI_SolidBackground");
+            this.pausedTexture = STextures.GetTexture("TEXTS_Paused");
 
-            pausedTextureOrigin = pausedTexture.GetOriginPosition();
-            backgroundTextureOrigin = backgroundTexture.GetOriginPosition();
+            this.pausedTextureOrigin = this.pausedTexture.GetOriginPosition();
+            this.backgroundTextureOrigin = this.backgroundTexture.GetOriginPosition();
         }
         protected override void OnUpdate()
         {
@@ -37,8 +37,8 @@ namespace StardustDefender.GUI.Common
         }
         protected override void OnDraw()
         {
-            SGraphics.SpriteBatch.Draw(backgroundTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, new Color(1, 11, 25, 180), 0f, backgroundTextureOrigin, new Vector2(1.5f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.Draw(pausedTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, Color.White, 0f, pausedTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.backgroundTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, new Color(1, 11, 25, 180), 0f, this.backgroundTextureOrigin, new Vector2(1.5f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.pausedTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, Color.White, 0f, this.pausedTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
         }
     }
 }

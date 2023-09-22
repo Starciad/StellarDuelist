@@ -50,9 +50,20 @@ namespace StardustDefender.Controllers
                 totalEnemyCount -= SRandom.Range(3, 7);
             }
 
-            if (difficultyRate < 0) difficultyRate = 0;
-            if (totalEnemyCount < 5) totalEnemyCount = 5;
-            if (enemySpawnDelay < 0) enemySpawnDelay = 0;
+            if (difficultyRate < 0)
+            {
+                difficultyRate = 0;
+            }
+
+            if (totalEnemyCount < 5)
+            {
+                totalEnemyCount = 5;
+            }
+
+            if (enemySpawnDelay < 0)
+            {
+                enemySpawnDelay = 0;
+            }
         }
         internal static SEntity GetRandomEnemy(Vector2 position)
         {

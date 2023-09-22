@@ -10,9 +10,9 @@ namespace StardustDefender.Collections
         {
             T target = default;
 
-            if (objects.Count > 0)
+            if (this.objects.Count > 0)
             {
-                target = objects.Dequeue();
+                target = this.objects.Dequeue();
                 target.Reset();
 
                 return target;
@@ -25,7 +25,7 @@ namespace StardustDefender.Collections
         public void ReturnToPool(T obj)
         {
             obj.Reset();
-            objects.Enqueue(obj);
+            this.objects.Enqueue(obj);
         }
     }
 }

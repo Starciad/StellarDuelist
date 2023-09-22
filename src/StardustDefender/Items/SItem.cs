@@ -1,19 +1,15 @@
-﻿using StardustDefender.Controllers;
-using StardustDefender.Animation;
-using StardustDefender.Engine;
-using StardustDefender.Collections;
-using StardustDefender.Enums;
-using StardustDefender.Items;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using System;
-using StardustDefender.Extensions;
-using StardustDefender.Managers;
+using StardustDefender.Animation;
+using StardustDefender.Collections;
+using StardustDefender.Controllers;
 using StardustDefender.Effects.Common;
+using StardustDefender.Engine;
+using StardustDefender.Enums;
+using StardustDefender.Managers;
 
-namespace StardustDefender.Entities.Items
+namespace StardustDefender.Items
 {
     internal sealed class SItem : IPoolableObject
     {
@@ -32,9 +28,9 @@ namespace StardustDefender.Entities.Items
 
         internal void Build(SItemTemplate template, SAnimation animation, Vector2 position)
         {
-            _template = template;
-            _animation = animation;
-            _animation.SetMode(AnimationMode.Disable);
+            this._template = template;
+            this._animation = animation;
+            this._animation.SetMode(AnimationMode.Disable);
 
             Position = position;
         }
@@ -46,27 +42,27 @@ namespace StardustDefender.Entities.Items
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(_animation.Texture, Position, _animation.TextureRectangle, color, 0f, new Vector2(SItemTemplate.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, Position, this._animation.TextureRectangle, this.color, 0f, new Vector2(SItemTemplate.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
-            SEffectsManager.Create<SImpactEffect>(Position, new(1), 0f, Color.Yellow);
-            SSounds.Play("Player_Upgrade");
+            _ = SEffectsManager.Create<SImpactEffect>(Position, new(1), 0f, Color.Yellow);
+            _ = SSounds.Play("Player_Upgrade");
 
             SItemsManager.Remove(this);
         }
 
         private void ColorUpdate()
         {
-            if (currentColorUpdateDelay < COLOR_UPDATE_DELAY)
+            if (this.currentColorUpdateDelay < COLOR_UPDATE_DELAY)
             {
-                currentColorUpdateDelay += 0.1f;
+                this.currentColorUpdateDelay += 0.1f;
             }
             else
             {
-                currentColorUpdateDelay = 0;
-                colorIndex = colorIndex < SItemTemplate.COLOR_PALETTE.Length - 1 ? colorIndex + 1 : 0;
-                color = SItemTemplate.COLOR_PALETTE[colorIndex];
+                this.currentColorUpdateDelay = 0;
+                this.colorIndex = this.colorIndex < SItemTemplate.COLOR_PALETTE.Length - 1 ? this.colorIndex + 1 : 0;
+                this.color = SItemTemplate.COLOR_PALETTE[this.colorIndex];
             }
         }
         private void MovementUpdate()
@@ -80,7 +76,7 @@ namespace StardustDefender.Entities.Items
         {
             if (Vector2.Distance(SLevelController.Player.WorldPosition, Position) < COLLISION_RANGE)
             {
-                _template.ApplyEffect();
+                this._template.ApplyEffect();
                 Destroy();
             }
         }
@@ -88,9 +84,9 @@ namespace StardustDefender.Entities.Items
         public void Reset()
         {
             Position = Vector2.Zero;
-            currentColorUpdateDelay = 0f;
-            colorIndex = 0;
-            color = Color.White;
+            this.currentColorUpdateDelay = 0f;
+            this.colorIndex = 0;
+            this.color = Color.White;
         }
     }
 }

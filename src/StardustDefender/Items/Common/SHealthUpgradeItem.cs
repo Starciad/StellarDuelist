@@ -1,8 +1,4 @@
-﻿using StardustDefender.Controllers;
-
-using Microsoft.Xna.Framework;
-using StardustDefender.Engine;
-using StardustDefender.Enums;
+﻿using StardustDefender.Engine;
 using StardustDefender.Entities.Player;
 
 namespace StardustDefender.Items.Common

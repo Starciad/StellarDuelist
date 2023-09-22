@@ -24,11 +24,11 @@ namespace StardustDefender.GUI.Common
 
         protected override void OnInitialize()
         {
-            logo = STextures.GetTexture("UI_Logo");
-            font = SFonts.Impact;
+            this.logo = STextures.GetTexture("UI_Logo");
+            this.font = SFonts.Impact;
 
-            introString = new("Press Any Key to Continue!");
-            introStringMeasure = font.MeasureString(introString);
+            this.introString = new("Press Any Key to Continue!");
+            this.introStringMeasure = this.font.MeasureString(this.introString);
         }
         protected override void OnUpdate()
         {
@@ -41,8 +41,8 @@ namespace StardustDefender.GUI.Common
         }
         protected override void OnDraw()
         {
-            SGraphics.SpriteBatch.Draw(logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, introString, new Vector2(SCamera.Center.X - introStringMeasure.X / 1.5f, SCamera.Center.Y + 96), Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, this.logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.introString, new Vector2(SCamera.Center.X - (this.introStringMeasure.X / 1.5f), SCamera.Center.Y + 96), Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
         }
     }
 }

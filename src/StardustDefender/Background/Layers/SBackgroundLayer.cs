@@ -23,18 +23,18 @@ namespace StardustDefender.Background.Layers
             TextureRectangle = textureRectangle;
             ParallaxFactor = parallaxFactor;
 
-            initialY = (SScreen.Height / 2) - (TextureRectangle.Height / 2);
-            Position = new(SCamera.Center.X / 2, initialY);
+            this.initialY = (SScreen.Height / 2) - (TextureRectangle.Height / 2);
+            Position = new(SCamera.Center.X / 2, this.initialY);
         }
 
         internal void Update()
         {
-            finalParallaxFactor = ParallaxFactor * SBackgroundController.GlobalParallaxFactor;
-            Position = new(Position.X, Position.Y + finalParallaxFactor);
+            this.finalParallaxFactor = ParallaxFactor * SBackgroundController.GlobalParallaxFactor;
+            Position = new(Position.X, Position.Y + this.finalParallaxFactor);
 
-            if (Position.Y > initialY * 3)
+            if (Position.Y > this.initialY * 3)
             {
-                Position = new(Position.X, initialY);
+                Position = new(Position.X, this.initialY);
             }
         }
 

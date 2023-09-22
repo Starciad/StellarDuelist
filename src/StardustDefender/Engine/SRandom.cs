@@ -8,12 +8,7 @@ namespace StardustDefender.Engine
 
         internal static bool Chance(int chance, int total)
         {
-            if (Range(0, total) < chance)
-            {
-                return true;
-            }
-
-            return false;
+            return Range(0, total) < chance;
         }
 
         internal static float NextFloat()

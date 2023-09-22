@@ -40,7 +40,7 @@ namespace StardustDefender.Managers
         }
         internal static void Remove(SProjectile projectile)
         {
-            projectiles.Remove(projectile);
+            _ = projectiles.Remove(projectile);
             projectilePool.ReturnToPool(projectile);
         }
     }

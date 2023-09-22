@@ -3,9 +3,8 @@
 using StardustDefender.Camera;
 using StardustDefender.Engine;
 using StardustDefender.Entities;
-using StardustDefender.Entities.Items;
 using StardustDefender.Entities.Player;
-using StardustDefender.GUI.Common;
+using StardustDefender.Items;
 using StardustDefender.Managers;
 using StardustDefender.World;
 
@@ -60,7 +59,9 @@ namespace StardustDefender.Controllers
             foreach (SEntity entity in SEntityManager.Entities)
             {
                 if (entity == null)
+                {
                     continue;
+                }
 
                 if (entity.LocalPosition.X < minDespawnLimit.X ||
                     entity.LocalPosition.Y < minDespawnLimit.Y ||
@@ -68,7 +69,9 @@ namespace StardustDefender.Controllers
                     entity.LocalPosition.Y > maxDespawnLimit.Y)
                 {
                     if (entity is SPlayerEntity)
+                    {
                         continue;
+                    }
 
                     spawnedEnemies--;
                     SEntityManager.Remove(entity);
@@ -114,7 +117,9 @@ namespace StardustDefender.Controllers
                 }
 
                 if (SDifficultyController.EnemySpawnDelay > 0)
+                {
                     await Task.Delay(TimeSpan.FromSeconds(SDifficultyController.EnemySpawnDelay));
+                }
             }
 
             // Win
@@ -158,7 +163,7 @@ namespace StardustDefender.Controllers
         }
         private static void CreateEnemy()
         {
-            SDifficultyController.GetRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));
+            _ = SDifficultyController.GetRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));
         }
 
         private static void ResetPlayerPosition()

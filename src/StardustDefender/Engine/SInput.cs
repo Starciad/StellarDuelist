@@ -49,35 +49,20 @@ namespace StardustDefender.Engine
 
         internal static bool Started(Keys key)
         {
-            if (!PreviousKeyboard.IsKeyDown(key) &&
-                Keyboard.IsKeyDown(key))
-            {
-                return true;
-            }
-
-            return false;
+            return !PreviousKeyboard.IsKeyDown(key) &&
+                Keyboard.IsKeyDown(key);
         }
 
         internal static bool Performed(Keys key)
         {
-            if (PreviousKeyboard.IsKeyDown(key) &&
-                Keyboard.IsKeyDown(key))
-            {
-                return true;
-            }
-
-            return false;
+            return PreviousKeyboard.IsKeyDown(key) &&
+                Keyboard.IsKeyDown(key);
         }
 
         internal static bool Canceled(Keys key)
         {
-            if (PreviousKeyboard.IsKeyDown(key) &&
-                !Keyboard.IsKeyDown(key))
-            {
-                return true;
-            }
-
-            return false;
+            return PreviousKeyboard.IsKeyDown(key) &&
+                !Keyboard.IsKeyDown(key);
         }
     }
 }

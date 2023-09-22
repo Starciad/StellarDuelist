@@ -1,6 +1,6 @@
-﻿using StardustDefender.Enums;
+﻿using Microsoft.Xna.Framework;
 
-using Microsoft.Xna.Framework;
+using StardustDefender.Enums;
 
 namespace StardustDefender.Projectiles
 {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Collections;
-using StardustDefender.Effects;
-using StardustDefender.Entities.Items;
 using StardustDefender.Extensions;
 using StardustDefender.Items;
 
@@ -10,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Managers
 {
     internal static class SItemsManager
     {
@@ -69,7 +67,7 @@ namespace StardustDefender.Controllers
         }
         internal static void Remove(SItem item)
         {
-            items.Remove(item);
+            _ = items.Remove(item);
         }
     }
 }

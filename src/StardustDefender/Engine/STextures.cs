@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-
 using System.Collections.Generic;
 
 namespace StardustDefender.Engine
@@ -52,11 +51,13 @@ namespace StardustDefender.Engine
         }
         internal static Rectangle GetSprite(int scale, int pivotX, int pivotY)
         {
-            return new(new(pivotX * scale, pivotY * scale), new(scale)); ;
+            return new(new(pivotX * scale, pivotY * scale), new(scale));
+            ;
         }
         internal static Rectangle GetSprite(int scaleX, int scaleY, int pivotX, int pivotY)
         {
-            return new(new(pivotX * scaleX, pivotY * scaleY), new(scaleX, scaleY)); ;
+            return new(new(pivotX * scaleX, pivotY * scaleY), new(scaleX, scaleY));
+            ;
         }
     }
 }

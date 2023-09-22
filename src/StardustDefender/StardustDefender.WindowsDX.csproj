@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
 	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
 	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />

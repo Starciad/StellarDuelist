@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Enums;
 using StardustDefender.Animation;
 using StardustDefender.Collections;
 using StardustDefender.Engine;
+using StardustDefender.Enums;
 using StardustDefender.Managers;
 
 namespace StardustDefender.Effects
@@ -20,22 +20,22 @@ namespace StardustDefender.Effects
 
         internal void Build(SAnimation animation)
         {
-            _animation = animation;
-            _animation.OnAnimationFinished += OnFinished;
-            _animation.SetMode(AnimationMode.Once);
+            this._animation = animation;
+            this._animation.OnAnimationFinished += OnFinished;
+            this._animation.SetMode(AnimationMode.Once);
         }
         internal void Update()
         {
-            _animation.Update();
+            this._animation.Update();
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(_animation.Texture, Position, _animation.TextureRectangle, Color, Rotation, new Vector2(_animation.SpriteScale / 2), Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, Position, this._animation.TextureRectangle, Color, Rotation, new Vector2(this._animation.SpriteScale / 2), Scale, SpriteEffects.None, 0f);
         }
 
         private void OnFinished()
         {
-            _animation.OnAnimationFinished -= OnFinished;
+            this._animation.OnAnimationFinished -= OnFinished;
             SEffectsManager.Remove(this);
         }
 

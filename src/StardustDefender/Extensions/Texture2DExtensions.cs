@@ -7,10 +7,7 @@ namespace StardustDefender.Extensions
     {
         internal static Vector2 GetOriginPosition(this Texture2D texture)
         {
-            if (texture == null)
-                return Vector2.Zero;
-
-            return new(texture.Width / 2, texture.Height / 2);
+            return texture == null ? Vector2.Zero : new(texture.Width / 2, texture.Height / 2);
         }
     }
 }

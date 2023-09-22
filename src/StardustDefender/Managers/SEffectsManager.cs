@@ -1,12 +1,10 @@
-﻿using StardustDefender.Effects;
-using StardustDefender.Entities;
-using StardustDefender.World;
+﻿using Microsoft.Xna.Framework;
+
+using StardustDefender.Collections;
+using StardustDefender.Effects;
 
 using System;
 using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
-using StardustDefender.Collections;
 using System.Linq;
 
 namespace StardustDefender.Managers
@@ -37,7 +35,9 @@ namespace StardustDefender.Managers
             foreach (SEffect effect in Effects)
             {
                 if (effect == null)
+                {
                     continue;
+                }
 
                 effect.Update();
             }
@@ -47,7 +47,9 @@ namespace StardustDefender.Managers
             foreach (SEffect effect in Effects)
             {
                 if (effect == null)
+                {
                     continue;
+                }
 
                 effect.Draw();
             }
@@ -98,7 +100,7 @@ namespace StardustDefender.Managers
 
         internal static void Remove(SEffect effect)
         {
-            effects.Remove(effect);
+            _ = effects.Remove(effect);
             effectPool.ReturnToPool(effect);
         }
     }

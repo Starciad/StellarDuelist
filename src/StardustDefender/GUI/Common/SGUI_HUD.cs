@@ -34,48 +34,48 @@ namespace StardustDefender.GUI.Common
         protected override void OnInitialize()
         {
             // Textures
-            borderTexture = STextures.GetTexture("UI_SolidBackground");
-            logoTexture = STextures.GetTexture("UI_Logo");
+            this.borderTexture = STextures.GetTexture("UI_SolidBackground");
+            this.logoTexture = STextures.GetTexture("UI_Logo");
 
             // Origins
-            borderTextureOrigin = borderTexture.GetOriginPosition();
-            logoTextureOrigin = logoTexture.GetOriginPosition();
+            this.borderTextureOrigin = this.borderTexture.GetOriginPosition();
+            this.logoTextureOrigin = this.logoTexture.GetOriginPosition();
 
             // Fonts
-            font = SFonts.Impact;
+            this.font = SFonts.Impact;
         }
         protected override void OnUpdate()
         {
-            S_Level.Clear();
-            S_Health.Clear();
-            S_Damage.Clear();
-            S_BulletSpeed.Clear();
-            S_BulletDelay.Clear();
-            S_BulletLife.Clear();
+            _ = this.S_Level.Clear();
+            _ = this.S_Health.Clear();
+            _ = this.S_Damage.Clear();
+            _ = this.S_BulletSpeed.Clear();
+            _ = this.S_BulletDelay.Clear();
+            _ = this.S_BulletLife.Clear();
 
-            S_Level.Append($"Level: {SLevelController.Level + 1}");
-            S_Health.Append($"Health: {SLevelController.Player.HealthValue}");
-            S_Damage.Append($"Damage: {SLevelController.Player.DamageValue}");
-            S_BulletSpeed.Append($"Bullet Speed: {SLevelController.Player.BulletSpeed.ToString("#.0")}");
-            S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
-            S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
+            _ = this.S_Level.Append($"Level: {SLevelController.Level + 1}");
+            _ = this.S_Health.Append($"Health: {SLevelController.Player.HealthValue}");
+            _ = this.S_Damage.Append($"Damage: {SLevelController.Player.DamageValue}");
+            _ = this.S_BulletSpeed.Append($"Bullet Speed: {SLevelController.Player.BulletSpeed.ToString("#.0")}");
+            _ = this.S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
+            _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
         }
         protected override void OnDraw()
         {
             // Borders
-            SGraphics.SpriteBatch.Draw(borderTexture, new Vector2(SCamera.Center.X - 800, SCamera.Center.Y), null, new Color(0, 0, 0, 170), 0f, borderTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.Draw(borderTexture, new Vector2(SCamera.Center.X + 800, SCamera.Center.Y), null, new Color(0, 0, 0, 170), 0f, borderTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.borderTexture, new Vector2(SCamera.Center.X - 800, SCamera.Center.Y), null, new Color(0, 0, 0, 170), 0f, this.borderTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.borderTexture, new Vector2(SCamera.Center.X + 800, SCamera.Center.Y), null, new Color(0, 0, 0, 170), 0f, this.borderTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
 
             // Logo
-            SGraphics.SpriteBatch.Draw(logoTexture, new Vector2(SCamera.Center.X - 208, SCamera.Center.Y - 112), null, Color.White, 0f, logoTextureOrigin, new Vector2(0.5f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.logoTexture, new Vector2(SCamera.Center.X - 208, SCamera.Center.Y - 112), null, Color.White, 0f, this.logoTextureOrigin, new Vector2(0.5f), SpriteEffects.None, 0f);
 
             // Infos
-            SGraphics.SpriteBatch.DrawString(font, S_Level, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 45), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, S_Health, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 61), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, S_Damage, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 77), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, S_BulletDelay, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 93), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, S_BulletSpeed, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, S_BulletLife, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Level, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 45), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Health, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 61), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Damage, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 77), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletDelay, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 93), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletSpeed, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletLife, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
         }
     }
 }

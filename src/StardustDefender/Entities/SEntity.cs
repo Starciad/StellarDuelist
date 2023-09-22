@@ -1,14 +1,15 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.World;
-using StardustDefender.Engine;
-using StardustDefender.Managers;
-using StardustDefender.Enums;
-
-using System;
 using StardustDefender.Animation;
 using StardustDefender.Collections;
+using StardustDefender.Engine;
+
+using StardustDefender.Enums;
+using StardustDefender.Managers;
+using StardustDefender.World;
+
+using System;
 
 namespace StardustDefender.Entities
 {
@@ -85,13 +86,21 @@ namespace StardustDefender.Entities
             HealthValue -= value;
             OnDamaged(value);
 
-            if (HealthValue <= 0) Destroy();
-            else Knockback();
+            if (HealthValue <= 0)
+            {
+                Destroy();
+            }
+            else
+            {
+                Knockback();
+            }
         }
         private void Knockback()
         {
             if (!SRandom.Chance(ChanceOfKnockback, 100))
+            {
                 return;
+            }
 
             switch (Team)
             {

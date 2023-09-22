@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Animation;
-using StardustDefender.Camera;
 using StardustDefender.Collections;
 using StardustDefender.Engine;
 using StardustDefender.Entities;
@@ -92,7 +91,9 @@ namespace StardustDefender.Projectiles
                 if (entity == null ||
                     entity?.Team == Team ||
                     Vector2.Distance(Position, entity.WorldPosition) > Range)
+                {
                     continue;
+                }
 
                 entity?.Damage(Damage);
                 Destroy();

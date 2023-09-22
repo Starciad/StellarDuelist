@@ -1,12 +1,13 @@
-﻿using StardustDefender.Engine;
+﻿using Microsoft.Xna.Framework;
+
+using StardustDefender.Controllers;
+using StardustDefender.Effects.Common;
+using StardustDefender.Engine;
+
 using StardustDefender.Enums;
 using StardustDefender.Managers;
-using StardustDefender.Effects.Common;
 
 using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-using StardustDefender.Controllers;
 
 namespace StardustDefender.Entities.Aliens
 {
@@ -30,8 +31,8 @@ namespace StardustDefender.Entities.Aliens
         }
         protected override void OnDamaged(int value)
         {
-            SSounds.Play("Damage_02");
-            SEffectsManager.Create<SImpactEffect>(WorldPosition);
+            _ = SSounds.Play("Damage_02");
+            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
 
             _ = Task.Run(async () =>
             {
@@ -44,34 +45,36 @@ namespace StardustDefender.Entities.Aliens
         {
             SLevelController.EnemyKilled();
 
-            SSounds.Play("Explosion_01");
-            SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+            _ = SSounds.Play("Explosion_01");
+            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
 
             // Drop
             if (SRandom.Chance(20, 100))
-                SItemsManager.GetRandomItem(WorldPosition);
+            {
+                _ = SItemsManager.GetRandomItem(WorldPosition);
+            }
         }
 
         private void MovementUpdate()
         {
-            if (currentMovementDelay < movementDelay)
+            if (this.currentMovementDelay < this.movementDelay)
             {
-                currentMovementDelay += 0.1f;
+                this.currentMovementDelay += 0.1f;
             }
             else
             {
-                currentMovementDelay = 0;
-                switch (movementDirection)
+                this.currentMovementDelay = 0;
+                switch (this.movementDirection)
                 {
                     case 1:
                         int direction = SRandom.Chance(50, 100) ? -1 : 1;
                         LocalPosition = new(LocalPosition.X + direction, LocalPosition.Y);
-                        movementDirection = 2;
+                        this.movementDirection = 2;
                         break;
 
                     case 2:
                         LocalPosition = new(LocalPosition.X, LocalPosition.Y + 1);
-                        movementDirection = 1;
+                        this.movementDirection = 1;
                         break;
                 }
             }

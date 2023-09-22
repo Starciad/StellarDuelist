@@ -1,5 +1,4 @@
 ﻿using StardustDefender.Animation;
-using StardustDefender.Enums;
 
 namespace StardustDefender.Effects
 {

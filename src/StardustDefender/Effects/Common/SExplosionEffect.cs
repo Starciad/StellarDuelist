@@ -1,11 +1,4 @@
 ﻿using StardustDefender.Engine;
-using StardustDefender.Entities;
-using StardustDefender.Enums;
-using StardustDefender.Managers;
-
-using Microsoft.Xna.Framework;
-
-using System;
 
 namespace StardustDefender.Effects.Common
 {

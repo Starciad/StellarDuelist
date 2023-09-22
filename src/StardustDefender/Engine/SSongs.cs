@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework.Media;
 
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,9 @@ namespace StardustDefender.Engine
         internal static void Play(string name)
         {
             if (currentSong != null)
+            {
                 Stop();
+            }
 
             Song song = songs[name];
 

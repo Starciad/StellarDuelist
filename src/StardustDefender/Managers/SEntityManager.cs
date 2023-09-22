@@ -81,7 +81,7 @@ namespace StardustDefender.Managers
 
         internal static void Remove(SEntity entity)
         {
-            entities.Remove(entity);
+            _ = entities.Remove(entity);
             entityPool.ReturnToPool(entity);
         }
     }

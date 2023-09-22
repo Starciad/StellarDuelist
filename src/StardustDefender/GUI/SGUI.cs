@@ -11,14 +11,18 @@
         internal void Update()
         {
             if (!IsActive)
+            {
                 return;
+            }
 
             OnUpdate();
         }
         internal void Draw()
         {
             if (!IsActive)
+            {
                 return;
+            }
 
             OnDraw();
         }

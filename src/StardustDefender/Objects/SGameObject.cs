@@ -4,12 +4,12 @@ namespace StardustDefender.Objects
 {
     internal abstract class SGameObject
     {
-        public string Id => id;
+        public string Id => this.id;
         private readonly string id;
 
         public SGameObject()
         {
-            id = Guid.NewGuid().ToString();
+            this.id = Guid.NewGuid().ToString();
         }
 
         internal virtual void Awake() { return; }

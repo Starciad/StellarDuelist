@@ -1,6 +1,4 @@
-﻿using StardustDefender.Controllers;
-
-using StardustDefender.Engine;
+﻿using StardustDefender.Engine;
 using StardustDefender.Entities.Player;
 
 namespace StardustDefender.Items.Common

@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Enums;
+
+using System.Collections.Generic;
 
 namespace StardustDefender.Animation
 {
     internal sealed class SAnimation
     {
-        internal Texture2D Texture => texture;
-        internal Rectangle TextureRectangle => textureRectangle;
+        internal Texture2D Texture => this.texture;
+        internal Rectangle TextureRectangle => this.textureRectangle;
 
         internal float SpriteScale
         {
@@ -19,16 +19,11 @@ namespace StardustDefender.Animation
                 float width = TextureRectangle.Width;
                 float height = TextureRectangle.Height;
 
-                if (width == height)
-                {
-                    return width;
-                }
-
-                return (width + height) / 2;
+                return width == height ? width : (width + height) / 2;
             }
         }
 
-        internal AnimationMode Mode => mode;
+        internal AnimationMode Mode => this.mode;
 
         private Texture2D texture;
         private Rectangle textureRectangle;
@@ -46,48 +41,50 @@ namespace StardustDefender.Animation
 
         internal void Initialize()
         {
-            textureRectangle = animationFrames[0];
+            this.textureRectangle = this.animationFrames[0];
         }
         internal void Reset()
         {
-            mode = AnimationMode.Disable;
+            this.mode = AnimationMode.Disable;
 
-            animationDelay = 1f;
-            animationCurrentDelay = 0f;
+            this.animationDelay = 1f;
+            this.animationCurrentDelay = 0f;
 
-            animationFrames.Clear();
-            animationCurrentFrame = 0;
+            this.animationFrames.Clear();
+            this.animationCurrentFrame = 0;
         }
         internal void Update()
         {
-            if (mode == AnimationMode.Disable)
-                return;
-
-            if (animationCurrentDelay < animationDelay)
+            if (this.mode == AnimationMode.Disable)
             {
-                animationCurrentDelay += 0.1f;
+                return;
+            }
+
+            if (this.animationCurrentDelay < this.animationDelay)
+            {
+                this.animationCurrentDelay += 0.1f;
             }
             else
             {
-                animationCurrentDelay = 0;
+                this.animationCurrentDelay = 0;
 
-                if (animationCurrentFrame < animationFrames.Count - 1)
+                if (this.animationCurrentFrame < this.animationFrames.Count - 1)
                 {
-                    animationCurrentFrame++;
+                    this.animationCurrentFrame++;
                 }
                 else
                 {
-                    animationCurrentFrame = 0;
-                    if (mode == AnimationMode.Once)
+                    this.animationCurrentFrame = 0;
+                    if (this.mode == AnimationMode.Once)
                     {
-                        mode = AnimationMode.Disable;
+                        this.mode = AnimationMode.Disable;
                         OnAnimationFinished?.Invoke();
                         return;
                     }
                 }
             }
 
-            textureRectangle = animationFrames[animationCurrentFrame];
+            this.textureRectangle = this.animationFrames[this.animationCurrentFrame];
         }
 
         internal void SetTexture(Texture2D texture)
@@ -96,7 +93,7 @@ namespace StardustDefender.Animation
         }
         internal void AddSprite(Rectangle rect)
         {
-            animationFrames.Add(rect);
+            this.animationFrames.Add(rect);
         }
 
         internal void SetMode(AnimationMode mode)
@@ -105,7 +102,7 @@ namespace StardustDefender.Animation
         }
         internal void SetDuration(float delay)
         {
-            animationDelay = delay;
+            this.animationDelay = delay;
         }
     }
 }

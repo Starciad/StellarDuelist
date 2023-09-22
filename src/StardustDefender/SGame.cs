@@ -45,12 +45,20 @@ namespace StardustDefender
 
         protected override void OnActivated(object sender, EventArgs args)
         {
-            if (SGameController.State == SGameState.Introduction) return;
+            if (SGameController.State == SGameState.Introduction)
+            {
+                return;
+            }
+
             SGameController.SetGameState(SGameState.Running);
         }
         protected override void OnDeactivated(object sender, EventArgs args)
         {
-            if (SGameController.State == SGameState.Introduction) return;
+            if (SGameController.State == SGameState.Introduction)
+            {
+                return;
+            }
+
             SGameController.SetGameState(SGameState.Paused);
         }
 
