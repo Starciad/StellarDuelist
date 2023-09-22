@@ -43,15 +43,23 @@ namespace StardustDefender
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
         }
 
+        protected override void OnActivated(object sender, EventArgs args)
+        {
+            if (SGameController.State == SGameState.Introduction) return;
+            SGameController.SetGameState(SGameState.Running);
+        }
+        protected override void OnDeactivated(object sender, EventArgs args)
+        {
+            if (SGameController.State == SGameState.Introduction) return;
+            SGameController.SetGameState(SGameState.Paused);
+        }
+
         protected override void Initialize()
         {
             // Engine
             SGraphics.Initialize();
             SScreen.Initialize(SGraphics.GraphicsDevice.Viewport);
             SCamera.Initialize();
-
-            // Controllers
-            SLevelController.Initialize();
 
             base.Initialize();
         }
@@ -70,6 +78,7 @@ namespace StardustDefender
             SItemsManager.Initialize();
 
             // Controllers
+            SLevelController.Initialize();
             SGameController.BeginRun();
             SDifficultyController.BeginRun();
             SBackgroundController.BeginRun();
@@ -81,11 +90,6 @@ namespace StardustDefender
         {
             STime.Update(gameTime, null);
             SInput.Update();
-
-            // Engine
-            SFade.Update();
-            SGUIManager.Update();
-            SBackgroundController.Update();
 
             // Game
             if (SGameController.State == SGameState.Running)
@@ -99,6 +103,15 @@ namespace StardustDefender
                 // Controllers
                 SLevelController.Update();
             }
+
+            if (SGameController.State != SGameState.Paused)
+            {
+                SBackgroundController.Update();
+            }
+
+            // Engine
+            SFade.Update();
+            SGUIManager.Update();
 
             base.Update(gameTime);
         }
@@ -141,30 +154,34 @@ namespace StardustDefender
         }
         private static void DrawGameGUI()
         {
+            // INTRODUCTION
             if (SGameController.State == SGameState.Introduction)
             {
-                SGUIManager.DisableAll();
                 SGUIManager.Enable<SGUIIntroduction>();
             }
+            else
+            {
+                SGUIManager.Disable<SGUIIntroduction>();
+            }
 
+            // RUNNING
             if (SGameController.State == SGameState.Running)
             {
-
+                SGUIManager.Enable<SGUI_HUD>();
+            }
+            else
+            {
+                SGUIManager.Disable<SGUI_HUD>();
             }
 
+            // PAUSE
             if (SGameController.State == SGameState.Paused)
             {
-
+                SGUIManager.Enable<SGUIPause>();
             }
-
-            if (SGameController.State == SGameState.Victory)
+            else
             {
-
-            }
-
-            if (SGameController.State == SGameState.GameOver)
-            {
-
+                SGUIManager.Disable<SGUIPause>();
             }
 
             SGUIManager.Draw();

@@ -33,6 +33,9 @@ namespace StardustDefender.Engine
             textures.Add("UI_Logo", SContent.Sprites.Load<Texture2D>("UI/Logo/StardustDefenderLogo"));
             textures.Add("UI_SolidBackground", SContent.Sprites.Load<Texture2D>("UI/Backgrounds/SolidBackground"));
 
+            // Texts
+            textures.Add("UI_Paused", SContent.Sprites.Load<Texture2D>("UI/Texts/Paused"));
+
             // Items
             textures.Add("Upgrades", SContent.Sprites.Load<Texture2D>("Items/Upgrades"));
         }

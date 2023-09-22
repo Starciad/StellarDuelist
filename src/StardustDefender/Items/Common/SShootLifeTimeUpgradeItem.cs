@@ -17,7 +17,7 @@ namespace StardustDefender.Items.Common
 
         protected override void OnEffect(SPlayerEntity player)
         {
-            player.ShootLifeTime += 0.1f;
+            player.BulletLifeTime += 0.1f;
         }
     }
 }

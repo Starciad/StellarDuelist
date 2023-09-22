@@ -11,7 +11,7 @@ namespace StardustDefender.World
         internal const float GridScale = 32;
         internal const float SmoothScale = 0.2f;
 
-        internal const int Width = 7;
+        internal const int Width = 4;
         internal const int Height = 12;
 
         internal static Vector2 Clamp(Vector2 pos)

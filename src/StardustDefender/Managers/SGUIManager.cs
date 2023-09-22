@@ -32,6 +32,10 @@ namespace StardustDefender.Managers
                 gui.Draw();
         }
 
+        internal static T Get<T>() where T : SGUI
+        {
+            return (T)_GUIs[typeof(T)];
+        }
         internal static void Enable<T>() where T : SGUI
         {
             _GUIs[typeof(T)].Enable();

@@ -14,7 +14,7 @@ namespace StardustDefender.Items.Common
 
         protected override void OnEffect(SPlayerEntity player)
         {
-            player.ShootSpeed += 0.1f;
+            player.BulletSpeed += 0.1f;
         }
     }
 }

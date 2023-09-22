@@ -16,9 +16,9 @@ namespace StardustDefender.Entities.Player
     internal sealed class SPlayerEntity : SEntity
     {
         internal bool CanShoot => currentShootDelay == 0;
-        public float ShootDelay { get; set; } = 2.5f;
-        public float ShootLifeTime { get; set; } = 3f;
-        public float ShootSpeed { get; set; } = 3f;
+        public float ShootDelay { get; set; } = 3f;
+        public float BulletLifeTime { get; set; } = 3f;
+        public float BulletSpeed { get; set; } = 3f;
 
         private float currentShootDelay;
 
@@ -79,8 +79,14 @@ namespace StardustDefender.Entities.Player
 
         private void InputsUpdate()
         {
+            PauseInputUpdate();
             MovementInputUpdate();
             ShootInputUpdate();
+        }
+        private void PauseInputUpdate()
+        {
+            if (SInput.Started(Keys.P))
+                SGameController.SetGameState(SGameState.Paused);
         }
         private void MovementInputUpdate()
         {
@@ -112,9 +118,9 @@ namespace StardustDefender.Entities.Player
                     SpriteId = 0,
                     Team = Teams.Good,
                     Position = new(WorldPosition.X, WorldPosition.Y - 32f),
-                    Speed = new(0, ShootSpeed * -1),
+                    Speed = new(0, BulletSpeed * -1),
                     Damage = DamageValue,
-                    LifeTime = ShootLifeTime,
+                    LifeTime = BulletLifeTime,
                     Range = 10f
                 });
             }

@@ -5,6 +5,7 @@ using StardustDefender.Engine;
 using StardustDefender.Entities;
 using StardustDefender.Entities.Items;
 using StardustDefender.Entities.Player;
+using StardustDefender.GUI.Common;
 using StardustDefender.Managers;
 using StardustDefender.World;
 
@@ -17,6 +18,7 @@ namespace StardustDefender.Controllers
     {
         internal static SPlayerEntity Player { get; private set; }
         internal static int PlayerCumulativeDamage => playerCumulativeDamage;
+        internal static int Level => level;
 
         private static Vector2 centerPosition;
         private static Vector2 playerPosition;
@@ -25,7 +27,7 @@ namespace StardustDefender.Controllers
         private static Vector2 minDespawnLimit;
         private static Vector2 maxDespawnLimit;
 
-        private const int ENEMY_SPAWN_RANGE = 5;
+        private const int ENEMY_SPAWN_RANGE = 4;
 
         private static int level;
 
