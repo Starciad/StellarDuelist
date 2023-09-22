@@ -81,7 +81,7 @@ namespace StardustDefender.Entities.Aliens
         {
             Animation.Reset();
             Animation.SetMode(AnimationMode.Forward);
-            Animation.SetTexture(STextures.GetTexture("Aliens"));
+            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             Animation.AddSprite(STextures.GetSprite(32, 0, 0));
             Animation.AddSprite(STextures.GetSprite(32, 1, 0));
             Animation.SetDuration(3f);

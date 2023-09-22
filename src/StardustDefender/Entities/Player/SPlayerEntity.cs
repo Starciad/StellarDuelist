@@ -24,7 +24,7 @@ namespace StardustDefender.Entities.Player
 
         protected override void OnAwake()
         {
-            Animation.SetTexture(STextures.GetTexture("Player_1"));
+            Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
             Animation.AddSprite(STextures.GetSprite(32, 0, 0));
 
             Team = Teams.Good;

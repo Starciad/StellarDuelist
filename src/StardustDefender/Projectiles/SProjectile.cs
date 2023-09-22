@@ -57,7 +57,7 @@ namespace StardustDefender.Projectiles
         {
             Animation.Reset();
             Animation.SetMode(AnimationMode.Disable);
-            Animation.SetTexture(STextures.GetTexture("Bullets"));
+            Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
             Animation.AddSprite(STextures.GetSprite(32, SpriteId, 0));
             Animation.Initialize();
 

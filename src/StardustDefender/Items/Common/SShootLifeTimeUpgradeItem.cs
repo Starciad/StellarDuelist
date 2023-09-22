@@ -11,7 +11,7 @@ namespace StardustDefender.Items.Common
     {
         protected override void OnInitialize()
         {
-            Animation.SetTexture(STextures.GetTexture("Upgrades"));
+            Animation.SetTexture(STextures.GetTexture("ITEMS_Upgrades"));
             Animation.AddSprite(STextures.GetSprite(SPRITE_SCALE, 3, 0));
         }
 

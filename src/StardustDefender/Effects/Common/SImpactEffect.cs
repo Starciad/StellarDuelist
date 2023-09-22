@@ -6,7 +6,7 @@ namespace StardustDefender.Effects.Common
     {
         protected override void OnBuild()
         {
-            Animation.SetTexture(STextures.GetTexture("Effects_Impact"));
+            Animation.SetTexture(STextures.GetTexture("EFFECTS_Impact"));
             Animation.AddSprite(STextures.GetSprite(64, 0, 0));
             Animation.AddSprite(STextures.GetSprite(64, 1, 0));
             Animation.AddSprite(STextures.GetSprite(64, 2, 0));

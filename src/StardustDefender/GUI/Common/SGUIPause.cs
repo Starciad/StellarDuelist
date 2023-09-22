@@ -22,7 +22,7 @@ namespace StardustDefender.GUI.Common
         protected override void OnInitialize()
         {
             backgroundTexture = STextures.GetTexture("UI_SolidBackground");
-            pausedTexture = STextures.GetTexture("UI_Paused");
+            pausedTexture = STextures.GetTexture("TEXTS_Paused");
 
             pausedTextureOrigin = pausedTexture.GetOriginPosition();
             backgroundTextureOrigin = backgroundTexture.GetOriginPosition();

@@ -59,7 +59,7 @@ namespace StardustDefender.Engine
 
             foreach ((string, string) asset in assets)
             {
-                soundEffects.Add(asset.Item1, SContent.Sprites.Load<SoundEffect>(asset.Item2));
+                soundEffects.Add(asset.Item1, SContent.Sounds.Load<SoundEffect>(asset.Item2));
             }
         }
         internal static SoundEffectInstance Play(string name)

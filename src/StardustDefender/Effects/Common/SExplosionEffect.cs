@@ -14,7 +14,7 @@ namespace StardustDefender.Effects.Common
         protected override void OnBuild()
         {
             // Animation
-            Animation.SetTexture(STextures.GetTexture("Effects_Explosion"));
+            Animation.SetTexture(STextures.GetTexture("EFFECTS_Explosion"));
             Animation.AddSprite(STextures.GetSprite(64, 0, 0));
             Animation.AddSprite(STextures.GetSprite(64, 1, 0));
             Animation.AddSprite(STextures.GetSprite(64, 2, 0));
