@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 
-using SharpDX.Direct3D9;
-
 using StardustDefender.Collections;
 using StardustDefender.Effects;
 using StardustDefender.Entities.Items;
@@ -65,7 +63,7 @@ namespace StardustDefender.Controllers
             SItemTemplate template = templates[type];
 
             item.Build(template, template.Animation, position);
-            
+
             items.Add(item);
             return item;
         }

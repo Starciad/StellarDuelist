@@ -17,7 +17,7 @@ namespace StardustDefender.Managers
 
         // Templates
         private static readonly Dictionary<Type, SEffectTemplate> templates = new();
-        
+
         // Pool
         private static readonly ObjectPool<SEffect> effectPool = new();
         private static readonly List<SEffect> effects = new();

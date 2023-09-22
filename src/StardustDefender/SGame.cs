@@ -99,7 +99,7 @@ namespace StardustDefender
                 SEffectsManager.Update();
                 SProjectileManager.Update();
                 SEntityManager.Update();
-                
+
                 // Controllers
                 SLevelController.Update();
             }

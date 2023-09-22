@@ -1,7 +1,5 @@
-﻿using Microsoft.VisualBasic.Logging;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Camera;
 using StardustDefender.Controllers;

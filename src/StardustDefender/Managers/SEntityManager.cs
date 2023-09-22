@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Camera;
 using StardustDefender.Collections;
 using StardustDefender.Entities;
 using StardustDefender.World;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace StardustDefender.Managers
 {
@@ -81,7 +78,7 @@ namespace StardustDefender.Managers
             entities.Add(entity);
             return entity;
         }
-        
+
         internal static void Remove(SEntity entity)
         {
             entities.Remove(entity);
