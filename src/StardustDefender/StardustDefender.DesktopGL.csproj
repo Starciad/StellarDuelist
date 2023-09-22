@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
-	<Import Project="../Targets/Linux/Project_Compilation.targets" />
-	<Import Project="../Targets/Linux/Project_Settings.targets" />
-	<Import Project="../Targets/Linux/Project_Infos.targets" />
+	<Import Project="../Targets/DesktopGL/Project_Compilation.targets" />
+	<Import Project="../Targets/DesktopGL/Project_Settings.targets" />
+	<Import Project="../Targets/DesktopGL/Project_Infos.targets" />
 
 	<!-- HEADER -->
 	<PropertyGroup>
@@ -10,6 +10,8 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<RollForward>Major</RollForward>
 		<AssemblyName>StardustDefender</AssemblyName>
+		<DefineConstants>DesktopGL</DefineConstants>
+		<MonoGamePlatform>DesktopGL</MonoGamePlatform>
 	</PropertyGroup>
 	
 	<!-- SYSTEM -->
@@ -20,8 +22,8 @@
 
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
+		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
 		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
 	</ItemGroup>
 
 	<!-- TARGETS -->

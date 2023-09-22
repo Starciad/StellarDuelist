@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 	<!-- IMPORTS -->
-	<Import Project="../Targets/Windows/Project_Compilation.targets" />
-	<Import Project="../Targets/Windows/Project_Settings.targets" />
-	<Import Project="../Targets/Windows/Project_Infos.targets" />
+	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
+	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />
+	<Import Project="../Targets/WindowsDX/Project_Infos.targets" />
 
 	<!-- HEADER -->
 	<PropertyGroup>
@@ -11,6 +11,7 @@
 		<RollForward>Major</RollForward>
 		<AssemblyName>StardustDefender</AssemblyName>
 		<DefineConstants>WindowsDX</DefineConstants>
+		<MonoGamePlatform>Windows</MonoGamePlatform>
 	</PropertyGroup>
 	
 	<!-- SYSTEM -->
