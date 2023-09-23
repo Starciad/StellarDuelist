@@ -49,8 +49,7 @@ namespace StardustDefender.Animation
 
             this.animationDelay = 1f;
             this.animationCurrentDelay = 0f;
-
-            this.animationFrames.Clear();
+            
             this.animationCurrentFrame = 0;
         }
         internal void Update()
@@ -85,6 +84,10 @@ namespace StardustDefender.Animation
             }
 
             this.textureRectangle = this.animationFrames[this.animationCurrentFrame];
+        }
+        internal void Clear()
+        {
+            this.animationFrames.Clear();
         }
 
         internal void SetTexture(Texture2D texture)

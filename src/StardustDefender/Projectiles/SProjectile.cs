@@ -55,6 +55,8 @@ namespace StardustDefender.Projectiles
         public void Reset()
         {
             Animation.Reset();
+            Animation.Clear();
+
             Animation.SetMode(AnimationMode.Disable);
             Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
             Animation.AddSprite(STextures.GetSprite(32, SpriteId, 0));

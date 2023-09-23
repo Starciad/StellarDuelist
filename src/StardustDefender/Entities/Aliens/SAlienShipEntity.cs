@@ -117,6 +117,8 @@ namespace StardustDefender.Entities.Aliens
         public override void Reset()
         {
             Animation.Reset();
+            Animation.Clear();
+
             Animation.SetMode(AnimationMode.Forward);
             Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             Animation.AddSprite(STextures.GetSprite(32, 0, 1));

@@ -13,7 +13,7 @@ namespace StardustDefender.Entities.Aliens
 {
     internal class SAlienEntity : SAlien
     {
-        private readonly float movementDelay = 0.5f; // 10f
+        private readonly float movementDelay = 10f;
         private float currentMovementDelay = 0f;
         private int movementDirection = 1;
 
@@ -83,6 +83,8 @@ namespace StardustDefender.Entities.Aliens
         public override void Reset()
         {
             Animation.Reset();
+            Animation.Clear();
+
             Animation.SetMode(AnimationMode.Forward);
             Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             Animation.AddSprite(STextures.GetSprite(32, 0, 0));
