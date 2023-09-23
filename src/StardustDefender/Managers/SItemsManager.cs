@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Collections;
+using StardustDefender.Entities;
 using StardustDefender.Extensions;
 using StardustDefender.Items;
 
@@ -45,6 +46,15 @@ namespace StardustDefender.Managers
                 item?.Draw();
             }
         }
+        internal static void Reset()
+        {
+            foreach (SItem item in Items)
+            {
+                itemPool.ReturnToPool(item);
+            }
+
+            items.Clear();
+        }
 
         internal static SItem GetRandomItem(Vector2 position)
         {
@@ -57,7 +67,7 @@ namespace StardustDefender.Managers
         }
         internal static SItem Create(Type type, Vector2 position)
         {
-            SItem item = itemPool.Get() ?? new();
+            SItem item = itemPool.Get(type) ?? new();
             SItemTemplate template = templates[type];
 
             item.Build(template, template.Animation, position);
@@ -65,6 +75,7 @@ namespace StardustDefender.Managers
             items.Add(item);
             return item;
         }
+
         internal static void Remove(SItem item)
         {
             _ = items.Remove(item);

@@ -56,8 +56,25 @@ namespace StardustDefender.Entities.Player
         protected override void OnDestroy()
         {
             _ = SSounds.Play("Explosion_10");
+
             SGameController.SetGameState(SGameState.GameOver);
+            SLevelController.GameOver();
+
             _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+        }
+        public override void Reset()
+        {
+            HealthValue = 3;
+            DamageValue = 1;
+
+            ChanceOfKnockback = 0;
+            KnockbackForce = 0;
+
+            ShootDelay = 3f;
+            BulletLifeTime = 3f;
+            BulletSpeed = 3f;
+
+            currentShootDelay = ShootDelay;
         }
 
         private void ShootUpdate()

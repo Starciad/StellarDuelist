@@ -29,11 +29,8 @@ namespace StardustDefender.Controllers
 
         internal static void BeginRun()
         {
-            difficultyRate = 1f;
-            enemySpawnDelay = 2.5f;
-            totalEnemyCount = SRandom.Range(5, 11);
+            Reset();
         }
-
         internal static void Next()
         {
             // Easy
@@ -65,11 +62,17 @@ namespace StardustDefender.Controllers
                 enemySpawnDelay = 0;
             }
         }
-        internal static SEntity GetRandomEnemy(Vector2 position)
+        internal static void Reset()
+        {
+            difficultyRate = 1f;
+            enemySpawnDelay = 2.5f;
+            totalEnemyCount = SRandom.Range(5, 11);
+        }
+
+        internal static SEntity CreateRandomEnemy(Vector2 position)
         {
             return SEntityManager.Create(GetRandomEnemyType(), position);
         }
-
         private static Type GetRandomEnemyType()
         {
             return enemiesByDifficulty.Where(x => x.Key <= difficultyRate).SelectRandom().Value;

@@ -1,4 +1,8 @@
-﻿namespace StardustDefender.Controllers
+﻿using StardustDefender.Managers;
+
+using System;
+
+namespace StardustDefender.Controllers
 {
     internal enum SGameState
     {
@@ -20,6 +24,23 @@
         internal static void SetGameState(SGameState state)
         {
             State = state;
+        }
+        internal static void Reset()
+        {
+            SetGameState(SGameState.Introduction);
+
+            // Controllers
+            SBackgroundController.Reset();
+            SDifficultyController.Reset();
+            SLevelController.Reset();
+
+            // Managers
+            SEffectsManager.Reset();
+            SEntityManager.Reset();
+            SItemsManager.Reset();
+            SProjectileManager.Reset();
+
+            GC.Collect();
         }
     }
 }

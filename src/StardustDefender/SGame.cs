@@ -192,6 +192,17 @@ namespace StardustDefender
                 SGUIManager.Disable<SGUIPause>();
             }
 
+            // GAME OVER
+            if (SGameController.State == SGameState.GameOver)
+            {
+                SGUIManager.Enable<SGUIGameOver>();
+            }
+            else
+            {
+                SGUIManager.Disable<SGUIGameOver>();
+            }
+
+
             SGUIManager.Draw();
         }
     }

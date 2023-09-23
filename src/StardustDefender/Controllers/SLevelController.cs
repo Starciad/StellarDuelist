@@ -4,11 +4,14 @@ using StardustDefender.Camera;
 using StardustDefender.Engine;
 using StardustDefender.Entities;
 using StardustDefender.Entities.Player;
+using StardustDefender.GUI.Common;
 using StardustDefender.Items;
 using StardustDefender.Managers;
 using StardustDefender.World;
 
 using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Controllers
@@ -28,11 +31,18 @@ namespace StardustDefender.Controllers
 
         private const int ENEMY_SPAWN_RANGE = 4;
 
-        private static int level;
+        private static int level = 0;
 
-        private static int enemiesKilled;
-        private static int spawnedEnemies;
-        private static int playerCumulativeDamage;
+        private static int enemiesKilled = 0;
+        private static int spawnedEnemies = 0;
+        private static int playerCumulativeDamage = 0;
+
+        private static readonly Stopwatch totalGameTime = new();
+
+        private static SGUIGameOver GUI_GameOver;
+
+        private static bool initialized;
+        private static bool gameEnded;
 
         internal static void Initialize()
         {
@@ -45,12 +55,22 @@ namespace StardustDefender.Controllers
         }
         internal static void BeginRun()
         {
+            GUI_GameOver = SGUIManager.Get<SGUIGameOver>();
             SGameController.SetGameState(SGameState.Introduction);
-            CreatePlayer();
         }
         internal static void Update()
         {
             RemoveAllOffScreenElements();
+        }
+        internal static void Reset()
+        {
+            level = 0;
+
+            enemiesKilled = 0;
+            spawnedEnemies = 0;
+            playerCumulativeDamage = 0;
+
+            initialized = false;
         }
 
         private static void RemoveAllOffScreenElements()
@@ -93,7 +113,24 @@ namespace StardustDefender.Controllers
 
         internal static void RunLevel()
         {
+            if (!initialized)
+            {
+                totalGameTime.Restart();
+                CreatePlayer();
+
+                initialized = true;
+                gameEnded = false;
+            }
+
             _ = Task.Run(RunLevelAsync);
+        }
+        internal static void GameOver()
+        {
+            gameEnded = true;
+            initialized = false;
+
+            totalGameTime.Stop();
+            GUI_GameOver.Build(totalGameTime.Elapsed, level + 1);
         }
 
         internal static void PlayerDamaged(int value)
@@ -116,10 +153,14 @@ namespace StardustDefender.Controllers
                     spawnedEnemies++;
                 }
 
+                if (gameEnded) { return; }
+
                 if (SDifficultyController.EnemySpawnDelay > 0)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(SDifficultyController.EnemySpawnDelay));
                 }
+
+                if (gameEnded) { return; }
             }
 
             // Win
@@ -163,7 +204,7 @@ namespace StardustDefender.Controllers
         }
         private static void CreateEnemy()
         {
-            _ = SDifficultyController.GetRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));
+            _ = SDifficultyController.CreateRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));
         }
 
         private static void ResetPlayerPosition()

@@ -54,6 +54,15 @@ namespace StardustDefender.Managers
                 effect.Draw();
             }
         }
+        internal static void Reset()
+        {
+            foreach (SEffect effect in Effects)
+            {
+                effectPool.ReturnToPool(effect);
+            }
+
+            effects.Clear();
+        }
 
         internal static SEffect Create<T>() where T : SEffectTemplate
         {
@@ -86,7 +95,7 @@ namespace StardustDefender.Managers
         }
         internal static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation, Color color)
         {
-            SEffect effect = effectPool.Get() ?? new();
+            SEffect effect = effectPool.Get(type) ?? new();
 
             effect.Build(templates[type].Animation);
             effect.Position = position;

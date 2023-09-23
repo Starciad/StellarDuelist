@@ -30,6 +30,15 @@ namespace StardustDefender.Managers
                 entities[i]?.Draw();
             }
         }
+        internal static void Reset()
+        {
+            foreach (SEntity entity in Entities)
+            {
+                entityPool.ReturnToPool(entity);
+            }
+
+            entities.Clear();
+        }
 
         internal static T Create<T>() where T : SEntity
         {
@@ -62,7 +71,7 @@ namespace StardustDefender.Managers
         }
         internal static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get();
+            SEntity entity = entityPool.Get(type);
 
             if (entity == null)
             {

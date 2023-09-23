@@ -13,7 +13,7 @@ namespace StardustDefender.Entities.Aliens
 {
     internal class SAlienEntity : SAlien
     {
-        private readonly float movementDelay = 10f;
+        private readonly float movementDelay = 0.5f; // 10f
         private float currentMovementDelay = 0f;
         private int movementDirection = 1;
 

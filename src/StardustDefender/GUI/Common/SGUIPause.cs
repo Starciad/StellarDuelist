@@ -16,8 +16,8 @@ namespace StardustDefender.GUI.Common
         private Texture2D pausedTexture;
 
         // Transform
-        private Vector2 pausedTextureOrigin;
         private Vector2 backgroundTextureOrigin;
+        private Vector2 pausedTextureOrigin;
 
         protected override void OnInitialize()
         {
@@ -39,6 +39,7 @@ namespace StardustDefender.GUI.Common
         {
             SGraphics.SpriteBatch.Draw(this.backgroundTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, new Color(1, 11, 25, 180), 0f, this.backgroundTextureOrigin, new Vector2(1.5f), SpriteEffects.None, 0f);
             SGraphics.SpriteBatch.Draw(this.pausedTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, Color.White, 0f, this.pausedTextureOrigin, new Vector2(1f), SpriteEffects.None, 0f);
+            
         }
     }
 }

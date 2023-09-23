@@ -18,7 +18,6 @@ namespace StardustDefender.Entities
         // General
         internal string Id { get; set; }
         internal Teams Team { get; set; }
-        internal bool Destroyed { get; private set; }
 
         // Texture 
         internal SAnimation Animation { get; private set; }
@@ -73,8 +72,6 @@ namespace StardustDefender.Entities
         }
         internal void Destroy()
         {
-            Destroyed = true;
-
             SEntityManager.Remove(this);
             OnDestroy();
         }

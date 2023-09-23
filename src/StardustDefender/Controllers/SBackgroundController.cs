@@ -14,7 +14,7 @@ namespace StardustDefender.Controllers
 
         internal static void BeginRun()
         {
-            GlobalParallaxFactor = 1f;
+            Reset();
 
             foreach (Type type in SGame.Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(SBackground))))
             {
@@ -24,15 +24,17 @@ namespace StardustDefender.Controllers
                 backgrounds.Add(background);
             }
         }
-
         internal static void Update()
         {
             backgrounds.ForEach(x => x.Update());
         }
-
         internal static void Draw()
         {
             backgrounds.ForEach(x => x.Draw());
+        }
+        internal static void Reset()
+        {
+            GlobalParallaxFactor = 1f;
         }
     }
 }

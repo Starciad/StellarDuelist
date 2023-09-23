@@ -32,6 +32,7 @@ namespace StardustDefender.Engine
 
             // TEXTS
             ("TEXTS_Paused", "UI/Texts/Paused"),
+            ("TEXTS_GameOver", "UI/Texts/GameOver"),
 
             // ITEMS
             ("ITEMS_Upgrades", "Items/Upgrades"),
