@@ -1,13 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-
-using StardustDefender.Controllers;
-using StardustDefender.Effects.Common;
-using StardustDefender.Engine;
-
+﻿using StardustDefender.Engine;
 using StardustDefender.Enums;
-using StardustDefender.Managers;
-
-using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Aliens
 {
@@ -29,30 +21,24 @@ namespace StardustDefender.Entities.Aliens
             // AI
             MovementUpdate();
         }
-        protected override void OnDamaged(int value)
+        public override void Reset()
         {
-            _ = SSounds.Play("Damage_02");
-            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
+            Animation.Reset();
+            Animation.Clear();
 
-            _ = Task.Run(async () =>
-            {
-                Color = Color.Red;
-                await Task.Delay(235);
-                Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
+            Animation.SetMode(AnimationMode.Forward);
+            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
+            Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+            Animation.AddSprite(STextures.GetSprite(32, 1, 0));
+            Animation.SetDuration(3f);
 
-            _ = SSounds.Play("Explosion_01");
-            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+            Team = Teams.Bad;
 
-            // Drop
-            if (SRandom.Chance(20, 100))
-            {
-                _ = SItemsManager.GetRandomItem(WorldPosition);
-            }
+            HealthValue = 2;
+            DamageValue = 1;
+
+            ChanceOfKnockback = 50;
+            KnockbackForce = 1;
         }
 
         private void MovementUpdate()
@@ -78,26 +64,6 @@ namespace StardustDefender.Entities.Aliens
                         break;
                 }
             }
-        }
-
-        public override void Reset()
-        {
-            Animation.Reset();
-            Animation.Clear();
-
-            Animation.SetMode(AnimationMode.Forward);
-            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            Animation.AddSprite(STextures.GetSprite(32, 0, 0));
-            Animation.AddSprite(STextures.GetSprite(32, 1, 0));
-            Animation.SetDuration(3f);
-
-            Team = Teams.Bad;
-
-            HealthValue = 2;
-            DamageValue = 1;
-
-            ChanceOfKnockback = 50;
-            KnockbackForce = 1;
         }
     }
 }

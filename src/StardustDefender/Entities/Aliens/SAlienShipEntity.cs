@@ -37,30 +37,24 @@ namespace StardustDefender.Entities.Aliens
             MovementUpdate();
             ShootUpdate();
         }
-        protected override void OnDamaged(int value)
+        public override void Reset()
         {
-            _ = SSounds.Play("Damage_02");
-            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
+            Animation.Reset();
+            Animation.Clear();
 
-            _ = Task.Run(async () =>
-            {
-                Color = Color.Red;
-                await Task.Delay(235);
-                Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
+            Animation.SetMode(AnimationMode.Forward);
+            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
+            Animation.AddSprite(STextures.GetSprite(32, 0, 1));
+            Animation.AddSprite(STextures.GetSprite(32, 1, 1));
+            Animation.SetDuration(3f);
 
-            _ = SSounds.Play("Explosion_01");
-            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+            Team = Teams.Bad;
 
-            // Drop
-            if (SRandom.Chance(25, 100))
-            {
-                _ = SItemsManager.GetRandomItem(WorldPosition);
-            }
+            HealthValue = 3;
+            DamageValue = 1;
+
+            ChanceOfKnockback = 0;
+            KnockbackForce = 0;
         }
 
         private void MovementUpdate()
@@ -112,26 +106,6 @@ namespace StardustDefender.Entities.Aliens
                 LifeTime = SHOOT_LIFE_TIME,
                 Range = 10f
             });
-        }
-
-        public override void Reset()
-        {
-            Animation.Reset();
-            Animation.Clear();
-
-            Animation.SetMode(AnimationMode.Forward);
-            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            Animation.AddSprite(STextures.GetSprite(32, 0, 1));
-            Animation.AddSprite(STextures.GetSprite(32, 1, 1));
-            Animation.SetDuration(3f);
-
-            Team = Teams.Bad;
-
-            HealthValue = 3;
-            DamageValue = 1;
-
-            ChanceOfKnockback = 0;
-            KnockbackForce = 0;
         }
     }
 }
