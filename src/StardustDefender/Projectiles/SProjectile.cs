@@ -21,9 +21,12 @@ namespace StardustDefender.Projectiles
         public float Range { get; private set; }
         public int Damage { get; private set; }
         public float LifeTime { get; private set; }
+        public Color Color { get; private set; }
 
         internal void Build(SProjectileBuilder builder)
         {
+            Reset();
+
             Team = builder.Team;
             SpriteId = builder.SpriteId;
             Position = builder.Position;
@@ -31,11 +34,16 @@ namespace StardustDefender.Projectiles
             Range = builder.Range;
             Damage = builder.Damage;
             LifeTime = builder.LifeTime;
+            Color = builder.Color;
+
+            Animation.AddSprite(STextures.GetSprite(32, SpriteId, 0));
+            Animation.Initialize();
         }
 
         internal void Initialize()
         {
-            Reset();
+            Animation.SetMode(AnimationMode.Disable);
+            Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
         }
         internal void Update()
         {
@@ -45,7 +53,7 @@ namespace StardustDefender.Projectiles
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(Animation.Texture, Position, Animation.TextureRectangle, Color.White, 0f, new Vector2(Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(Animation.Texture, Position, Animation.TextureRectangle, Color, 0f, new Vector2(Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
@@ -56,11 +64,6 @@ namespace StardustDefender.Projectiles
         {
             Animation.Reset();
             Animation.Clear();
-
-            Animation.SetMode(AnimationMode.Disable);
-            Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
-            Animation.AddSprite(STextures.GetSprite(32, SpriteId, 0));
-            Animation.Initialize();
 
             Team = Teams.None;
             SpriteId = 0;
@@ -92,7 +95,7 @@ namespace StardustDefender.Projectiles
             {
                 if (entity == null ||
                     entity?.Team == Team ||
-                    Vector2.Distance(Position, entity.WorldPosition) > Range)
+                    Vector2.Distance(Position, entity.WorldPosition) > entity.CollisionRange)
                 {
                     continue;
                 }

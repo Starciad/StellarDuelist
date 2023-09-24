@@ -20,7 +20,7 @@ namespace StardustDefender.Entities
         internal Teams Team { get; set; }
 
         // Texture 
-        internal SAnimation Animation { get; private set; }
+        internal SAnimation Animation { get; set; }
         internal Color Color { get; set; }
 
         // Transform
@@ -33,9 +33,15 @@ namespace StardustDefender.Entities
         internal int HealthValue { get; set; }
         internal int DamageValue { get; set; }
 
+        // Collision
+        internal float CollisionRange { get; set; }
+
         // Knockback
         internal int ChanceOfKnockback { get; set; }
         internal int KnockbackForce { get; set; }
+
+        // Settings
+        internal bool IsInvincible { get; set; }
 
         public SEntity()
         {
@@ -46,12 +52,14 @@ namespace StardustDefender.Entities
             Scale = Vector2.One;
             Rotation = 0f;
 
+            CollisionRange = 22f;
             Color = Color.White;
-            Animation = new();
         }
 
         internal void Initialize()
         {
+            Animation = new();
+
             OnAwake();
             OnStart();
 
@@ -68,6 +76,9 @@ namespace StardustDefender.Entities
         }
         internal void Draw()
         {
+            if (Animation.IsEmpty())
+                return;
+
             SGraphics.SpriteBatch.Draw(Animation.Texture, WorldPosition, Animation.TextureRectangle, Color, Rotation, new Vector2(32 / 2), Scale, SpriteEffects.None, 0f);
         }
         internal void Destroy()
@@ -80,6 +91,9 @@ namespace StardustDefender.Entities
 
         internal void Damage(int value)
         {
+            if (IsInvincible)
+                return;
+
             HealthValue -= value;
             OnDamaged(value);
 

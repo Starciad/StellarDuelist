@@ -1,4 +1,5 @@
 ﻿using StardustDefender.Collections;
+using StardustDefender.Items;
 using StardustDefender.Projectiles;
 
 using System.Collections.Generic;
@@ -14,16 +15,26 @@ namespace StardustDefender.Managers
 
         internal static void Update()
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            foreach (SProjectile projectile in Projectiles)
             {
-                projectiles[i].Update();
+                if (projectile == null)
+                {
+                    continue;
+                }
+
+                projectile?.Update();
             }
         }
         internal static void Draw()
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            foreach (SProjectile projectile in Projectiles)
             {
-                projectiles[i].Draw();
+                if (projectile == null)
+                {
+                    continue;
+                }
+
+                projectile?.Draw();
             }
         }
         internal static void Reset()

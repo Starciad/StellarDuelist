@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Collections;
+using StardustDefender.Effects;
 using StardustDefender.Entities;
 using StardustDefender.World;
 
@@ -18,16 +19,26 @@ namespace StardustDefender.Managers
 
         internal static void Update()
         {
-            for (int i = 0; i < entities.Count; i++)
+            foreach (SEntity entity in Entities)
             {
-                entities[i]?.Update();
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                entity.Update();
             }
         }
         internal static void Draw()
         {
-            for (int i = 0; i < entities.Count; i++)
+            foreach (SEntity entity in Entities)
             {
-                entities[i]?.Draw();
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                entity.Draw();
             }
         }
         internal static void Reset()

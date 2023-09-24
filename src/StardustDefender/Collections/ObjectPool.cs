@@ -21,6 +21,7 @@ namespace StardustDefender.Collections
                 if (objects.Count > 0)
                 {
                     target = objects.Dequeue();
+                    target.Reset();
                     return target;
                 }
             }

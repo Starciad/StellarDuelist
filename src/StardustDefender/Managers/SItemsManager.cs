@@ -36,14 +36,24 @@ namespace StardustDefender.Managers
         {
             foreach (SItem item in Items)
             {
-                item?.Update();
+                if (item == null)
+                {
+                    continue;
+                }
+
+                item.Update();
             }
         }
         internal static void Draw()
         {
             foreach (SItem item in Items)
             {
-                item?.Draw();
+                if (item == null)
+                {
+                    continue;
+                }
+
+                item.Draw();
             }
         }
         internal static void Reset()
@@ -56,7 +66,7 @@ namespace StardustDefender.Managers
             items.Clear();
         }
 
-        internal static SItem GetRandomItem(Vector2 position)
+        internal static SItem CreateRandomItem(Vector2 position)
         {
             return Create(templates.Keys.SelectRandom(), position);
         }

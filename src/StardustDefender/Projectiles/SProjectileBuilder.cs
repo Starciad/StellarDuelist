@@ -13,5 +13,11 @@ namespace StardustDefender.Projectiles
         public float Range { get; set; }
         public int Damage { get; set; }
         public float LifeTime { get; set; }
+        public Color Color { get; set; }
+
+        public SProjectileBuilder()
+        {
+            Color = Color.White;
+        }
     }
 }

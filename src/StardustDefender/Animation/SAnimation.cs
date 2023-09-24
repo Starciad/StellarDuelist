@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Enums;
 
+using System;
 using System.Collections.Generic;
 
 namespace StardustDefender.Animation
@@ -41,7 +42,10 @@ namespace StardustDefender.Animation
 
         internal void Initialize()
         {
-            this.textureRectangle = this.animationFrames[0];
+            if (animationFrames.Count > 0)
+            {
+                this.textureRectangle = this.animationFrames[0];
+            }
         }
         internal void Reset()
         {
@@ -94,11 +98,6 @@ namespace StardustDefender.Animation
         {
             this.texture = texture;
         }
-        internal void AddSprite(Rectangle rect)
-        {
-            this.animationFrames.Add(rect);
-        }
-
         internal void SetMode(AnimationMode mode)
         {
             this.mode = mode;
@@ -106,6 +105,23 @@ namespace StardustDefender.Animation
         internal void SetDuration(float delay)
         {
             this.animationDelay = delay;
+        }
+        internal void SetCurrentFrame(int frame)
+        {
+            animationCurrentFrame = Math.Clamp(frame, 0, animationFrames.Count - 1);
+        }
+
+        internal void AddSprite(Rectangle rect)
+        {
+            this.animationFrames.Add(rect);
+        }
+
+        internal bool IsEmpty()
+        {
+            if (Texture == null || TextureRectangle.IsEmpty)
+                return true;
+
+            return false;
         }
     }
 }

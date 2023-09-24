@@ -15,6 +15,7 @@ namespace StardustDefender.Engine
 
             // ENEMIES
             ("ENEMIES_Aliens", "Enemies/Aliens"),
+            ("ENEMIES_Bosses", "Enemies/Bosses"),
 
             // PROJECTILES
             ("PROJECTILES_Bullets", "Projectiles/Bullets"),
