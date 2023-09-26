@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using System;
+
 namespace StardustDefender.Core
 {
     internal static class SGraphics
@@ -9,6 +11,7 @@ namespace StardustDefender.Core
         public static GraphicsDevice GraphicsDevice => _graphicsDeviceManager.GraphicsDevice;
         public static RenderTarget2D DefaultRenderTarget => _defaultRenderTarget;
         public static SpriteBatch SpriteBatch => _spriteBatch;
+        public static TimeSpan FPS => TimeSpan.FromSeconds(1f / 60f);
 
         private static GraphicsDeviceManager _graphicsDeviceManager;
         private static GraphicsDevice _graphicsDevice;

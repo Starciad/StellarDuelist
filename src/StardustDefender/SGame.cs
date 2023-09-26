@@ -41,7 +41,7 @@ namespace StardustDefender
             // Settings
             this.IsMouseVisible = true;
             this.IsFixedTimeStep = true;
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
+            this.TargetElapsedTime = SGraphics.FPS;
         }
 
         protected override void Initialize()
