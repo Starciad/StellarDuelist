@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardustDefender.Camera;
 using StardustDefender.Controllers;
 using StardustDefender.Core;
+using StardustDefender.Enums;
 using StardustDefender.GUI.Common;
 using StardustDefender.Managers;
 
@@ -41,25 +42,6 @@ namespace StardustDefender
             this.IsMouseVisible = true;
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
-        }
-
-        protected override void OnActivated(object sender, EventArgs args)
-        {
-            if (SGameController.State == SGameState.Introduction)
-            {
-                return;
-            }
-
-            SGameController.SetGameState(SGameState.Running);
-        }
-        protected override void OnDeactivated(object sender, EventArgs args)
-        {
-            if (SGameController.State == SGameState.Introduction)
-            {
-                return;
-            }
-
-            SGameController.SetGameState(SGameState.Paused);
         }
 
         protected override void Initialize()
@@ -100,7 +82,7 @@ namespace StardustDefender
             SInput.Update();
 
             // Game
-            if (SGameController.State == SGameState.Running)
+            if (this.IsActive && SGameController.State == SGameState.Running)
             {
                 // Managers
                 SItemsManager.Update();
@@ -112,7 +94,7 @@ namespace StardustDefender
                 SLevelController.Update();
             }
 
-            if (SGameController.State != SGameState.Paused)
+            if (this.IsActive && SGameController.State != SGameState.Paused)
             {
                 SBackgroundController.Update();
             }

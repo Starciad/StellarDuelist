@@ -1,6 +1,6 @@
 ﻿namespace StardustDefender.Enums
 {
-    internal enum AnimationMode
+    internal enum SAnimationMode
     {
         Disable,
         Forward,

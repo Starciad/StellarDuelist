@@ -30,7 +30,7 @@ namespace StardustDefender.Items
         {
             this._template = template;
             this._animation = animation;
-            this._animation.SetMode(AnimationMode.Disable);
+            this._animation.SetMode(SAnimationMode.Disable);
 
             this.Position = position;
         }

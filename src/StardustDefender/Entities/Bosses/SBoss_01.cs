@@ -115,7 +115,7 @@ namespace StardustDefender.Entities.Bosses
             this.CollisionRange = 55f;
 
             // Team
-            this.Team = Teams.Bad;
+            this.Team = STeam.Bad;
 
             // States
             this.isDied = false;
@@ -138,10 +138,10 @@ namespace StardustDefender.Entities.Bosses
             this.A_Normal.Clear();
             this.A_Shoot.Clear();
 
-            this.A_Idle.SetMode(AnimationMode.Disable);
-            this.A_Intro.SetMode(AnimationMode.Once);
-            this.A_Normal.SetMode(AnimationMode.Disable);
-            this.A_Shoot.SetMode(AnimationMode.Once);
+            this.A_Idle.SetMode(SAnimationMode.Disable);
+            this.A_Intro.SetMode(SAnimationMode.Once);
+            this.A_Normal.SetMode(SAnimationMode.Disable);
+            this.A_Shoot.SetMode(SAnimationMode.Once);
 
             this.A_Intro.SetDuration(3f);
             this.A_Normal.SetDuration(1f);
@@ -256,7 +256,7 @@ namespace StardustDefender.Entities.Bosses
         private async Task StartShootingAsync()
         {
             this.A_Shoot.Reset();
-            this.A_Shoot.SetMode(AnimationMode.Once);
+            this.A_Shoot.SetMode(SAnimationMode.Once);
 
             this.state = State.SHOOTING;
             this.isShooting = true;
@@ -280,7 +280,7 @@ namespace StardustDefender.Entities.Bosses
                 SProjectileManager.Create(new()
                 {
                     SpriteId = 1,
-                    Team = Teams.Bad,
+                    Team = STeam.Bad,
                     Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
                     Speed = bulletSpeed,
                     Damage = this.DamageValue,

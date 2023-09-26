@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StardustDefender.Animation;
 using StardustDefender.Collections;
 using StardustDefender.Core;
-
 using StardustDefender.Enums;
 using StardustDefender.Managers;
 using StardustDefender.World;
@@ -17,7 +16,7 @@ namespace StardustDefender.Entities
     {
         // General
         internal string Id { get; set; }
-        internal Teams Team { get; set; }
+        internal STeam Team { get; set; }
 
         // Texture 
         internal SAnimation Animation { get; set; }
@@ -119,11 +118,11 @@ namespace StardustDefender.Entities
 
             switch (this.Team)
             {
-                case Teams.Good:
+                case STeam.Good:
                     this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + this.KnockbackForce);
                     break;
 
-                case Teams.Bad:
+                case STeam.Bad:
                     this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y - this.KnockbackForce);
                     break;
 

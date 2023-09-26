@@ -1,6 +1,6 @@
 ﻿namespace StardustDefender.Enums
 {
-    internal enum CardinalDirection
+    internal enum SCardinalDirection
     {
         North,
         South,

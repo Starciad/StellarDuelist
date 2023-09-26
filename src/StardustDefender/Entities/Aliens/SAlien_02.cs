@@ -71,13 +71,13 @@ namespace StardustDefender.Entities.Aliens
             this.Animation.Reset();
             this.Animation.Clear();
 
-            this.Animation.SetMode(AnimationMode.Forward);
+            this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             this.Animation.AddSprite(STextures.GetSprite(32, 0, 1));
             this.Animation.AddSprite(STextures.GetSprite(32, 1, 1));
             this.Animation.SetDuration(3f);
 
-            this.Team = Teams.Bad;
+            this.Team = STeam.Bad;
 
             this.HealthValue = 3;
             this.DamageValue = 1;
@@ -126,7 +126,7 @@ namespace StardustDefender.Entities.Aliens
             SProjectileManager.Create(new()
             {
                 SpriteId = 0,
-                Team = Teams.Bad,
+                Team = STeam.Bad,
                 Position = new(this.WorldPosition.X, this.WorldPosition.Y + 16f),
                 Speed = new(0, SHOOT_SPEED),
                 Damage = this.DamageValue,

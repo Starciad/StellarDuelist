@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Camera;
+using StardustDefender.Enums;
 using StardustDefender.Entities.Player;
 using StardustDefender.GUI.Common;
 using StardustDefender.Managers;

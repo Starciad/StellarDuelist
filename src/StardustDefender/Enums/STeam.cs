@@ -1,6 +1,6 @@
 ﻿namespace StardustDefender.Enums
 {
-    internal enum Teams
+    internal enum STeam
     {
         None,
         Good,

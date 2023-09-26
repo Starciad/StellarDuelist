@@ -77,7 +77,7 @@ namespace StardustDefender.Entities.Player
             this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
 
             // Team
-            this.Team = Teams.Good;
+            this.Team = STeam.Good;
 
             // Attributes
             this.HealthValue = 3;
@@ -141,7 +141,7 @@ namespace StardustDefender.Entities.Player
                 SProjectileManager.Create(new()
                 {
                     SpriteId = 0,
-                    Team = Teams.Good,
+                    Team = STeam.Good,
                     Position = new(this.WorldPosition.X, this.WorldPosition.Y - 32f),
                     Speed = new(0, this.BulletSpeed * -1),
                     Damage = this.DamageValue,

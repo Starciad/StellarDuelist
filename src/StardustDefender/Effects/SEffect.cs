@@ -22,7 +22,7 @@ namespace StardustDefender.Effects
         {
             this._animation = animation;
             this._animation.OnAnimationFinished += OnFinished;
-            this._animation.SetMode(AnimationMode.Once);
+            this._animation.SetMode(SAnimationMode.Once);
         }
         internal void Update()
         {

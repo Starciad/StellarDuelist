@@ -24,12 +24,12 @@ namespace StardustDefender.Animation
             }
         }
 
-        internal AnimationMode Mode => this.mode;
+        internal SAnimationMode Mode => this.mode;
 
         private Texture2D texture;
         private Rectangle textureRectangle;
 
-        private AnimationMode mode;
+        private SAnimationMode mode;
 
         private float animationDelay = 1f;
         private float animationCurrentDelay = 0f;
@@ -49,7 +49,7 @@ namespace StardustDefender.Animation
         }
         internal void Reset()
         {
-            this.mode = AnimationMode.Disable;
+            this.mode = SAnimationMode.Disable;
 
             this.animationDelay = 1f;
             this.animationCurrentDelay = 0f;
@@ -58,7 +58,7 @@ namespace StardustDefender.Animation
         }
         internal void Update()
         {
-            if (this.mode == AnimationMode.Disable)
+            if (this.mode == SAnimationMode.Disable)
             {
                 return;
             }
@@ -78,9 +78,9 @@ namespace StardustDefender.Animation
                 else
                 {
                     this.animationCurrentFrame = 0;
-                    if (this.mode == AnimationMode.Once)
+                    if (this.mode == SAnimationMode.Once)
                     {
-                        this.mode = AnimationMode.Disable;
+                        this.mode = SAnimationMode.Disable;
                         OnAnimationFinished?.Invoke();
                         return;
                     }
@@ -98,7 +98,7 @@ namespace StardustDefender.Animation
         {
             this.texture = texture;
         }
-        internal void SetMode(AnimationMode mode)
+        internal void SetMode(SAnimationMode mode)
         {
             this.mode = mode;
         }

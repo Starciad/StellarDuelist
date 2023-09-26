@@ -67,13 +67,13 @@ namespace StardustDefender.Entities.Aliens
             this.Animation.Reset();
             this.Animation.Clear();
 
-            this.Animation.SetMode(AnimationMode.Forward);
+            this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
             this.Animation.AddSprite(STextures.GetSprite(32, 1, 0));
             this.Animation.SetDuration(3f);
 
-            this.Team = Teams.Bad;
+            this.Team = STeam.Bad;
 
             this.HealthValue = 2;
             this.DamageValue = 1;

@@ -14,7 +14,7 @@ namespace StardustDefender.Projectiles
     {
         internal SAnimation Animation { get; private set; } = new();
 
-        public Teams Team { get; private set; }
+        public STeam Team { get; private set; }
         public int SpriteId { get; private set; }
         public Vector2 Position { get; private set; }
         public Vector2 Speed { get; private set; }
@@ -42,7 +42,7 @@ namespace StardustDefender.Projectiles
 
         internal void Initialize()
         {
-            this.Animation.SetMode(AnimationMode.Disable);
+            this.Animation.SetMode(SAnimationMode.Disable);
             this.Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
         }
         internal void Update()
@@ -65,7 +65,7 @@ namespace StardustDefender.Projectiles
             this.Animation.Reset();
             this.Animation.Clear();
 
-            this.Team = Teams.None;
+            this.Team = STeam.None;
             this.SpriteId = 0;
             this.Position = Vector2.Zero;
             this.Speed = Vector2.Zero;

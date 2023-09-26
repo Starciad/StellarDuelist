@@ -1,17 +1,11 @@
-﻿using StardustDefender.Managers;
+﻿using StardustDefender.Enums;
+using StardustDefender.Managers;
 
 using System;
 
 namespace StardustDefender.Controllers
 {
-    internal enum SGameState
-    {
-        Introduction,
-        Running,
-        Paused,
-        Victory,
-        GameOver
-    }
+
 
     internal static class SGameController
     {
