@@ -1,31 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace StardustDefender.Collections
 {
-    internal sealed class ObjectPool<T> where T : IPoolableObject, new()
+    internal sealed class ObjectPool<TObject> where TObject : IPoolableObject
     {
-        private readonly Queue<T> objects = new();
+        private readonly Dictionary<Type, Queue<TObject>> _objectPool = new();
 
-        public T Get()
+        public TObject Get<TKey>() where TKey : TObject
         {
-            T target = default;
-
-            if (objects.Count > 0)
-            {
-                target = objects.Dequeue();
-                target.Reset();
-
-                return target;
-            }
-            else
-            {
-                return target;
-            }
+            return Get(typeof(TKey));
         }
-        public void ReturnToPool(T obj)
+        public TObject Get(Type keyType)
         {
-            obj.Reset();
-            objects.Enqueue(obj);
+            TObject target = default;
+
+            if (this._objectPool.ContainsKey(keyType))
+            {
+                Queue<TObject> objects = this._objectPool[keyType];
+                if (objects.Count > 0)
+                {
+                    target = objects.Dequeue();
+                    target.Reset();
+                    return target;
+                }
+            }
+
+            return target;
+        }
+
+        public void ReturnToPool(TObject value)
+        {
+            value.Reset();
+            Type valueType = value.GetType();
+
+            if (!this._objectPool.ContainsKey(valueType))
+            {
+                this._objectPool.Add(valueType, new());
+            }
+
+            this._objectPool[valueType].Enqueue(value);
         }
     }
 }

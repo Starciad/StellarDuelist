@@ -2,16 +2,15 @@
 
 using StardustDefender.Controllers;
 
-namespace StardustDefender.Entities.Aliens
+namespace StardustDefender.Entities.Bosses
 {
-    internal abstract class SAlien : SEntity
+    internal abstract class SBossEntity : SEntity
     {
         protected void CollideWithPlayer()
         {
-            if (Vector2.Distance(SLevelController.Player.WorldPosition, WorldPosition) < 32)
+            if (Vector2.Distance(SLevelController.Player.WorldPosition, this.WorldPosition) < 64)
             {
                 SLevelController.Player.Damage(1);
-                Destroy();
             }
         }
     }

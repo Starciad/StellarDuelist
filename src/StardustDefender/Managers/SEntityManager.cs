@@ -18,17 +18,36 @@ namespace StardustDefender.Managers
 
         internal static void Update()
         {
-            for (int i = 0; i < entities.Count; i++)
+            foreach (SEntity entity in Entities)
             {
-                entities[i]?.Update();
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                entity.Update();
             }
         }
         internal static void Draw()
         {
-            for (int i = 0; i < entities.Count; i++)
+            foreach (SEntity entity in Entities)
             {
-                entities[i]?.Draw();
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                entity.Draw();
             }
+        }
+        internal static void Reset()
+        {
+            foreach (SEntity entity in Entities)
+            {
+                entityPool.ReturnToPool(entity);
+            }
+
+            entities.Clear();
         }
 
         internal static T Create<T>() where T : SEntity
@@ -62,26 +81,21 @@ namespace StardustDefender.Managers
         }
         internal static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get();
-
-            if (entity == null)
-            {
-                entity = (SEntity)Activator.CreateInstance(type);
-                entity.Initialize();
-            }
+            SEntity entity = entityPool.Get(type) ?? (SEntity)Activator.CreateInstance(type);
 
             entity.LocalPosition = position;
             entity.WorldPosition = SWorld.GetWorldPosition(position);
             entity.Scale = scale;
             entity.Rotation = rotation;
 
+            entity.Initialize();
             entities.Add(entity);
             return entity;
         }
 
         internal static void Remove(SEntity entity)
         {
-            entities.Remove(entity);
+            _ = entities.Remove(entity);
             entityPool.ReturnToPool(entity);
         }
     }

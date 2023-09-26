@@ -1,12 +1,10 @@
-﻿using StardustDefender.Effects;
-using StardustDefender.Entities;
-using StardustDefender.World;
+﻿using Microsoft.Xna.Framework;
+
+using StardustDefender.Collections;
+using StardustDefender.Effects;
 
 using System;
 using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
-using StardustDefender.Collections;
 using System.Linq;
 
 namespace StardustDefender.Managers
@@ -37,7 +35,9 @@ namespace StardustDefender.Managers
             foreach (SEffect effect in Effects)
             {
                 if (effect == null)
+                {
                     continue;
+                }
 
                 effect.Update();
             }
@@ -47,10 +47,21 @@ namespace StardustDefender.Managers
             foreach (SEffect effect in Effects)
             {
                 if (effect == null)
+                {
                     continue;
+                }
 
                 effect.Draw();
             }
+        }
+        internal static void Reset()
+        {
+            foreach (SEffect effect in Effects)
+            {
+                effectPool.ReturnToPool(effect);
+            }
+
+            effects.Clear();
         }
 
         internal static SEffect Create<T>() where T : SEffectTemplate
@@ -84,7 +95,7 @@ namespace StardustDefender.Managers
         }
         internal static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation, Color color)
         {
-            SEffect effect = effectPool.Get() ?? new();
+            SEffect effect = effectPool.Get(type) ?? new();
 
             effect.Build(templates[type].Animation);
             effect.Position = position;
@@ -98,7 +109,7 @@ namespace StardustDefender.Managers
 
         internal static void Remove(SEffect effect)
         {
-            effects.Remove(effect);
+            _ = effects.Remove(effect);
             effectPool.ReturnToPool(effect);
         }
     }

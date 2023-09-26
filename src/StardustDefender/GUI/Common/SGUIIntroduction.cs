@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Camera;
 using StardustDefender.Controllers;
-using StardustDefender.Engine;
+using StardustDefender.Core;
+using StardustDefender.Enums;
 using StardustDefender.Extensions;
 
 using System.Text;
@@ -19,20 +21,22 @@ namespace StardustDefender.GUI.Common
         private SpriteFont font;
 
         // Message
-        private StringBuilder introString;
-        private Vector2 introStringMeasure;
+        private readonly StringBuilder S_Intro = new();
+        private Vector2 S_IntroMeasure;
 
         protected override void OnInitialize()
         {
-            logo = STextures.GetTexture("UI_Logo");
-            font = SFonts.Impact;
+            this.logo = STextures.GetTexture("UI_Logo");
+            this.font = SFonts.Impact;
 
-            introString = new("Press Any Key to Continue!");
-            introStringMeasure = font.MeasureString(introString);
+            _ = this.S_Intro.Clear();
+            _ = this.S_Intro.Append("Press Space to Continue!");
+
+            this.S_IntroMeasure = this.font.MeasureString(this.S_Intro);
         }
         protected override void OnUpdate()
         {
-            if (SInput.Keyboard.GetPressedKeyCount() > 0)
+            if (SInput.Started(Keys.Space))
             {
                 SGameController.SetGameState(SGameState.Running);
                 SLevelController.RunLevel();
@@ -41,8 +45,8 @@ namespace StardustDefender.GUI.Common
         }
         protected override void OnDraw()
         {
-            SGraphics.SpriteBatch.Draw(logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(font, introString, new Vector2(SCamera.Center.X - introStringMeasure.X / 1.5f, SCamera.Center.Y + 96), Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, this.logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Intro, new Vector2(SCamera.Center.X - (this.S_IntroMeasure.X / 1.5f), SCamera.Center.Y + 96), Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
         }
     }
 }

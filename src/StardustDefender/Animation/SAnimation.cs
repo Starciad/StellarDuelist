@@ -1,39 +1,35 @@
-﻿using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Enums;
+
+using System;
+using System.Collections.Generic;
 
 namespace StardustDefender.Animation
 {
     internal sealed class SAnimation
     {
-        internal Texture2D Texture => texture;
-        internal Rectangle TextureRectangle => textureRectangle;
+        internal Texture2D Texture => this.texture;
+        internal Rectangle TextureRectangle => this.textureRectangle;
 
         internal float SpriteScale
         {
             get
             {
-                float width = TextureRectangle.Width;
-                float height = TextureRectangle.Height;
+                float width = this.TextureRectangle.Width;
+                float height = this.TextureRectangle.Height;
 
-                if (width == height)
-                {
-                    return width;
-                }
-
-                return (width + height) / 2;
+                return width == height ? width : (width + height) / 2;
             }
         }
 
-        internal AnimationMode Mode => mode;
+        internal SAnimationMode Mode => this.mode;
 
         private Texture2D texture;
         private Rectangle textureRectangle;
 
-        private AnimationMode mode;
+        private SAnimationMode mode;
 
         private float animationDelay = 1f;
         private float animationCurrentDelay = 0f;
@@ -46,66 +42,83 @@ namespace StardustDefender.Animation
 
         internal void Initialize()
         {
-            textureRectangle = animationFrames[0];
+            if (this.animationFrames.Count > 0)
+            {
+                this.textureRectangle = this.animationFrames[0];
+            }
         }
         internal void Reset()
         {
-            mode = AnimationMode.Disable;
+            this.mode = SAnimationMode.Disable;
 
-            animationDelay = 1f;
-            animationCurrentDelay = 0f;
+            this.animationDelay = 1f;
+            this.animationCurrentDelay = 0f;
 
-            animationFrames.Clear();
-            animationCurrentFrame = 0;
+            this.animationCurrentFrame = 0;
         }
         internal void Update()
         {
-            if (mode == AnimationMode.Disable)
-                return;
-
-            if (animationCurrentDelay < animationDelay)
+            if (this.mode == SAnimationMode.Disable)
             {
-                animationCurrentDelay += 0.1f;
+                return;
+            }
+
+            if (this.animationCurrentDelay < this.animationDelay)
+            {
+                this.animationCurrentDelay += 0.1f;
             }
             else
             {
-                animationCurrentDelay = 0;
+                this.animationCurrentDelay = 0;
 
-                if (animationCurrentFrame < animationFrames.Count - 1)
+                if (this.animationCurrentFrame < this.animationFrames.Count - 1)
                 {
-                    animationCurrentFrame++;
+                    this.animationCurrentFrame++;
                 }
                 else
                 {
-                    animationCurrentFrame = 0;
-                    if (mode == AnimationMode.Once)
+                    this.animationCurrentFrame = 0;
+                    if (this.mode == SAnimationMode.Once)
                     {
-                        mode = AnimationMode.Disable;
+                        this.mode = SAnimationMode.Disable;
                         OnAnimationFinished?.Invoke();
                         return;
                     }
                 }
             }
 
-            textureRectangle = animationFrames[animationCurrentFrame];
+            this.textureRectangle = this.animationFrames[this.animationCurrentFrame];
+        }
+        internal void Clear()
+        {
+            this.animationFrames.Clear();
         }
 
         internal void SetTexture(Texture2D texture)
         {
             this.texture = texture;
         }
-        internal void AddSprite(Rectangle rect)
-        {
-            animationFrames.Add(rect);
-        }
-
-        internal void SetMode(AnimationMode mode)
+        internal void SetMode(SAnimationMode mode)
         {
             this.mode = mode;
         }
         internal void SetDuration(float delay)
         {
-            animationDelay = delay;
+            this.animationDelay = delay;
+        }
+        internal void SetCurrentFrame(int frame)
+        {
+            this.animationCurrentFrame = Math.Clamp(frame, 0, this.animationFrames.Count - 1);
+        }
+
+        internal void AddSprite(Rectangle rect)
+        {
+            this.animationFrames.Add(rect);
+        }
+
+        internal bool IsEmpty()
+        {
+            return this.Texture == null || this.TextureRectangle.IsEmpty;
         }
     }
 }

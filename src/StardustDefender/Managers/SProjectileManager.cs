@@ -7,27 +7,48 @@ namespace StardustDefender.Managers
 {
     internal static class SProjectileManager
     {
+        public static SProjectile[] Projectiles => projectiles.ToArray();
+
         private static readonly ObjectPool<SProjectile> projectilePool = new();
         private static readonly List<SProjectile> projectiles = new();
 
         internal static void Update()
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            foreach (SProjectile projectile in Projectiles)
             {
-                projectiles[i].Update();
+                if (projectile == null)
+                {
+                    continue;
+                }
+
+                projectile?.Update();
             }
         }
         internal static void Draw()
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            foreach (SProjectile projectile in Projectiles)
             {
-                projectiles[i].Draw();
+                if (projectile == null)
+                {
+                    continue;
+                }
+
+                projectile?.Draw();
             }
+        }
+        internal static void Reset()
+        {
+            foreach (SProjectile projectile in Projectiles)
+            {
+                projectilePool.ReturnToPool(projectile);
+            }
+
+            projectiles.Clear();
         }
 
         internal static void Create(SProjectileBuilder builder)
         {
-            SProjectile projectile = projectilePool.Get();
+            SProjectile projectile = projectilePool.Get<SProjectile>();
 
             if (projectile == null)
             {
@@ -40,7 +61,7 @@ namespace StardustDefender.Managers
         }
         internal static void Remove(SProjectile projectile)
         {
-            projectiles.Remove(projectile);
+            _ = projectiles.Remove(projectile);
             projectilePool.ReturnToPool(projectile);
         }
     }

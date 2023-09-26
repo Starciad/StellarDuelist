@@ -1,6 +1,4 @@
-﻿using StardustDefender.Controllers;
-
-using StardustDefender.Engine;
+﻿using StardustDefender.Core;
 using StardustDefender.Entities.Player;
 
 namespace StardustDefender.Items.Common
@@ -9,8 +7,8 @@ namespace StardustDefender.Items.Common
     {
         protected override void OnInitialize()
         {
-            Animation.SetTexture(STextures.GetTexture("Upgrades"));
-            Animation.AddSprite(STextures.GetSprite(SPRITE_SCALE, 1, 0));
+            this.Animation.SetTexture(STextures.GetTexture("ITEMS_Upgrades"));
+            this.Animation.AddSprite(STextures.GetSprite(SPRITE_SCALE, 1, 0));
         }
 
         protected override void OnEffect(SPlayerEntity player)

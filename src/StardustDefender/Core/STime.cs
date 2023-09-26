@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class STime
     {
@@ -9,8 +9,15 @@ namespace StardustDefender.Engine
 
         internal static void Update(GameTime updateTime = null, GameTime drawTime = null)
         {
-            if (updateTime != null) UpdateTime = updateTime;
-            if (drawTime != null) DrawTime = drawTime;
+            if (updateTime != null)
+            {
+                UpdateTime = updateTime;
+            }
+
+            if (drawTime != null)
+            {
+                DrawTime = drawTime;
+            }
         }
     }
 }

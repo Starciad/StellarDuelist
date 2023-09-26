@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.World;
-using StardustDefender.Engine;
-using StardustDefender.Managers;
-using StardustDefender.Enums;
-
-using System;
 using StardustDefender.Animation;
 using StardustDefender.Collections;
+using StardustDefender.Core;
+using StardustDefender.Enums;
+using StardustDefender.Managers;
+using StardustDefender.World;
+
+using System;
 
 namespace StardustDefender.Entities
 {
@@ -16,11 +16,10 @@ namespace StardustDefender.Entities
     {
         // General
         internal string Id { get; set; }
-        internal Teams Team { get; set; }
-        internal bool Destroyed { get; private set; }
+        internal STeam Team { get; set; }
 
         // Texture 
-        internal SAnimation Animation { get; private set; }
+        internal SAnimation Animation { get; set; }
         internal Color Color { get; set; }
 
         // Transform
@@ -33,47 +32,58 @@ namespace StardustDefender.Entities
         internal int HealthValue { get; set; }
         internal int DamageValue { get; set; }
 
+        // Collision
+        internal float CollisionRange { get; set; }
+
         // Knockback
         internal int ChanceOfKnockback { get; set; }
         internal int KnockbackForce { get; set; }
 
+        // Settings
+        internal bool IsInvincible { get; set; }
+
         public SEntity()
         {
-            Id = Guid.NewGuid().ToString();
+            this.Id = Guid.NewGuid().ToString();
 
-            LocalPosition = Vector2.Zero;
-            WorldPosition = Vector2.Zero;
-            Scale = Vector2.One;
-            Rotation = 0f;
+            this.LocalPosition = Vector2.Zero;
+            this.WorldPosition = Vector2.Zero;
+            this.Scale = Vector2.One;
+            this.Rotation = 0f;
 
-            Color = Color.White;
-            Animation = new();
+            this.CollisionRange = 22f;
+            this.Color = Color.White;
         }
 
         internal void Initialize()
         {
+            this.Animation = new();
+
             OnAwake();
             OnStart();
 
-            Animation.Initialize();
+            this.Animation.Initialize();
         }
         internal void Update()
         {
-            Animation.Update();
+            this.Animation.Update();
 
-            WorldPosition = Vector2.Lerp(WorldPosition, SWorld.GetWorldPosition(LocalPosition), SWorld.SmoothScale);
-            LocalPosition = SWorld.Clamp(LocalPosition);
+            this.WorldPosition = Vector2.Lerp(this.WorldPosition, SWorld.GetWorldPosition(this.LocalPosition), SWorld.SmoothScale);
+            this.LocalPosition = SWorld.Clamp(this.LocalPosition);
 
             OnUpdate();
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(Animation.Texture, WorldPosition, Animation.TextureRectangle, Color, Rotation, new Vector2(32 / 2), Scale, SpriteEffects.None, 0f);
+            if (this.Animation.IsEmpty())
+            {
+                return;
+            }
+
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.WorldPosition, this.Animation.TextureRectangle, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
-            Destroyed = true;
-
             SEntityManager.Remove(this);
             OnDestroy();
         }
@@ -82,25 +92,38 @@ namespace StardustDefender.Entities
 
         internal void Damage(int value)
         {
-            HealthValue -= value;
+            if (this.IsInvincible)
+            {
+                return;
+            }
+
+            this.HealthValue -= value;
             OnDamaged(value);
 
-            if (HealthValue <= 0) Destroy();
-            else Knockback();
+            if (this.HealthValue <= 0)
+            {
+                Destroy();
+            }
+            else
+            {
+                Knockback();
+            }
         }
         private void Knockback()
         {
-            if (!SRandom.Chance(ChanceOfKnockback, 100))
-                return;
-
-            switch (Team)
+            if (!SRandom.Chance(this.ChanceOfKnockback, 100))
             {
-                case Teams.Good:
-                    LocalPosition = new(LocalPosition.X, LocalPosition.Y + KnockbackForce);
+                return;
+            }
+
+            switch (this.Team)
+            {
+                case STeam.Good:
+                    this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + this.KnockbackForce);
                     break;
 
-                case Teams.Bad:
-                    LocalPosition = new(LocalPosition.X, LocalPosition.Y - KnockbackForce);
+                case STeam.Bad:
+                    this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y - this.KnockbackForce);
                     break;
 
                 default:

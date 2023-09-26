@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Collections;
-using StardustDefender.Effects;
-using StardustDefender.Entities.Items;
 using StardustDefender.Extensions;
 using StardustDefender.Items;
 
@@ -10,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Managers
 {
     internal static class SItemsManager
     {
@@ -37,18 +35,37 @@ namespace StardustDefender.Controllers
         {
             foreach (SItem item in Items)
             {
-                item?.Update();
+                if (item == null)
+                {
+                    continue;
+                }
+
+                item.Update();
             }
         }
         internal static void Draw()
         {
             foreach (SItem item in Items)
             {
-                item?.Draw();
+                if (item == null)
+                {
+                    continue;
+                }
+
+                item.Draw();
             }
         }
+        internal static void Reset()
+        {
+            foreach (SItem item in Items)
+            {
+                itemPool.ReturnToPool(item);
+            }
 
-        internal static SItem GetRandomItem(Vector2 position)
+            items.Clear();
+        }
+
+        internal static SItem CreateRandomItem(Vector2 position)
         {
             return Create(templates.Keys.SelectRandom(), position);
         }
@@ -59,7 +76,7 @@ namespace StardustDefender.Controllers
         }
         internal static SItem Create(Type type, Vector2 position)
         {
-            SItem item = itemPool.Get() ?? new();
+            SItem item = itemPool.Get(type) ?? new();
             SItemTemplate template = templates[type];
 
             item.Build(template, template.Animation, position);
@@ -67,9 +84,10 @@ namespace StardustDefender.Controllers
             items.Add(item);
             return item;
         }
+
         internal static void Remove(SItem item)
         {
-            items.Remove(item);
+            _ = items.Remove(item);
         }
     }
 }

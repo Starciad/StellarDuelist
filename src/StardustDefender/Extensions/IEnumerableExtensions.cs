@@ -1,4 +1,4 @@
-﻿using StardustDefender.Engine;
+﻿using StardustDefender.Core;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +11,7 @@ namespace StardustDefender.Extensions
         {
             int count = values.Count();
 
-            if (count == 0)
-                return default;
-
-            if (count == 1)
-                return values.ElementAtOrDefault(0);
-
-            return values.ElementAtOrDefault(SRandom.Range(0, count));
+            return count == 0 ? default : count == 1 ? values.ElementAtOrDefault(0) : values.ElementAtOrDefault(SRandom.Range(0, count));
         }
     }
 }

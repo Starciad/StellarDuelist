@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SContent
     {

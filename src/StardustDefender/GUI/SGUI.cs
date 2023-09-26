@@ -10,26 +10,30 @@
         }
         internal void Update()
         {
-            if (!IsActive)
+            if (!this.IsActive)
+            {
                 return;
+            }
 
             OnUpdate();
         }
         internal void Draw()
         {
-            if (!IsActive)
+            if (!this.IsActive)
+            {
                 return;
+            }
 
             OnDraw();
         }
 
         internal void Enable()
         {
-            IsActive = true;
+            this.IsActive = true;
         }
         internal void Disable()
         {
-            IsActive = false;
+            this.IsActive = false;
         }
 
         protected virtual void OnInitialize() { return; }

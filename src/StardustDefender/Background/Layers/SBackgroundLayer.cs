@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Camera;
 using StardustDefender.Controllers;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 
 namespace StardustDefender.Background.Layers
 {
@@ -19,29 +19,29 @@ namespace StardustDefender.Background.Layers
 
         internal SBackgroundLayer(Texture2D texture, Rectangle textureRectangle, float parallaxFactor)
         {
-            Texture = texture;
-            TextureRectangle = textureRectangle;
-            ParallaxFactor = parallaxFactor;
+            this.Texture = texture;
+            this.TextureRectangle = textureRectangle;
+            this.ParallaxFactor = parallaxFactor;
 
-            initialY = (SScreen.Height / 2) - (TextureRectangle.Height / 2);
-            Position = new(SCamera.Center.X / 2, initialY);
+            this.initialY = (SScreen.Height / 2) - (this.TextureRectangle.Height / 2);
+            this.Position = new(SCamera.Center.X / 2, this.initialY);
         }
 
         internal void Update()
         {
-            finalParallaxFactor = ParallaxFactor * SBackgroundController.GlobalParallaxFactor;
-            Position = new(Position.X, Position.Y + finalParallaxFactor);
+            this.finalParallaxFactor = this.ParallaxFactor * SBackgroundController.GlobalParallaxFactor;
+            this.Position = new(this.Position.X, this.Position.Y + this.finalParallaxFactor);
 
-            if (Position.Y > initialY * 3)
+            if (this.Position.Y > this.initialY * 3)
             {
-                Position = new(Position.X, initialY);
+                this.Position = new(this.Position.X, this.initialY);
             }
         }
 
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(Texture, Position, TextureRectangle, Color.White);
-            SGraphics.SpriteBatch.Draw(Texture, Position - new Vector2(0, TextureRectangle.Height), TextureRectangle, Color.White);
+            SGraphics.SpriteBatch.Draw(this.Texture, this.Position, this.TextureRectangle, Color.White);
+            SGraphics.SpriteBatch.Draw(this.Texture, this.Position - new Vector2(0, this.TextureRectangle.Height), this.TextureRectangle, Color.White);
         }
     }
 }

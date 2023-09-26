@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardustDefender.Camera;
 using StardustDefender.Extensions;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SFade
     {

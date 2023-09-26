@@ -1,9 +1,9 @@
-﻿using StardustDefender.Background.Layers;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using StardustDefender.Background.Layers;
 
 using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace StardustDefender.Background
 {
@@ -18,11 +18,11 @@ namespace StardustDefender.Background
         }
         internal void Update()
         {
-            layers.ForEach(x => x.Update());
+            this.layers.ForEach(x => x.Update());
         }
         internal void Draw()
         {
-            layers.ForEach(x => x.Draw());
+            this.layers.ForEach(x => x.Draw());
         }
 
         protected void SetTexture(Texture2D texture)
@@ -31,7 +31,7 @@ namespace StardustDefender.Background
         }
         protected void AddLayer(Rectangle textureRectangle, float parallaxFactor)
         {
-            layers.Add(new(texture, textureRectangle, parallaxFactor));
+            this.layers.Add(new(this.texture, textureRectangle, parallaxFactor));
         }
 
         protected abstract void OnProcess();

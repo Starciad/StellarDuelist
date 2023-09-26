@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
-using System.Collections.Generic;
-
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SFonts
     {

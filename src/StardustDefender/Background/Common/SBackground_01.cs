@@ -1,4 +1,4 @@
-﻿using StardustDefender.Engine;
+﻿using StardustDefender.Core;
 
 namespace StardustDefender.Background.Common
 {
@@ -6,7 +6,7 @@ namespace StardustDefender.Background.Common
     {
         protected override void OnProcess()
         {
-            SetTexture(STextures.GetTexture("Background_01"));
+            SetTexture(STextures.GetTexture("BACKGROUND_01"));
             AddLayer(STextures.GetSprite(SScreen.Width / 2, SScreen.Height / 2, 0, 0), 0f);
             AddLayer(STextures.GetSprite(SScreen.Width / 2, SScreen.Height / 2, 0, 1), 0.2f);
             AddLayer(STextures.GetSprite(SScreen.Width / 2, SScreen.Height / 2, 0, 2), 0.4f);

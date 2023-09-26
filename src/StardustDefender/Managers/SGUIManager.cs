@@ -1,5 +1,4 @@
-﻿using StardustDefender.Controllers;
-using StardustDefender.GUI;
+﻿using StardustDefender.GUI;
 
 using System;
 using System.Collections.Generic;
@@ -24,12 +23,16 @@ namespace StardustDefender.Managers
         internal static void Update()
         {
             foreach (SGUI gui in _GUIs.Values)
+            {
                 gui.Update();
+            }
         }
         internal static void Draw()
         {
             foreach (SGUI gui in _GUIs.Values)
+            {
                 gui.Draw();
+            }
         }
 
         internal static T Get<T>() where T : SGUI
@@ -47,7 +50,9 @@ namespace StardustDefender.Managers
         internal static void DisableAll()
         {
             foreach (SGUI gui in _GUIs.Values)
+            {
                 gui.Disable();
+            }
         }
     }
 }
