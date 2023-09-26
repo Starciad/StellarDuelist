@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StardustDefender.Collections;
+
+using System;
 
 namespace StardustDefender.Engine
 {
@@ -20,11 +22,13 @@ namespace StardustDefender.Engine
 
         internal STimer()
         {
-            SetDelay(0f);
+            this.target = 0f;
+            this.current = 0f;
         }
         internal STimer(float value)
         {
-            SetDelay(value);
+            this.target = value;
+            this.current = value;
         }
 
         internal void Start()
@@ -54,6 +58,8 @@ namespace StardustDefender.Engine
                 this.current = 0;
                 this.active = false;
             }
+
+            this.current = Math.Clamp(this.current, 0, this.target);
         }
 
         internal void Enable()
@@ -68,7 +74,7 @@ namespace StardustDefender.Engine
         internal void SetDelay(float value)
         {
             this.target = value;
-            this.current = value;
+            this.current = Math.Clamp(this.current, 0, this.target);
         }
 
         public override string ToString()

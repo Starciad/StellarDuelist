@@ -16,31 +16,36 @@ namespace StardustDefender.Entities.Player
     internal sealed class SPlayerEntity : SEntity
     {
         public bool CanShoot => shootTimer.IsFinished;
-        public float ShootDelay { get; set; } = 3f;
-        public float BulletLifeTime { get; set; } = 3f;
-        public float BulletSpeed { get; set; } = 3f;
+        public float BulletLifeTime { get; set; }
+        public float BulletSpeed { get; set; }
+        public float ShootDelay
+        {
+            get
+            {
+                return this.shootDelay;
+            }
+
+            set
+            {
+                this.shootDelay = value;
+                shootTimer.SetDelay(value);
+            }
+        }
 
         private readonly STimer shootTimer = new();
+        private float shootDelay;
 
         protected override void OnAwake()
         {
-            Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
-            Animation.AddSprite(STextures.GetSprite(32, 0, 0));
-
-            Team = Teams.Good;
-
-            HealthValue = 3;
-            DamageValue = 1;
-
-            ChanceOfKnockback = 0;
-            KnockbackForce = 0;
-
-            shootTimer.SetDelay(ShootDelay);
-            shootTimer.Start();
+            Reset();
+        }
+        protected override void OnStart()
+        {
+            shootTimer.Restart();
         }
         protected override void OnUpdate()
         {
-            ShootUpdate();
+            TimersUpdate();
             InputsUpdate();
         }
         protected override void OnDamaged(int value)
@@ -66,24 +71,38 @@ namespace StardustDefender.Entities.Player
 
             _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
         }
+
         public override void Reset()
         {
+            // Animations
+            Animation.Reset();
+            Animation.Clear();
+            Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
+            Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+
+            // Team
+            Team = Teams.Good;
+
+            // Attributes
             HealthValue = 3;
             DamageValue = 1;
-
             ChanceOfKnockback = 0;
             KnockbackForce = 0;
 
             ShootDelay = 3f;
-            BulletLifeTime = 3f;
-            BulletSpeed = 3f;
+            BulletLifeTime = 3.6f;
+            BulletSpeed = 3.6f;
+
+            // Timers
+            shootTimer.SetDelay(ShootDelay);
         }
 
-        private void ShootUpdate()
+        private void TimersUpdate()
         {
             shootTimer.Update();
         }
 
+        #region INPUTS
         private void InputsUpdate()
         {
             PauseInputUpdate();
@@ -113,13 +132,13 @@ namespace StardustDefender.Entities.Player
         }
         private void ShootInputUpdate()
         {
+            if (!CanShoot)
+            {
+                return;
+            }
+
             if (SInput.Performed(Keys.Space))
             {
-                if (!CanShoot)
-                {
-                    return;
-                }
-
                 this.shootTimer.Restart();
                 _ = SSounds.Play("Shoot_01");
 
@@ -135,5 +154,6 @@ namespace StardustDefender.Entities.Player
                 });
             }
         }
+        #endregion
     }
 }

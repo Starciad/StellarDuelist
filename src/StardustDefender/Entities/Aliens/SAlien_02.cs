@@ -1,7 +1,13 @@
-﻿using StardustDefender.Core;
-
+﻿using StardustDefender.Controllers;
+using StardustDefender.Core;
+using StardustDefender.Effects.Common;
+using StardustDefender.Engine;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
+
+using Microsoft.Xna.Framework;
+
+using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Aliens
 {
@@ -10,11 +16,8 @@ namespace StardustDefender.Entities.Aliens
         private const float SHOOT_SPEED = 2f;
         private const float SHOOT_LIFE_TIME = 25f;
 
-        private readonly float movementDelay = 20f;
-        private readonly float shootDelay = 25f;
-
-        private float currentMovementDelay = 0f;
-        private float currentShootDelay = 0f;
+        private readonly STimer movementTimer = new(20f);
+        private readonly STimer shootTimer = new(25f);
 
         private int movementDirection = 1;
 
@@ -22,14 +25,46 @@ namespace StardustDefender.Entities.Aliens
         {
             Reset();
         }
+        protected override void OnStart()
+        {
+            movementTimer.Restart();
+            shootTimer.Restart();
+        }
         protected override void OnUpdate()
         {
+            TimersUpdate();
+
             // Behaviour
             CollideWithPlayer();
 
             // AI
             MovementUpdate();
             ShootUpdate();
+        }
+        protected override void OnDamaged(int value)
+        {
+            _ = SSounds.Play("Damage_02");
+            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
+
+            _ = Task.Run(async () =>
+            {
+                Color = Color.Red;
+                await Task.Delay(235);
+                Color = Color.White;
+            });
+        }
+        protected override void OnDestroy()
+        {
+            SLevelController.EnemyKilled();
+
+            _ = SSounds.Play("Explosion_01");
+            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+
+            // Drop
+            if (SRandom.Chance(20, 100))
+            {
+                _ = SItemsManager.CreateRandomItem(WorldPosition);
+            }
         }
         public override void Reset()
         {
@@ -51,15 +86,17 @@ namespace StardustDefender.Entities.Aliens
             KnockbackForce = 0;
         }
 
+        private void TimersUpdate()
+        {
+            movementTimer.Update();
+            shootTimer.Update();
+        }
+
         private void MovementUpdate()
         {
-            if (this.currentMovementDelay < this.movementDelay)
+            if (this.movementTimer.IsFinished)
             {
-                this.currentMovementDelay += 0.1f;
-            }
-            else
-            {
-                this.currentMovementDelay = 0;
+                this.movementTimer.Restart();
                 switch (this.movementDirection)
                 {
                     case 1:
@@ -77,13 +114,9 @@ namespace StardustDefender.Entities.Aliens
         }
         private void ShootUpdate()
         {
-            if (this.currentShootDelay < this.shootDelay)
+            if (this.shootTimer.IsFinished)
             {
-                this.currentShootDelay += 0.1f;
-            }
-            else
-            {
-                this.currentShootDelay = 0;
+                this.shootTimer.Restart();
                 Shoot();
             }
         }

@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 using System.Threading.Tasks;
 using System;
+using StardustDefender.Engine;
+using System.Timers;
 
 namespace StardustDefender.Entities.Bosses
 {
@@ -31,13 +33,10 @@ namespace StardustDefender.Entities.Bosses
         private readonly SAnimation A_Shoot = new();
 
         private const float HORIZONTAL_SPEED = 0.1f;
-        private const float VERTICAL_SPEED = 0.1f;
+        private const float VERTICAL_SPEED = 0.01f;
 
-        private const float BULLET_SPEED = 2.5f;
+        private const float BULLET_SPEED = 2f;
         private const float BULLET_LIFE_TIME = 40f;
-        
-        private const float DELAY_TO_CHANGE_VERTICAL_DIRECTION = 15f;
-        private const float DELAY_FOR_SHOOTING = 20f;
 
         private State state;
 
@@ -48,8 +47,8 @@ namespace StardustDefender.Entities.Bosses
         private bool horizontalDirection;
         private bool verticalDirection;
 
-        private float currentDelayToChangeVerticalDirection;
-        private float currentDelayForShooting;
+        private readonly STimer verticalDirectionTimer = new(10f);
+        private readonly STimer shootTimer = new(20f);
 
         private Vector2 previousLocalPosition;
 
@@ -60,17 +59,19 @@ namespace StardustDefender.Entities.Bosses
         }
         protected override void OnStart()
         {
+            verticalDirectionTimer.Restart();
+            shootTimer.Restart();
+
             BOSS_Boost();
             BOSS_Introduction();
         }
         protected override void OnUpdate()
         {
-            // Animation
             AnimationUpdate();
 
-            // IA
             if (canMove)
             {
+                this.verticalDirectionTimer.Update();
                 HorizontalMovementUpdate();
                 VerticalMovementUpdate();
                 previousLocalPosition = LocalPosition;
@@ -78,6 +79,7 @@ namespace StardustDefender.Entities.Bosses
 
             if (canShoot)
             {
+                this.shootTimer.Update();
                 ShootUpdate();
             }
         }
@@ -108,9 +110,6 @@ namespace StardustDefender.Entities.Bosses
         }
         public override void Reset()
         {
-            // Position 
-            LocalPosition = new(LocalPosition.X - 3.5f, LocalPosition.Y - 2.5f);
-
             // Attributes
             HealthValue = 20;
             DamageValue = 1;
@@ -123,10 +122,6 @@ namespace StardustDefender.Entities.Bosses
             isDied = false;
             verticalDirection = false;
             horizontalDirection = false;
-
-            // Counters
-            currentDelayToChangeVerticalDirection = 0;
-            currentDelayForShooting = 0;
 
             // Animation
             texture = STextures.GetTexture("ENEMIES_Bosses");
@@ -170,9 +165,6 @@ namespace StardustDefender.Entities.Bosses
             A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
 
             Animation = A_Normal;
-
-            // Start
-            OnStart();
         }
 
         // Actions
@@ -236,37 +228,29 @@ namespace StardustDefender.Entities.Bosses
             // MOVING
             if (verticalDirection)
             {
-                LocalPosition = Vector2.Lerp(LocalPosition, new(LocalPosition.X, LocalPosition.Y + VERTICAL_SPEED), 0.1f);
+                LocalPosition = new(LocalPosition.X, LocalPosition.Y + VERTICAL_SPEED);
             }
             else
             {
-                LocalPosition = Vector2.Lerp(LocalPosition, new(LocalPosition.X, LocalPosition.Y - VERTICAL_SPEED), 0.1f);
+                LocalPosition = new(LocalPosition.X, LocalPosition.Y - VERTICAL_SPEED);
             }
 
             // CHANGE DIRECTION
-            if (currentDelayToChangeVerticalDirection < DELAY_TO_CHANGE_VERTICAL_DIRECTION)
+            if (this.verticalDirectionTimer.IsFinished)
             {
-                currentDelayToChangeVerticalDirection += 0.1f;
-            }
-            else
-            {
-                currentDelayToChangeVerticalDirection = 0f;
+                this.verticalDirectionTimer.Restart();
                 verticalDirection = !verticalDirection;
             }
         }
         private void ShootUpdate()
         {
-            if (isShooting)
+            if (this.isShooting)
                 return;
 
             // Update Delay counters
-            if (currentDelayForShooting < DELAY_FOR_SHOOTING)
+            if (this.shootTimer.IsFinished)
             {
-                currentDelayForShooting += 0.1f;
-            }
-            else
-            {
-                currentDelayForShooting = 0f;
+                
                 _ = Task.Run(StartShootingAsync);
             }
         }
@@ -280,13 +264,12 @@ namespace StardustDefender.Entities.Bosses
         // Actions
         private async Task StartShootingAsync()
         {
-            A_Shoot.Reset();
-            A_Shoot.SetMode(AnimationMode.Once);
+            this.A_Shoot.Reset();
+            this.A_Shoot.SetMode(AnimationMode.Once);
 
             this.state = State.SHOOTING;
-
-            isShooting = true;
-            canMove = false;
+            this.isShooting = true;
+            this.canMove = false;
 
             await Task.Delay(TimeSpan.FromSeconds(0.5f));
 
@@ -319,10 +302,11 @@ namespace StardustDefender.Entities.Bosses
                 await Task.Delay(SRandom.Range(50, 100));
             }
 
-            isShooting = false;
-            canMove = true;
-
+            this.isShooting = false;
+            this.canMove = true;
             this.state = State.NORMAL;
+
+            this.shootTimer.Restart();
         }
     }
 }

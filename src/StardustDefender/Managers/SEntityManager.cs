@@ -82,19 +82,14 @@ namespace StardustDefender.Managers
         }
         internal static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get(type);
-
-            if (entity == null)
-            {
-                entity = (SEntity)Activator.CreateInstance(type);
-                entity.Initialize();
-            }
+            SEntity entity = entityPool.Get(type) ?? (SEntity)Activator.CreateInstance(type);
 
             entity.LocalPosition = position;
             entity.WorldPosition = SWorld.GetWorldPosition(position);
             entity.Scale = scale;
             entity.Rotation = rotation;
 
+            entity.Initialize();
             entities.Add(entity);
             return entity;
         }
