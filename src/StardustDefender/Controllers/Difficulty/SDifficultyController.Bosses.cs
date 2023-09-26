@@ -8,7 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 
 namespace StardustDefender.Controllers
 {

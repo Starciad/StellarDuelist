@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SRandom
     {

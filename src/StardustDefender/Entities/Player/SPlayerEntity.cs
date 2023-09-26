@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Controllers;
 using StardustDefender.Effects.Common;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
 

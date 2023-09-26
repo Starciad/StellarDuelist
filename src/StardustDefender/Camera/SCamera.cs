@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Engine;
+using StardustDefender.Core;
 
 namespace StardustDefender.Camera
 {

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SSounds
     {

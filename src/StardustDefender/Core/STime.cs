@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class STime
     {

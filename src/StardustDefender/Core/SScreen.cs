@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     internal static class SScreen
     {

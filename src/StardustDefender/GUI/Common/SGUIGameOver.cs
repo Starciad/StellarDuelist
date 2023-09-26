@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Camera;
 using StardustDefender.Controllers;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 using StardustDefender.Extensions;
 
 using System.Text;

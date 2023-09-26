@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StardustDefender.Animation;
 using StardustDefender.Collections;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 
 using StardustDefender.Enums;
 using StardustDefender.Managers;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace StardustDefender.Engine
+namespace StardustDefender.Core
 {
     /// <summary>
     /// Static wrapper of engine input information.

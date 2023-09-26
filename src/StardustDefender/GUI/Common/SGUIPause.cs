@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Camera;
 using StardustDefender.Controllers;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 using StardustDefender.Extensions;
 
 namespace StardustDefender.GUI.Common

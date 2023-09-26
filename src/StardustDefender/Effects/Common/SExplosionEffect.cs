@@ -1,4 +1,4 @@
-﻿using StardustDefender.Engine;
+﻿using StardustDefender.Core;
 
 namespace StardustDefender.Effects.Common
 {

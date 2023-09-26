@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Camera;
-using StardustDefender.Engine;
+using StardustDefender.Core;
 using StardustDefender.Entities;
 using StardustDefender.Entities.Bosses;
 using StardustDefender.Entities.Player;
