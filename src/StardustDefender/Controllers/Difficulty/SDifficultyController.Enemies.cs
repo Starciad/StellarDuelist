@@ -17,7 +17,7 @@ namespace StardustDefender.Controllers
         private static readonly Dictionary<Type, float> enemies = new()
         {
             [typeof(SAlien_01)] = 0f,
-            [typeof(SAlien_02)] = 2f,
+            [typeof(SAlien_02)] = 3f,
         };
 
         internal static SEntity CreateRandomEnemy(Vector2 position)

@@ -1,7 +1,6 @@
 ﻿using StardustDefender.Controllers;
 using StardustDefender.Effects.Common;
 using StardustDefender.Engine;
-using StardustDefender.Entities.Player;
 using StardustDefender.Managers;
 using StardustDefender.Enums;
 using StardustDefender.Animation;
@@ -34,10 +33,10 @@ namespace StardustDefender.Entities.Bosses
         private const float HORIZONTAL_SPEED = 0.1f;
         private const float VERTICAL_SPEED = 0.1f;
 
-        private const float BULLET_SPEED = 1.5f;
+        private const float BULLET_SPEED = 2.5f;
         private const float BULLET_LIFE_TIME = 40f;
         
-        private const float DELAY_TO_CHANGE_VERTICAL_DIRECTION = 5f;
+        private const float DELAY_TO_CHANGE_VERTICAL_DIRECTION = 15f;
         private const float DELAY_FOR_SHOOTING = 20f;
 
         private State state;
@@ -61,6 +60,7 @@ namespace StardustDefender.Entities.Bosses
         }
         protected override void OnStart()
         {
+            BOSS_Boost();
             BOSS_Introduction();
         }
         protected override void OnUpdate()
@@ -108,6 +108,9 @@ namespace StardustDefender.Entities.Bosses
         }
         public override void Reset()
         {
+            // Position 
+            LocalPosition = new(LocalPosition.X - 3.5f, LocalPosition.Y - 2.5f);
+
             // Attributes
             HealthValue = 20;
             DamageValue = 1;
@@ -118,6 +121,8 @@ namespace StardustDefender.Entities.Bosses
 
             // States
             isDied = false;
+            verticalDirection = false;
+            horizontalDirection = false;
 
             // Counters
             currentDelayToChangeVerticalDirection = 0;
@@ -170,7 +175,11 @@ namespace StardustDefender.Entities.Bosses
             OnStart();
         }
 
-        // Animations
+        // Actions
+        private void BOSS_Boost()
+        {
+            HealthValue *= SLevelController.Player.DamageValue;
+        }
         private void BOSS_Introduction()
         {
             _ = Task.Run(async () =>
@@ -281,7 +290,7 @@ namespace StardustDefender.Entities.Bosses
 
             await Task.Delay(TimeSpan.FromSeconds(0.5f));
 
-            int shotBurstCount = SRandom.Range(5, 15);
+            int shotBurstCount = SRandom.Range(15, 30);
             for (int i = 0; i < shotBurstCount; i++)
             {
                 if (isDied)
@@ -305,8 +314,9 @@ namespace StardustDefender.Entities.Bosses
                     Range = 10f,
                     Color = new Color(255, 0, 0, 255),
                 });
+                _ = SSounds.Play("Shoot_05");
 
-                await Task.Delay(TimeSpan.FromSeconds(SRandom.Range(0, 1)));
+                await Task.Delay(SRandom.Range(50, 100));
             }
 
             isShooting = false;

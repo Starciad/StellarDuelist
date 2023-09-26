@@ -17,7 +17,7 @@ namespace StardustDefender.Entities.Player
         internal bool CanShoot => this.currentShootDelay == 0;
         public float ShootDelay { get; set; } = 3f;
         public float BulletLifeTime { get; set; } = 3f;
-        public float BulletSpeed { get; set; } = 3f; // 3f
+        public float BulletSpeed { get; set; } = 3f;
 
         private float currentShootDelay;
 
@@ -99,7 +99,7 @@ namespace StardustDefender.Entities.Player
             MovementInputUpdate();
             ShootInputUpdate();
         }
-        private void PauseInputUpdate()
+        private static void PauseInputUpdate()
         {
             if (SInput.Started(Keys.P))
             {

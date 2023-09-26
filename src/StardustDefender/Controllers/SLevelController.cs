@@ -12,7 +12,6 @@ using StardustDefender.World;
 
 using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Controllers
@@ -23,12 +22,15 @@ namespace StardustDefender.Controllers
         internal static int PlayerCumulativeDamage => playerCumulativeDamage;
         internal static int Level => level;
 
-        // Entities
-        private static SPlayerEntity player;
-        private static SBossEntity boss;
-
         // Consts
         private const int ENEMY_SPAWN_RANGE = 4;
+
+        // Entities
+        private static SPlayerEntity player;
+
+        // Entities (Boss)
+        private static Type bossTypeSelected;
+        private static bool bossDead;
 
         // Position
         private static Vector2 centerPosition;
@@ -36,8 +38,8 @@ namespace StardustDefender.Controllers
         private static Vector2 enemyPosition;
         private static Vector2 bossPosition;
 
-        private static Vector2 minDespawnLimit;
-        private static Vector2 maxDespawnLimit;
+        private static Vector2 minEntityDespawnLimit;
+        private static Vector2 maxEntityDespawnLimit;
 
         // Counters
         private static int level = 0;
@@ -46,7 +48,6 @@ namespace StardustDefender.Controllers
         private static int playerCumulativeDamage = 0;
 
         // States
-        private static bool bossDead;
         private static bool initialized;
         private static bool gameEnded;
 
@@ -61,10 +62,10 @@ namespace StardustDefender.Controllers
             centerPosition = SWorld.GetLocalPosition(SCamera.Center);
             playerPosition = new(centerPosition.X, centerPosition.Y + 4);
             enemyPosition = new(centerPosition.X, centerPosition.Y - 5);
-            bossPosition = new(centerPosition.X, centerPosition.Y - 2.5f);
+            bossPosition = new(centerPosition.X - 0.5f, centerPosition.Y - 2f);
 
-            minDespawnLimit = new(centerPosition.X - 10, centerPosition.Y - 5);
-            maxDespawnLimit = new(centerPosition.X + 10, centerPosition.Y + 5);
+            minEntityDespawnLimit = new(centerPosition.X - 10, centerPosition.Y - 5);
+            maxEntityDespawnLimit = new(centerPosition.X + 10, centerPosition.Y + 5);
         }
         internal static void BeginRun()
         {
@@ -96,10 +97,10 @@ namespace StardustDefender.Controllers
                     continue;
                 }
 
-                if (entity.LocalPosition.X < minDespawnLimit.X ||
-                    entity.LocalPosition.Y < minDespawnLimit.Y ||
-                    entity.LocalPosition.X > maxDespawnLimit.X ||
-                    entity.LocalPosition.Y > maxDespawnLimit.Y)
+                if (entity.LocalPosition.X < minEntityDespawnLimit.X ||
+                    entity.LocalPosition.Y < minEntityDespawnLimit.Y ||
+                    entity.LocalPosition.X > maxEntityDespawnLimit.X ||
+                    entity.LocalPosition.Y > maxEntityDespawnLimit.Y)
                 {
                     if (entity is SPlayerEntity)
                     {
@@ -114,10 +115,10 @@ namespace StardustDefender.Controllers
             // Items
             foreach (SItem item in SItemsManager.Items)
             {
-                if (item.Position.X < minDespawnLimit.X * SWorld.GridScale ||
-                    item.Position.Y < minDespawnLimit.Y * SWorld.GridScale ||
-                    item.Position.X > maxDespawnLimit.X * SWorld.GridScale ||
-                    item.Position.Y > maxDespawnLimit.Y * SWorld.GridScale)
+                if (item.Position.X < minEntityDespawnLimit.X * SWorld.GridScale ||
+                    item.Position.Y < minEntityDespawnLimit.Y * SWorld.GridScale ||
+                    item.Position.X > maxEntityDespawnLimit.X * SWorld.GridScale ||
+                    item.Position.Y > maxEntityDespawnLimit.Y * SWorld.GridScale)
                 {
                     SItemsManager.Remove(item);
                 }
@@ -157,12 +158,11 @@ namespace StardustDefender.Controllers
         internal static void BossKilled()
         {
             bossDead = true;
-            boss = null;
         }
 
         private static async Task RunLevelAsync()
         {
-            // Game
+            #region LEVEL LOOP
             while (enemiesKilled < SDifficultyController.TotalEnemyCount)
             {
                 if (spawnedEnemies < SDifficultyController.TotalEnemyCount)
@@ -182,12 +182,15 @@ namespace StardustDefender.Controllers
             }
 
             await Task.Delay(TimeSpan.FromSeconds(1f));
-
-            // Boss
-            if (TryCreateBoss())
+            #endregion
+            
+            #region BOSS BATTLE
+            if (TrySelectingRandomBoss())
             {
                 SFade.FadeIn(Color.White, 0.5f);
-                await Task.Delay(TimeSpan.FromSeconds(1.5f));
+                await Task.Delay(TimeSpan.FromSeconds(1f));
+                CreateBoss();
+                await Task.Delay(TimeSpan.FromSeconds(1f));
                 SFade.FadeOut(0.05f);
 
                 while (!bossDead)
@@ -197,17 +200,22 @@ namespace StardustDefender.Controllers
 
                 await Task.Delay(TimeSpan.FromSeconds(3.5f));
             }
+            #endregion
 
-            // Win
+            #region VICTORY
             await LevelTransitionAsync();
             SDifficultyController.Next();
+            #endregion
 
-            // Reset
+            #region LEVEL RESET
             level++;
             ResetLevelInfos();
+            #endregion
 
-            // Next level (Loop)
+            #region NEXT LEVEL (RECURSION)
             RunLevel();
+            #endregion
+
             await Task.CompletedTask;
         }
         private static async Task LevelTransitionAsync()
@@ -237,18 +245,26 @@ namespace StardustDefender.Controllers
         {
             _ = SDifficultyController.CreateRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));
         }
-        private static bool TryCreateBoss()
+        private static void CreateBoss()
         {
-            if (SDifficultyController.TryCreateRandomBoss(bossPosition, out SBossEntity value))
-            {
-                boss = value;
-                bossDead = false;
+            if (bossTypeSelected == null)
+                return;
 
+            _ = SDifficultyController.CreateBossOfType(bossTypeSelected, bossPosition);
+            bossDead = false;
+        }
+
+        private static bool TrySelectingRandomBoss()
+        {
+            if (SDifficultyController.TryGetRandomBossType(out Type bossType))
+            {
+                bossTypeSelected = bossType;
                 return true;
             }
 
             return false;
         }
+        
 
         private static void ResetPlayerPosition()
         {

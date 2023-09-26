@@ -1,48 +1,51 @@
 ﻿using StardustDefender.Entities.Bosses;
 using StardustDefender.Entities.Player;
-using StardustDefender.Entities;
 using StardustDefender.Managers;
 using StardustDefender.Extensions;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
+using StardustDefender.Engine;
 
 namespace StardustDefender.Controllers
 {
     internal static partial class SDifficultyController
     {
-        // <Type, (difficultyRate, levelRequired, spawnCheckAction)>
-        private static readonly Dictionary<Type, (float, int, Func<SPlayerEntity, bool>)> bosses = new()
+        private static float delayForNextBoss = 3;
+        private static float currentDelayForNextBoss = 0;
+
+        private static readonly Dictionary<Type, Func<SPlayerEntity, bool>> bosses = new()
         {
-            [typeof(SBoss_01)] = (5f, 2, new Func<SPlayerEntity, bool>(Boss01_Checker)),
+            [typeof(SBoss_01)] = new Func<SPlayerEntity, bool>(Boss01_Checker),
         };
 
-        internal static bool TryCreateRandomBoss(Vector2 position, out SBossEntity value)
+        internal static bool TryGetRandomBossType(out Type bossType)
         {
-            Type targetType = GetRandomBossType();
+            // === DEBUG (FORCE A BOSS TO APPEAR) ===
+            // bossType = typeof(SBoss_01);
+            // return true;
 
-            if (targetType == null)
+            // === APPLY DELAY ===
+            if (currentDelayForNextBoss > 0)
             {
-                value = default;
+                currentDelayForNextBoss--;
+                bossType = default;
                 return false;
             }
 
-            value = (SBossEntity)SEntityManager.Create(targetType, position);
-            return true;
+            // === GAME (SELECT A BOSS BASED ON VARIOUS CONDITIONS) ===
+            bossType = bosses.Where(x => x.Value.Invoke(SLevelController.Player)).SelectRandom().Key;
+            return bossType != null;
         }
-        private static Type GetRandomBossType()
+        internal static SBossEntity CreateBossOfType(Type bossType, Vector2 position)
         {
-            return typeof(SBoss_01);
+            delayForNextBoss = SRandom.Range(3, 7);
+            currentDelayForNextBoss = delayForNextBoss;
 
-            /*
-            return bosses.Where(x => x.Value.Item1 <= difficultyRate)
-                         .Where(x => x.Value.Item2 >= SLevelController.Level)
-                         .Where(x => x.Value.Item3.Invoke(SLevelController.Player))
-                         .SelectRandom().Key;
-            */
+            return (SBossEntity)SEntityManager.Create(bossType, position);
         }
 
         #region BOSS CHECKERS
@@ -51,7 +54,8 @@ namespace StardustDefender.Controllers
 
         private static bool Boss01_Checker(SPlayerEntity player)
         {
-            return true;
+            return (difficultyRate >= 2.5f && SLevelController.Level >= 5) &&
+                   (player.BulletSpeed >= 3.6f && player.BulletLifeTime >= 3.6f);
         }
         #endregion
     }
