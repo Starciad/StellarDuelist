@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Controllers;
-using StardustDefender.Effects.Common;
-using StardustDefender.Core;
-using StardustDefender.Managers;
-
-using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Aliens
 {
@@ -13,7 +8,7 @@ namespace StardustDefender.Entities.Aliens
     {
         protected void CollideWithPlayer()
         {
-            if (Vector2.Distance(SLevelController.Player.WorldPosition, WorldPosition) < 32)
+            if (Vector2.Distance(SLevelController.Player.WorldPosition, this.WorldPosition) < 32)
             {
                 SLevelController.Player.Damage(1);
                 Destroy();

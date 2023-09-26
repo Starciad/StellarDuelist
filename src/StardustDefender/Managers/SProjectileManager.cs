@@ -1,5 +1,4 @@
 ﻿using StardustDefender.Collections;
-using StardustDefender.Items;
 using StardustDefender.Projectiles;
 
 using System.Collections.Generic;

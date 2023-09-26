@@ -14,7 +14,7 @@ namespace StardustDefender.Collections
         public TObject Get(Type keyType)
         {
             TObject target = default;
-            
+
             if (this._objectPool.ContainsKey(keyType))
             {
                 Queue<TObject> objects = this._objectPool[keyType];
@@ -34,7 +34,7 @@ namespace StardustDefender.Collections
             value.Reset();
             Type valueType = value.GetType();
 
-            if (!_objectPool.ContainsKey(valueType))
+            if (!this._objectPool.ContainsKey(valueType))
             {
                 this._objectPool.Add(valueType, new());
             }

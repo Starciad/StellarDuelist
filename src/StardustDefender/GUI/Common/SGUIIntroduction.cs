@@ -28,8 +28,8 @@ namespace StardustDefender.GUI.Common
             this.logo = STextures.GetTexture("UI_Logo");
             this.font = SFonts.Impact;
 
-            this.S_Intro.Clear();
-            this.S_Intro.Append("Press Space to Continue!");
+            _ = this.S_Intro.Clear();
+            _ = this.S_Intro.Append("Press Space to Continue!");
 
             this.S_IntroMeasure = this.font.MeasureString(this.S_Intro);
         }

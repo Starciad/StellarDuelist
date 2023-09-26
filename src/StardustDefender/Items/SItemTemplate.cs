@@ -22,7 +22,7 @@ namespace StardustDefender.Items
         internal void Initialize()
         {
             OnInitialize();
-            Animation.Initialize();
+            this.Animation.Initialize();
         }
         internal void ApplyEffect()
         {

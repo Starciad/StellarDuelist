@@ -17,7 +17,7 @@ namespace StardustDefender.Projectiles
 
         public SProjectileBuilder()
         {
-            Color = Color.White;
+            this.Color = Color.White;
         }
     }
 }

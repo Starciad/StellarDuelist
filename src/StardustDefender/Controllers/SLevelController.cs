@@ -3,7 +3,6 @@
 using StardustDefender.Camera;
 using StardustDefender.Core;
 using StardustDefender.Entities;
-using StardustDefender.Entities.Bosses;
 using StardustDefender.Entities.Player;
 using StardustDefender.GUI.Common;
 using StardustDefender.Items;
@@ -171,19 +170,21 @@ namespace StardustDefender.Controllers
                     spawnedEnemies++;
                 }
 
-                if (gameEnded) { return; }
+                if (gameEnded)
+                { return; }
 
                 if (SDifficultyController.EnemySpawnDelay > 0)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(SDifficultyController.EnemySpawnDelay));
                 }
 
-                if (gameEnded) { return; }
+                if (gameEnded)
+                { return; }
             }
 
             await Task.Delay(TimeSpan.FromSeconds(1f));
             #endregion
-            
+
             #region BOSS BATTLE
             if (TrySelectingRandomBoss())
             {
@@ -248,7 +249,9 @@ namespace StardustDefender.Controllers
         private static void CreateBoss()
         {
             if (bossTypeSelected == null)
+            {
                 return;
+            }
 
             _ = SDifficultyController.CreateBossOfType(bossTypeSelected, bossPosition);
             bossDead = false;
@@ -264,7 +267,6 @@ namespace StardustDefender.Controllers
 
             return false;
         }
-        
 
         private static void ResetPlayerPosition()
         {

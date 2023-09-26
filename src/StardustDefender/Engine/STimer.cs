@@ -1,6 +1,4 @@
-﻿using StardustDefender.Collections;
-
-using System;
+﻿using System;
 
 namespace StardustDefender.Engine
 {
@@ -47,7 +45,9 @@ namespace StardustDefender.Engine
         internal void Update()
         {
             if (!this.active || !this.enable)
+            {
                 return;
+            }
 
             if (this.current > 0)
             {
@@ -64,11 +64,11 @@ namespace StardustDefender.Engine
 
         internal void Enable()
         {
-            enable = true;
+            this.enable = true;
         }
         internal void Disable()
         {
-            enable = false;
+            this.enable = false;
         }
 
         internal void SetDelay(float value)
@@ -79,7 +79,7 @@ namespace StardustDefender.Engine
 
         public override string ToString()
         {
-            return $"{current}/{target}";
+            return $"{this.current}/{this.target}";
         }
     }
 }

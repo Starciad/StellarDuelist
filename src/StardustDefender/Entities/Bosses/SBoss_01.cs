@@ -1,17 +1,16 @@
-﻿using StardustDefender.Controllers;
-using StardustDefender.Effects.Common;
-using StardustDefender.Core;
-using StardustDefender.Managers;
-using StardustDefender.Enums;
-using StardustDefender.Animation;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using System.Threading.Tasks;
-using System;
+using StardustDefender.Animation;
+using StardustDefender.Controllers;
+using StardustDefender.Core;
+using StardustDefender.Effects.Common;
 using StardustDefender.Engine;
-using System.Timers;
+using StardustDefender.Enums;
+using StardustDefender.Managers;
+
+using System;
+using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Bosses
 {
@@ -59,8 +58,8 @@ namespace StardustDefender.Entities.Bosses
         }
         protected override void OnStart()
         {
-            verticalDirectionTimer.Restart();
-            shootTimer.Restart();
+            this.verticalDirectionTimer.Restart();
+            this.shootTimer.Restart();
 
             BOSS_Boost();
             BOSS_Introduction();
@@ -69,15 +68,15 @@ namespace StardustDefender.Entities.Bosses
         {
             AnimationUpdate();
 
-            if (canMove)
+            if (this.canMove)
             {
                 this.verticalDirectionTimer.Update();
                 HorizontalMovementUpdate();
                 VerticalMovementUpdate();
-                previousLocalPosition = LocalPosition;
+                this.previousLocalPosition = this.LocalPosition;
             }
 
-            if (canShoot)
+            if (this.canShoot)
             {
                 this.shootTimer.Update();
                 ShootUpdate();
@@ -86,99 +85,99 @@ namespace StardustDefender.Entities.Bosses
         protected override void OnDamaged(int value)
         {
             _ = SSounds.Play("Damage_05");
-            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition, new(2f));
+            _ = SEffectsManager.Create<SImpactEffect>(this.WorldPosition, new(2f));
 
             _ = Task.Run(async () =>
             {
-                Color = Color.Red;
+                this.Color = Color.Red;
                 await Task.Delay(235);
-                Color = Color.White;
+                this.Color = Color.White;
             });
         }
         protected override void OnDestroy()
         {
-            isDied = true;
+            this.isDied = true;
             SLevelController.BossKilled();
 
             _ = SSounds.Play("Explosion_05");
-            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition, new(2f));
+            _ = SEffectsManager.Create<SExplosionEffect>(this.WorldPosition, new(2f));
 
-            _ = SItemsManager.CreateRandomItem(new(WorldPosition.X, WorldPosition.Y + 16));
-            _ = SItemsManager.CreateRandomItem(new(WorldPosition.X, WorldPosition.Y - 16));
-            _ = SItemsManager.CreateRandomItem(new(WorldPosition.X + 16, WorldPosition.Y));
-            _ = SItemsManager.CreateRandomItem(new(WorldPosition.X - 16, WorldPosition.Y));
+            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X, this.WorldPosition.Y + 16));
+            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X, this.WorldPosition.Y - 16));
+            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X + 16, this.WorldPosition.Y));
+            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X - 16, this.WorldPosition.Y));
         }
         public override void Reset()
         {
             // Attributes
-            HealthValue = 20;
-            DamageValue = 1;
-            CollisionRange = 55f;
+            this.HealthValue = 20;
+            this.DamageValue = 1;
+            this.CollisionRange = 55f;
 
             // Team
-            Team = Teams.Bad;
+            this.Team = Teams.Bad;
 
             // States
-            isDied = false;
-            verticalDirection = false;
-            horizontalDirection = false;
+            this.isDied = false;
+            this.verticalDirection = false;
+            this.horizontalDirection = false;
 
             // Animation
-            texture = STextures.GetTexture("ENEMIES_Bosses");
-            A_Intro.SetTexture(texture);
-            A_Normal.SetTexture(texture);
-            A_Shoot.SetTexture(texture);
+            this.texture = STextures.GetTexture("ENEMIES_Bosses");
+            this.A_Intro.SetTexture(this.texture);
+            this.A_Normal.SetTexture(this.texture);
+            this.A_Shoot.SetTexture(this.texture);
 
-            A_Idle.Reset();
-            A_Intro.Reset();
-            A_Normal.Reset();
-            A_Shoot.Reset();
+            this.A_Idle.Reset();
+            this.A_Intro.Reset();
+            this.A_Normal.Reset();
+            this.A_Shoot.Reset();
 
-            A_Idle.Clear();
-            A_Intro.Clear();
-            A_Normal.Clear();
-            A_Shoot.Clear();
+            this.A_Idle.Clear();
+            this.A_Intro.Clear();
+            this.A_Normal.Clear();
+            this.A_Shoot.Clear();
 
-            A_Idle.SetMode(AnimationMode.Disable);
-            A_Intro.SetMode(AnimationMode.Once);
-            A_Normal.SetMode(AnimationMode.Disable);
-            A_Shoot.SetMode(AnimationMode.Once);
+            this.A_Idle.SetMode(AnimationMode.Disable);
+            this.A_Intro.SetMode(AnimationMode.Once);
+            this.A_Normal.SetMode(AnimationMode.Disable);
+            this.A_Shoot.SetMode(AnimationMode.Once);
 
-            A_Intro.SetDuration(3f);
-            A_Normal.SetDuration(1f);
-            A_Shoot.SetDuration(3f);
+            this.A_Intro.SetDuration(3f);
+            this.A_Normal.SetDuration(1f);
+            this.A_Shoot.SetDuration(3f);
 
-            A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
+            this.A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
 
-            A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
-            A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
 
-            A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
 
-            A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
-            A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
-            A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
 
-            Animation = A_Normal;
+            this.Animation = this.A_Normal;
         }
 
         // Actions
         private void BOSS_Boost()
         {
-            HealthValue *= SLevelController.Player.DamageValue;
+            this.HealthValue *= SLevelController.Player.DamageValue;
         }
         private void BOSS_Introduction()
         {
             _ = Task.Run(async () =>
             {
-                IsInvincible = true;
-                canMove = false;
-                canShoot = false;
+                this.IsInvincible = true;
+                this.canMove = false;
+                this.canShoot = false;
 
                 SetState(State.INDLE);
                 await Task.Delay(TimeSpan.FromSeconds(1f));
@@ -186,71 +185,63 @@ namespace StardustDefender.Entities.Bosses
                 await Task.Delay(TimeSpan.FromSeconds(3.5f));
                 SetState(State.NORMAL);
 
-                IsInvincible = false;
-                canMove = true;
-                canShoot = true;
+                this.IsInvincible = false;
+                this.canMove = true;
+                this.canShoot = true;
             });
         }
 
         // Update
         private void AnimationUpdate()
         {
-            Animation = state switch
+            this.Animation = this.state switch
             {
-                State.INTRO => A_Intro,
-                State.INDLE => A_Idle,
-                State.NORMAL => A_Normal,
-                State.SHOOTING => A_Shoot,
-                _ => A_Idle,
+                State.INTRO => this.A_Intro,
+                State.INDLE => this.A_Idle,
+                State.NORMAL => this.A_Normal,
+                State.SHOOTING => this.A_Shoot,
+                _ => this.A_Idle,
             };
 
-            Animation?.Update();
+            this.Animation?.Update();
         }
         private void HorizontalMovementUpdate()
         {
             // MOVING
-            if (horizontalDirection)
-            {
-                LocalPosition = new(LocalPosition.X + HORIZONTAL_SPEED, LocalPosition.Y);
-            }
-            else
-            {
-                LocalPosition = new(LocalPosition.X - HORIZONTAL_SPEED, LocalPosition.Y);
-            }
+            this.LocalPosition = this.horizontalDirection
+                ? new(this.LocalPosition.X + HORIZONTAL_SPEED, this.LocalPosition.Y)
+                : new(this.LocalPosition.X - HORIZONTAL_SPEED, this.LocalPosition.Y);
 
-            if (previousLocalPosition.X == LocalPosition.X)
+            if (this.previousLocalPosition.X == this.LocalPosition.X)
             {
-                horizontalDirection = !horizontalDirection;
+                this.horizontalDirection = !this.horizontalDirection;
             }
         }
         private void VerticalMovementUpdate()
         {
             // MOVING
-            if (verticalDirection)
-            {
-                LocalPosition = new(LocalPosition.X, LocalPosition.Y + VERTICAL_SPEED);
-            }
-            else
-            {
-                LocalPosition = new(LocalPosition.X, LocalPosition.Y - VERTICAL_SPEED);
-            }
+            this.LocalPosition = this.verticalDirection
+                ? new(this.LocalPosition.X, this.LocalPosition.Y + VERTICAL_SPEED)
+                : new(this.LocalPosition.X, this.LocalPosition.Y - VERTICAL_SPEED);
 
             // CHANGE DIRECTION
             if (this.verticalDirectionTimer.IsFinished)
             {
                 this.verticalDirectionTimer.Restart();
-                verticalDirection = !verticalDirection;
+                this.verticalDirection = !this.verticalDirection;
             }
         }
         private void ShootUpdate()
         {
             if (this.isShooting)
+            {
                 return;
+            }
 
             // Update Delay counters
             if (this.shootTimer.IsFinished)
             {
-                
+
                 _ = Task.Run(StartShootingAsync);
             }
         }
@@ -276,13 +267,13 @@ namespace StardustDefender.Entities.Bosses
             int shotBurstCount = SRandom.Range(15, 30);
             for (int i = 0; i < shotBurstCount; i++)
             {
-                if (isDied)
+                if (this.isDied)
                 {
                     break;
                 }
 
                 Vector2 bulletSpeed = new(
-                    BULLET_SPEED * (SRandom.Range(-1, 2) + -SRandom.NextFloat() / 1.5f),
+                    BULLET_SPEED * (SRandom.Range(-1, 2) + (-SRandom.NextFloat() / 1.5f)),
                     BULLET_SPEED
                 );
 
@@ -290,9 +281,9 @@ namespace StardustDefender.Entities.Bosses
                 {
                     SpriteId = 1,
                     Team = Teams.Bad,
-                    Position = new(WorldPosition.X + 16, WorldPosition.Y + 16),
+                    Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
                     Speed = bulletSpeed,
-                    Damage = DamageValue,
+                    Damage = this.DamageValue,
                     LifeTime = BULLET_LIFE_TIME,
                     Range = 10f,
                     Color = new Color(255, 0, 0, 255),

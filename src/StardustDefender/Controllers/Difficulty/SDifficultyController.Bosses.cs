@@ -1,14 +1,14 @@
-﻿using StardustDefender.Entities.Bosses;
-using StardustDefender.Entities.Player;
-using StardustDefender.Managers;
-using StardustDefender.Extensions;
+﻿using Microsoft.Xna.Framework;
+
 using StardustDefender.Core;
+using StardustDefender.Entities.Bosses;
+using StardustDefender.Entities.Player;
+using StardustDefender.Extensions;
+using StardustDefender.Managers;
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace StardustDefender.Controllers
 {
@@ -54,8 +54,8 @@ namespace StardustDefender.Controllers
 
         private static bool Boss01_Checker(SPlayerEntity player)
         {
-            return (difficultyRate >= 2.5f && SLevelController.Level >= 5) &&
-                   (player.HealthValue >= 2 && player.BulletSpeed >= 3.6f && player.BulletLifeTime >= 3.6f);
+            return difficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                   player.HealthValue >= 2 && player.BulletSpeed >= 3.6f && player.BulletLifeTime >= 3.6f;
         }
         #endregion
     }

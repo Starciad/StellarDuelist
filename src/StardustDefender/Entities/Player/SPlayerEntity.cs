@@ -2,33 +2,29 @@
 using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Controllers;
-using StardustDefender.Effects.Common;
 using StardustDefender.Core;
+using StardustDefender.Effects.Common;
 using StardustDefender.Engine;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
 
-using System;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Player
 {
     internal sealed class SPlayerEntity : SEntity
     {
-        public bool CanShoot => shootTimer.IsFinished;
+        public bool CanShoot => this.shootTimer.IsFinished;
         public float BulletLifeTime { get; set; }
         public float BulletSpeed { get; set; }
         public float ShootDelay
         {
-            get
-            {
-                return this.shootDelay;
-            }
+            get => this.shootDelay;
 
             set
             {
                 this.shootDelay = value;
-                shootTimer.SetDelay(value);
+                this.shootTimer.SetDelay(value);
             }
         }
 
@@ -41,7 +37,7 @@ namespace StardustDefender.Entities.Player
         }
         protected override void OnStart()
         {
-            shootTimer.Restart();
+            this.shootTimer.Restart();
         }
         protected override void OnUpdate()
         {
@@ -53,13 +49,13 @@ namespace StardustDefender.Entities.Player
             SLevelController.PlayerDamaged(value);
 
             _ = SSounds.Play("Damage_10");
-            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
+            _ = SEffectsManager.Create<SImpactEffect>(this.WorldPosition);
 
             _ = Task.Run(async () =>
             {
-                Color = Color.Red;
+                this.Color = Color.Red;
                 await Task.Delay(235);
-                Color = Color.White;
+                this.Color = Color.White;
             });
         }
         protected override void OnDestroy()
@@ -69,37 +65,37 @@ namespace StardustDefender.Entities.Player
             SGameController.SetGameState(SGameState.GameOver);
             SLevelController.GameOver();
 
-            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+            _ = SEffectsManager.Create<SExplosionEffect>(this.WorldPosition);
         }
 
         public override void Reset()
         {
             // Animations
-            Animation.Reset();
-            Animation.Clear();
-            Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
-            Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+            this.Animation.Reset();
+            this.Animation.Clear();
+            this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
 
             // Team
-            Team = Teams.Good;
+            this.Team = Teams.Good;
 
             // Attributes
-            HealthValue = 3;
-            DamageValue = 1;
-            ChanceOfKnockback = 0;
-            KnockbackForce = 0;
+            this.HealthValue = 3;
+            this.DamageValue = 1;
+            this.ChanceOfKnockback = 0;
+            this.KnockbackForce = 0;
 
-            ShootDelay = 3f;
-            BulletLifeTime = 3.6f;
-            BulletSpeed = 3.6f;
+            this.ShootDelay = 3f;
+            this.BulletLifeTime = 3.6f;
+            this.BulletSpeed = 3.6f;
 
             // Timers
-            shootTimer.SetDelay(ShootDelay);
+            this.shootTimer.SetDelay(this.ShootDelay);
         }
 
         private void TimersUpdate()
         {
-            shootTimer.Update();
+            this.shootTimer.Update();
         }
 
         #region INPUTS
@@ -121,18 +117,18 @@ namespace StardustDefender.Entities.Player
             if (SInput.Started(Keys.A) || SInput.Started(Keys.Left))
             {
                 _ = SSounds.Play("Player_Movement");
-                LocalPosition = new(LocalPosition.X - 1, LocalPosition.Y);
+                this.LocalPosition = new(this.LocalPosition.X - 1, this.LocalPosition.Y);
             }
 
             if (SInput.Started(Keys.D) || SInput.Started(Keys.Right))
             {
                 _ = SSounds.Play("Player_Movement");
-                LocalPosition = new(LocalPosition.X + 1, LocalPosition.Y);
+                this.LocalPosition = new(this.LocalPosition.X + 1, this.LocalPosition.Y);
             }
         }
         private void ShootInputUpdate()
         {
-            if (!CanShoot)
+            if (!this.CanShoot)
             {
                 return;
             }
@@ -146,10 +142,10 @@ namespace StardustDefender.Entities.Player
                 {
                     SpriteId = 0,
                     Team = Teams.Good,
-                    Position = new(WorldPosition.X, WorldPosition.Y - 32f),
-                    Speed = new(0, BulletSpeed * -1),
-                    Damage = DamageValue,
-                    LifeTime = BulletLifeTime,
+                    Position = new(this.WorldPosition.X, this.WorldPosition.Y - 32f),
+                    Speed = new(0, this.BulletSpeed * -1),
+                    Damage = this.DamageValue,
+                    LifeTime = this.BulletLifeTime,
                     Range = 10f
                 });
             }

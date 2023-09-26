@@ -1,5 +1,4 @@
-﻿using StardustDefender.Entities;
-using StardustDefender.GUI;
+﻿using StardustDefender.GUI;
 
 using System;
 using System.Collections.Generic;

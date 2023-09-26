@@ -45,41 +45,43 @@ namespace StardustDefender.Entities
 
         public SEntity()
         {
-            Id = Guid.NewGuid().ToString();
+            this.Id = Guid.NewGuid().ToString();
 
-            LocalPosition = Vector2.Zero;
-            WorldPosition = Vector2.Zero;
-            Scale = Vector2.One;
-            Rotation = 0f;
+            this.LocalPosition = Vector2.Zero;
+            this.WorldPosition = Vector2.Zero;
+            this.Scale = Vector2.One;
+            this.Rotation = 0f;
 
-            CollisionRange = 22f;
-            Color = Color.White;
+            this.CollisionRange = 22f;
+            this.Color = Color.White;
         }
 
         internal void Initialize()
         {
-            Animation = new();
+            this.Animation = new();
 
             OnAwake();
             OnStart();
 
-            Animation.Initialize();
+            this.Animation.Initialize();
         }
         internal void Update()
         {
-            Animation.Update();
+            this.Animation.Update();
 
-            WorldPosition = Vector2.Lerp(WorldPosition, SWorld.GetWorldPosition(LocalPosition), SWorld.SmoothScale);
-            LocalPosition = SWorld.Clamp(LocalPosition);
+            this.WorldPosition = Vector2.Lerp(this.WorldPosition, SWorld.GetWorldPosition(this.LocalPosition), SWorld.SmoothScale);
+            this.LocalPosition = SWorld.Clamp(this.LocalPosition);
 
             OnUpdate();
         }
         internal void Draw()
         {
-            if (Animation.IsEmpty())
+            if (this.Animation.IsEmpty())
+            {
                 return;
+            }
 
-            SGraphics.SpriteBatch.Draw(Animation.Texture, WorldPosition, Animation.TextureRectangle, Color, Rotation, new Vector2(32 / 2), Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.WorldPosition, this.Animation.TextureRectangle, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
@@ -91,13 +93,15 @@ namespace StardustDefender.Entities
 
         internal void Damage(int value)
         {
-            if (IsInvincible)
+            if (this.IsInvincible)
+            {
                 return;
+            }
 
-            HealthValue -= value;
+            this.HealthValue -= value;
             OnDamaged(value);
 
-            if (HealthValue <= 0)
+            if (this.HealthValue <= 0)
             {
                 Destroy();
             }
@@ -108,19 +112,19 @@ namespace StardustDefender.Entities
         }
         private void Knockback()
         {
-            if (!SRandom.Chance(ChanceOfKnockback, 100))
+            if (!SRandom.Chance(this.ChanceOfKnockback, 100))
             {
                 return;
             }
 
-            switch (Team)
+            switch (this.Team)
             {
                 case Teams.Good:
-                    LocalPosition = new(LocalPosition.X, LocalPosition.Y + KnockbackForce);
+                    this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + this.KnockbackForce);
                     break;
 
                 case Teams.Bad:
-                    LocalPosition = new(LocalPosition.X, LocalPosition.Y - KnockbackForce);
+                    this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y - this.KnockbackForce);
                     break;
 
                 default:

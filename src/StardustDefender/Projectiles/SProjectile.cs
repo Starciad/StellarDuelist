@@ -27,23 +27,23 @@ namespace StardustDefender.Projectiles
         {
             Reset();
 
-            Team = builder.Team;
-            SpriteId = builder.SpriteId;
-            Position = builder.Position;
-            Speed = builder.Speed;
-            Range = builder.Range;
-            Damage = builder.Damage;
-            LifeTime = builder.LifeTime;
-            Color = builder.Color;
+            this.Team = builder.Team;
+            this.SpriteId = builder.SpriteId;
+            this.Position = builder.Position;
+            this.Speed = builder.Speed;
+            this.Range = builder.Range;
+            this.Damage = builder.Damage;
+            this.LifeTime = builder.LifeTime;
+            this.Color = builder.Color;
 
-            Animation.AddSprite(STextures.GetSprite(32, SpriteId, 0));
-            Animation.Initialize();
+            this.Animation.AddSprite(STextures.GetSprite(32, this.SpriteId, 0));
+            this.Animation.Initialize();
         }
 
         internal void Initialize()
         {
-            Animation.SetMode(AnimationMode.Disable);
-            Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
+            this.Animation.SetMode(AnimationMode.Disable);
+            this.Animation.SetTexture(STextures.GetTexture("PROJECTILES_Bullets"));
         }
         internal void Update()
         {
@@ -53,7 +53,7 @@ namespace StardustDefender.Projectiles
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(Animation.Texture, Position, Animation.TextureRectangle, Color, 0f, new Vector2(Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.Position, this.Animation.TextureRectangle, this.Color, 0f, new Vector2(this.Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
@@ -62,27 +62,27 @@ namespace StardustDefender.Projectiles
 
         public void Reset()
         {
-            Animation.Reset();
-            Animation.Clear();
+            this.Animation.Reset();
+            this.Animation.Clear();
 
-            Team = Teams.None;
-            SpriteId = 0;
-            Position = Vector2.Zero;
-            Speed = Vector2.Zero;
-            Range = 0f;
-            Damage = 0;
-            LifeTime = 0f;
+            this.Team = Teams.None;
+            this.SpriteId = 0;
+            this.Position = Vector2.Zero;
+            this.Speed = Vector2.Zero;
+            this.Range = 0f;
+            this.Damage = 0;
+            this.LifeTime = 0f;
         }
 
         private void MovementUpdate()
         {
-            Position = new(Position.X + Speed.X, Position.Y + Speed.Y);
+            this.Position = new(this.Position.X + this.Speed.X, this.Position.Y + this.Speed.Y);
         }
         private void LifeTimeUpdate()
         {
-            if (LifeTime > 0)
+            if (this.LifeTime > 0)
             {
-                LifeTime -= 0.1f;
+                this.LifeTime -= 0.1f;
             }
             else
             {
@@ -94,13 +94,13 @@ namespace StardustDefender.Projectiles
             foreach (SEntity entity in SEntityManager.Entities)
             {
                 if (entity == null ||
-                    entity?.Team == Team ||
-                    Vector2.Distance(Position, entity.WorldPosition) > entity.CollisionRange)
+                    entity?.Team == this.Team ||
+                    Vector2.Distance(this.Position, entity.WorldPosition) > entity.CollisionRange)
                 {
                     continue;
                 }
 
-                entity?.Damage(Damage);
+                entity?.Damage(this.Damage);
                 Destroy();
             }
         }

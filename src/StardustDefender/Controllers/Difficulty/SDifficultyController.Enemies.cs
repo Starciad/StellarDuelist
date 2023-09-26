@@ -1,13 +1,13 @@
-﻿using StardustDefender.Entities.Aliens;
+﻿using Microsoft.Xna.Framework;
+
 using StardustDefender.Entities;
-using StardustDefender.Managers;
+using StardustDefender.Entities.Aliens;
 using StardustDefender.Extensions;
+using StardustDefender.Managers;
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-
-using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace StardustDefender.Controllers
 {

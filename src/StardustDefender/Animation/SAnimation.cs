@@ -17,8 +17,8 @@ namespace StardustDefender.Animation
         {
             get
             {
-                float width = TextureRectangle.Width;
-                float height = TextureRectangle.Height;
+                float width = this.TextureRectangle.Width;
+                float height = this.TextureRectangle.Height;
 
                 return width == height ? width : (width + height) / 2;
             }
@@ -42,7 +42,7 @@ namespace StardustDefender.Animation
 
         internal void Initialize()
         {
-            if (animationFrames.Count > 0)
+            if (this.animationFrames.Count > 0)
             {
                 this.textureRectangle = this.animationFrames[0];
             }
@@ -53,7 +53,7 @@ namespace StardustDefender.Animation
 
             this.animationDelay = 1f;
             this.animationCurrentDelay = 0f;
-            
+
             this.animationCurrentFrame = 0;
         }
         internal void Update()
@@ -108,7 +108,7 @@ namespace StardustDefender.Animation
         }
         internal void SetCurrentFrame(int frame)
         {
-            animationCurrentFrame = Math.Clamp(frame, 0, animationFrames.Count - 1);
+            this.animationCurrentFrame = Math.Clamp(frame, 0, this.animationFrames.Count - 1);
         }
 
         internal void AddSprite(Rectangle rect)
@@ -118,10 +118,7 @@ namespace StardustDefender.Animation
 
         internal bool IsEmpty()
         {
-            if (Texture == null || TextureRectangle.IsEmpty)
-                return true;
-
-            return false;
+            return this.Texture == null || this.TextureRectangle.IsEmpty;
         }
     }
 }

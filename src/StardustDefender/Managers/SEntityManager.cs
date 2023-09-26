@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Collections;
-using StardustDefender.Effects;
 using StardustDefender.Entities;
 using StardustDefender.World;
 

@@ -1,11 +1,11 @@
-﻿using StardustDefender.Controllers;
+﻿using Microsoft.Xna.Framework;
+
+using StardustDefender.Controllers;
 using StardustDefender.Core;
 using StardustDefender.Effects.Common;
 using StardustDefender.Engine;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
-
-using Microsoft.Xna.Framework;
 
 using System.Threading.Tasks;
 
@@ -27,8 +27,8 @@ namespace StardustDefender.Entities.Aliens
         }
         protected override void OnStart()
         {
-            movementTimer.Restart();
-            shootTimer.Restart();
+            this.movementTimer.Restart();
+            this.shootTimer.Restart();
         }
         protected override void OnUpdate()
         {
@@ -44,13 +44,13 @@ namespace StardustDefender.Entities.Aliens
         protected override void OnDamaged(int value)
         {
             _ = SSounds.Play("Damage_02");
-            _ = SEffectsManager.Create<SImpactEffect>(WorldPosition);
+            _ = SEffectsManager.Create<SImpactEffect>(this.WorldPosition);
 
             _ = Task.Run(async () =>
             {
-                Color = Color.Red;
+                this.Color = Color.Red;
                 await Task.Delay(235);
-                Color = Color.White;
+                this.Color = Color.White;
             });
         }
         protected override void OnDestroy()
@@ -58,38 +58,38 @@ namespace StardustDefender.Entities.Aliens
             SLevelController.EnemyKilled();
 
             _ = SSounds.Play("Explosion_01");
-            _ = SEffectsManager.Create<SExplosionEffect>(WorldPosition);
+            _ = SEffectsManager.Create<SExplosionEffect>(this.WorldPosition);
 
             // Drop
             if (SRandom.Chance(20, 100))
             {
-                _ = SItemsManager.CreateRandomItem(WorldPosition);
+                _ = SItemsManager.CreateRandomItem(this.WorldPosition);
             }
         }
         public override void Reset()
         {
-            Animation.Reset();
-            Animation.Clear();
+            this.Animation.Reset();
+            this.Animation.Clear();
 
-            Animation.SetMode(AnimationMode.Forward);
-            Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            Animation.AddSprite(STextures.GetSprite(32, 0, 1));
-            Animation.AddSprite(STextures.GetSprite(32, 1, 1));
-            Animation.SetDuration(3f);
+            this.Animation.SetMode(AnimationMode.Forward);
+            this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 1));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 1));
+            this.Animation.SetDuration(3f);
 
-            Team = Teams.Bad;
+            this.Team = Teams.Bad;
 
-            HealthValue = 3;
-            DamageValue = 1;
+            this.HealthValue = 3;
+            this.DamageValue = 1;
 
-            ChanceOfKnockback = 0;
-            KnockbackForce = 0;
+            this.ChanceOfKnockback = 0;
+            this.KnockbackForce = 0;
         }
 
         private void TimersUpdate()
         {
-            movementTimer.Update();
-            shootTimer.Update();
+            this.movementTimer.Update();
+            this.shootTimer.Update();
         }
 
         private void MovementUpdate()
@@ -101,12 +101,12 @@ namespace StardustDefender.Entities.Aliens
                 {
                     case 1:
                         int direction = SRandom.Chance(50, 100) ? -1 : 1;
-                        LocalPosition = new(LocalPosition.X + direction, LocalPosition.Y);
+                        this.LocalPosition = new(this.LocalPosition.X + direction, this.LocalPosition.Y);
                         this.movementDirection = 2;
                         break;
 
                     case 2:
-                        LocalPosition = new(LocalPosition.X, LocalPosition.Y + 1);
+                        this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + 1);
                         this.movementDirection = 1;
                         break;
                 }
@@ -127,9 +127,9 @@ namespace StardustDefender.Entities.Aliens
             {
                 SpriteId = 0,
                 Team = Teams.Bad,
-                Position = new(WorldPosition.X, WorldPosition.Y + 16f),
+                Position = new(this.WorldPosition.X, this.WorldPosition.Y + 16f),
                 Speed = new(0, SHOOT_SPEED),
-                Damage = DamageValue,
+                Damage = this.DamageValue,
                 LifeTime = SHOOT_LIFE_TIME,
                 Range = 10f
             });

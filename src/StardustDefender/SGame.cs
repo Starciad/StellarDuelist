@@ -27,20 +27,20 @@ namespace StardustDefender
             });
 
             // Content
-            SContent.Build(Content.ServiceProvider, "Content");
+            SContent.Build(this.Content.ServiceProvider, "Content");
 
             // Assembly
             Assembly = GetType().Assembly;
 
             // Window
-            Window.Title = "Stardust Defender - v0.0.1";
-            Window.AllowUserResizing = false;
-            Window.IsBorderless = false;
+            this.Window.Title = "Stardust Defender - v0.0.1";
+            this.Window.AllowUserResizing = false;
+            this.Window.IsBorderless = false;
 
             // Settings
-            IsMouseVisible = true;
-            IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
+            this.IsMouseVisible = true;
+            this.IsFixedTimeStep = true;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
         }
 
         protected override void OnActivated(object sender, EventArgs args)
@@ -130,8 +130,8 @@ namespace StardustDefender
             // ========================= //
             // Targets
 
-            GraphicsDevice.SetRenderTarget(SGraphics.DefaultRenderTarget);
-            GraphicsDevice.Clear(new Color(1, 11, 25));
+            this.GraphicsDevice.SetRenderTarget(SGraphics.DefaultRenderTarget);
+            this.GraphicsDevice.Clear(new Color(1, 11, 25));
 
             SGraphics.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, SCamera.GetViewMatrix());
             DrawGameElements();
@@ -142,8 +142,8 @@ namespace StardustDefender
             // ========================= //
             // Content
 
-            GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Black);
+            this.GraphicsDevice.SetRenderTarget(null);
+            this.GraphicsDevice.Clear(Color.Black);
 
             SGraphics.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             SGraphics.SpriteBatch.Draw(SGraphics.DefaultRenderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
@@ -201,7 +201,6 @@ namespace StardustDefender
             {
                 SGUIManager.Disable<SGUIGameOver>();
             }
-
 
             SGUIManager.Draw();
         }

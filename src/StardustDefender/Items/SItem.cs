@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using StardustDefender.Animation;
 using StardustDefender.Collections;
 using StardustDefender.Controllers;
-using StardustDefender.Effects.Common;
 using StardustDefender.Core;
+using StardustDefender.Effects.Common;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
 
@@ -32,7 +32,7 @@ namespace StardustDefender.Items
             this._animation = animation;
             this._animation.SetMode(AnimationMode.Disable);
 
-            Position = position;
+            this.Position = position;
         }
         internal void Update()
         {
@@ -42,11 +42,11 @@ namespace StardustDefender.Items
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this._animation.Texture, Position, this._animation.TextureRectangle, this.color, 0f, new Vector2(SItemTemplate.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.TextureRectangle, this.color, 0f, new Vector2(SItemTemplate.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
-            _ = SEffectsManager.Create<SImpactEffect>(Position, new(1), 0f, Color.Yellow);
+            _ = SEffectsManager.Create<SImpactEffect>(this.Position, new(1), 0f, Color.Yellow);
             _ = SSounds.Play("Player_Upgrade");
 
             SItemsManager.Remove(this);
@@ -67,14 +67,14 @@ namespace StardustDefender.Items
         }
         private void MovementUpdate()
         {
-            float POS_X = Position.X;
-            float POS_Y = Position.Y + VERTICAL_SPEED;
+            float POS_X = this.Position.X;
+            float POS_Y = this.Position.Y + VERTICAL_SPEED;
 
-            Position = new(POS_X, POS_Y);
+            this.Position = new(POS_X, POS_Y);
         }
         private void CollisionCheckUpdate()
         {
-            if (Vector2.Distance(SLevelController.Player.WorldPosition, Position) < COLLISION_RANGE)
+            if (Vector2.Distance(SLevelController.Player.WorldPosition, this.Position) < COLLISION_RANGE)
             {
                 this._template.ApplyEffect();
                 Destroy();
@@ -83,7 +83,7 @@ namespace StardustDefender.Items
 
         public void Reset()
         {
-            Position = Vector2.Zero;
+            this.Position = Vector2.Zero;
             this.currentColorUpdateDelay = 0f;
             this.colorIndex = 0;
             this.color = Color.White;

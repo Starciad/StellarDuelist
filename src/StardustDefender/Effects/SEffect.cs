@@ -30,7 +30,7 @@ namespace StardustDefender.Effects
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this._animation.Texture, Position, this._animation.TextureRectangle, Color, Rotation, new Vector2(this._animation.SpriteScale / 2), Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.TextureRectangle, this.Color, this.Rotation, new Vector2(this._animation.SpriteScale / 2), this.Scale, SpriteEffects.None, 0f);
         }
 
         private void OnFinished()
@@ -41,9 +41,9 @@ namespace StardustDefender.Effects
 
         public void Reset()
         {
-            Position = Vector2.Zero;
-            Scale = Vector2.One;
-            Rotation = 0f;
+            this.Position = Vector2.Zero;
+            this.Scale = Vector2.One;
+            this.Rotation = 0f;
         }
     }
 }
