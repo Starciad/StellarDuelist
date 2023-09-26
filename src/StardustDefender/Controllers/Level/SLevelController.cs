@@ -17,6 +17,7 @@ namespace StardustDefender.Controllers
         internal static SPlayerEntity Player => player;
         internal static int PlayerCumulativeDamage => playerCumulativeDamage;
         internal static int Level => level;
+        internal static TimeSpan TotalGameTime => totalGameTime.Elapsed;
 
         // Consts
         private const int ENEMY_SPAWN_RANGE = 4;
