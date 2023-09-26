@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using StardustDefender.Controllers;
 using StardustDefender.Effects.Common;
 using StardustDefender.Core;
+using StardustDefender.Engine;
 using StardustDefender.Enums;
 using StardustDefender.Managers;
 
@@ -14,12 +15,12 @@ namespace StardustDefender.Entities.Player
 {
     internal sealed class SPlayerEntity : SEntity
     {
-        internal bool CanShoot => this.currentShootDelay == 0;
+        public bool CanShoot => shootTimer.IsFinished;
         public float ShootDelay { get; set; } = 3f;
         public float BulletLifeTime { get; set; } = 3f;
         public float BulletSpeed { get; set; } = 3f;
 
-        private float currentShootDelay;
+        private readonly STimer shootTimer = new();
 
         protected override void OnAwake()
         {
@@ -33,6 +34,9 @@ namespace StardustDefender.Entities.Player
 
             ChanceOfKnockback = 0;
             KnockbackForce = 0;
+
+            shootTimer.SetDelay(ShootDelay);
+            shootTimer.Start();
         }
         protected override void OnUpdate()
         {
@@ -73,24 +77,11 @@ namespace StardustDefender.Entities.Player
             ShootDelay = 3f;
             BulletLifeTime = 3f;
             BulletSpeed = 3f;
-
-            currentShootDelay = ShootDelay;
         }
 
         private void ShootUpdate()
         {
-            if (ShootDelay <= 0)
-            {
-                this.currentShootDelay = 0;
-                return;
-            }
-
-            if (this.currentShootDelay > 0)
-            {
-                this.currentShootDelay -= 0.1f;
-                this.currentShootDelay = Math.Clamp(this.currentShootDelay, 0, ShootDelay);
-                return;
-            }
+            shootDelay.Update();
         }
 
         private void InputsUpdate()
@@ -129,9 +120,8 @@ namespace StardustDefender.Entities.Player
                     return;
                 }
 
+                this.shootDelay.Restart();
                 _ = SSounds.Play("Shoot_01");
-
-                this.currentShootDelay = ShootDelay;
 
                 SProjectileManager.Create(new()
                 {
