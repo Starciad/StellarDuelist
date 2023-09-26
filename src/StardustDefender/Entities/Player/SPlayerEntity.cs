@@ -86,8 +86,8 @@ namespace StardustDefender.Entities.Player
             this.KnockbackForce = 0;
 
             this.ShootDelay = 3f;
-            this.BulletLifeTime = 3.6f;
-            this.BulletSpeed = 3.6f;
+            this.BulletLifeTime = 3f;
+            this.BulletSpeed = 3f;
 
             // Timers
             this.shootTimer.SetDelay(this.ShootDelay);
