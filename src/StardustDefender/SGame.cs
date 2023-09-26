@@ -34,7 +34,7 @@ namespace StardustDefender
             Assembly = GetType().Assembly;
 
             // Window
-            this.Window.Title = "Stardust Defender - v0.0.1";
+            this.Window.Title = SInfos.GetTitle();
             this.Window.AllowUserResizing = false;
             this.Window.IsBorderless = false;
 
