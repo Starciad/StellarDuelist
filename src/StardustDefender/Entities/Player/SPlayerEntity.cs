@@ -81,7 +81,7 @@ namespace StardustDefender.Entities.Player
 
         private void ShootUpdate()
         {
-            shootDelay.Update();
+            shootTimer.Update();
         }
 
         private void InputsUpdate()
@@ -120,7 +120,7 @@ namespace StardustDefender.Entities.Player
                     return;
                 }
 
-                this.shootDelay.Restart();
+                this.shootTimer.Restart();
                 _ = SSounds.Play("Shoot_01");
 
                 SProjectileManager.Create(new()
