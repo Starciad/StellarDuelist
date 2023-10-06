@@ -35,7 +35,7 @@ namespace StardustDefender.GUI
         }
         protected override void OnUpdate()
         {
-            if (SInput.Started(Keys.P))
+            if (SInput.Started(Keys.Space) || SInput.Started(Keys.Escape))
             {
                 SGameController.SetGameState(SGameState.Running);
                 Disable();
