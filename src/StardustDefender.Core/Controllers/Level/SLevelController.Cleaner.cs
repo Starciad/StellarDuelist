@@ -59,7 +59,7 @@ namespace StardustDefender.Controllers
         private static void ResetPlayerPosition()
         {
             Player.LocalPosition = playerPosition;
-            Player.WorldPosition += SWorld.GetWorldPosition(new(0, 10));
+            Player.WorldPosition = SWorld.GetWorldPosition(playerPosition);
         }
 
         private static void ResetLevelInfos()

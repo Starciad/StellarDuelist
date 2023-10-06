@@ -22,6 +22,7 @@ namespace StardustDefender.Controllers
                 gameEnded = false;
             }
 
+            ResetPlayerPosition();
             _ = Task.Run(RunLevelAsync);
         }
 
@@ -90,7 +91,6 @@ namespace StardustDefender.Controllers
 
             // Returns a completed task.
             await Task.CompletedTask;
-
         }
 
         private static async Task LevelTransitionAsync()
