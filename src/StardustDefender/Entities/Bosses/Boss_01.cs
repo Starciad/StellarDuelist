@@ -57,7 +57,7 @@ namespace StardustDefender.Entities.Bosses
         private const float HORIZONTAL_SPEED = 0.1f;
         private const float VERTICAL_SPEED = 0.01f;
 
-        private const float BULLET_SPEED = 2f;
+        private const float BULLET_SPEED = 2.5f;
         private const float BULLET_LIFE_TIME = 40f;
 
         private State state;
@@ -133,7 +133,7 @@ namespace StardustDefender.Entities.Bosses
         public override void Reset()
         {
             // Attributes
-            this.HealthValue = 20;
+            this.HealthValue = 45;
             this.DamageValue = 1;
             this.CollisionRange = 55f;
 
@@ -287,7 +287,7 @@ namespace StardustDefender.Entities.Bosses
 
             await Task.Delay(TimeSpan.FromSeconds(0.5f));
 
-            int shotBurstCount = SRandom.Range(15, 30);
+            int shotBurstCount = SRandom.Range(25, 35);
             for (int i = 0; i < shotBurstCount; i++)
             {
                 if (this.isDied)
