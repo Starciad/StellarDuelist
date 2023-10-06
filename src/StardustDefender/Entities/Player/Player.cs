@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
+using StardustDefender.Core.Entities;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
@@ -101,7 +102,27 @@ namespace StardustDefender.Entities.Player
             PauseInputUpdate();
             MovementInputUpdate();
             ShootInputUpdate();
+
+#if DEBUG
+            DEBUG_Kill_Enemies();
+#endif
         }
+
+#if DEBUG
+        private void DEBUG_Kill_Enemies()
+        {
+            if (SInput.Started(Keys.D0))
+            {
+                foreach (SEntity entity in SEntityManager.Entities)
+                {
+                    if (entity == this)
+                        continue;
+
+                    entity.Destroy();
+                }
+            }
+        }
+#endif
         private static void PauseInputUpdate()
         {
             if (SInput.Started(Keys.P))

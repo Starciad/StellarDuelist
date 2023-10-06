@@ -15,7 +15,7 @@ namespace StardustDefender.Core.Entities
     public class SEntity : IPoolableObject
     {
         // General
-        internal string Id { get; set; }
+        public string Id { get; internal set; }
         public STeam Team { get; set; }
 
         // Texture 
@@ -82,15 +82,14 @@ namespace StardustDefender.Core.Entities
 
             SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.WorldPosition, this.Animation.TextureRectangle, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
         }
-        internal void Destroy()
+
+        public void Destroy()
         {
             SEntityManager.Remove(this);
             OnDestroy();
         }
 
-        public virtual void Reset() { return; }
-
-        internal void Damage(int value)
+        public void Damage(int value)
         {
             if (this.IsInvincible)
             {
@@ -131,6 +130,7 @@ namespace StardustDefender.Core.Entities
             }
         }
 
+        public virtual void Reset() { return; }
         protected virtual void OnAwake() { return; }
         protected virtual void OnStart() { return; }
         protected virtual void OnUpdate() { return; }
