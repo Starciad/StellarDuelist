@@ -8,13 +8,20 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
-using StardustDefender.Enums;
 
 using System;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
 {
+    /// <summary>
+    /// [ ALIEN EYE ]
+    /// </summary>
+    /// <remarks>
+    /// Moves quickly down, left, and right, with a very high, random jump radius. When he finishes moving, he shoots 3 projectiles in a linear direction at the player.
+    /// <br/><br/>
+    /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
+    /// </remarks>
     [SEntityRegister(typeof(Header))]
     internal sealed class Enemy_05 : SEnemyEntity
     {
@@ -44,7 +51,7 @@ namespace StardustDefender.Entities.Enemies
         private SPlayerEntity player;
 
         private bool canShoot;
-        
+
         // ==================================================== //
         // RESET
         public override void Reset()
@@ -138,7 +145,9 @@ namespace StardustDefender.Entities.Enemies
         private void ShootUpdate()
         {
             if (!this.canShoot)
+            {
                 return;
+            }
 
             if (!this.shootTimer.IsFinished)
             {
@@ -156,12 +165,14 @@ namespace StardustDefender.Entities.Enemies
         {
             for (int i = 0; i < 3; i++)
             {
-                if (IsDead)
+                if (this.IsDead)
+                {
                     return;
+                }
 
                 await Task.Delay(TimeSpan.FromSeconds(0.15f));
 
-                Vector2 direction = player.WorldPosition - this.WorldPosition;
+                Vector2 direction = this.player.WorldPosition - this.WorldPosition;
 
                 if (direction != Vector2.Zero)
                 {

@@ -2,7 +2,6 @@
 
 using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
-using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
@@ -14,6 +13,14 @@ using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
 {
+    /// <summary>
+    /// [ ALIEN STAR ]
+    /// </summary>
+    /// <remarks>
+    /// Continuously moves downwards. When he dies, he releases a barrage of projectiles that are launched in a 360 degree radius around his point of death.
+    /// <br/><br/>
+    /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
+    /// </remarks>
     [SEntityRegister(typeof(Header))]
     internal sealed class Enemy_03 : SEnemyEntity
     {

@@ -16,6 +16,12 @@ using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Bosses
 {
+    /// <summary>
+    /// [ BLOODY EYE ALIEN ]
+    /// </summary>
+    /// <remarks>
+    /// He moves nimbly left and right, changing his direction by jumping around the corners of the screen, and also moves slightly up and down. At certain time intervals, it stops moving and begins to launch a volley of projectiles that follow random linear directions, when finished, it returns to moving normally.
+    /// </remarks>
     [SEntityRegister(typeof(Header))]
     internal sealed class Boss_01 : SBossEntity
     {

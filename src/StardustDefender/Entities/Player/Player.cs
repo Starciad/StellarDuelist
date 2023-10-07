@@ -10,6 +10,7 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
+
 using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Player
@@ -116,7 +117,9 @@ namespace StardustDefender.Entities.Player
                 foreach (SEntity entity in SEntityManager.Entities)
                 {
                     if (entity == this)
+                    {
                         continue;
+                    }
 
                     entity.Destroy();
                 }

@@ -14,6 +14,16 @@ using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
 {
+    /// <summary>
+    /// [ ALIEN SPACESHIP ]
+    /// </summary>
+    /// <remarks>
+    /// Moves downwards interspersed with horizontal movements based on a few pre-determined seconds. 
+    /// <br/><br/>
+    /// Shoots lasers that move steadily downwards. They hurt the <see cref="SPlayerEntity"/>.
+    /// <br/><br/>
+    /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
+    /// </remarks>
     [SEntityRegister(typeof(Header))]
     internal sealed class Enemy_02 : SEnemyEntity
     {

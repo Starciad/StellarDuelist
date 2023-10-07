@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 
+using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-
-using StardustDefender.Controllers;
 using StardustDefender.Effects;
 using StardustDefender.Enums;
 
@@ -15,6 +14,14 @@ using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
 {
+    /// <summary>
+    /// [ ALIEN ]
+    /// </summary>
+    /// <remarks>
+    /// Moves downwards interspersed with horizontal movements based on a few pre-determined seconds.
+    /// <br/><br/>
+    /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
+    /// </remarks>
     [SEntityRegister(typeof(Header))]
     internal sealed class Enemy_01 : SEnemyEntity
     {
