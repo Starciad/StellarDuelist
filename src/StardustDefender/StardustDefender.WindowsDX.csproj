@@ -13,9 +13,10 @@
 		<DefineConstants>WindowsDX</DefineConstants>
 		<MonoGamePlatform>Windows</MonoGamePlatform>
 	</PropertyGroup>
-	
+
 	<!-- SYSTEM -->
 	<PropertyGroup>
+		<RootNamespace>StardustDefender</RootNamespace>
 		<ApplicationManifest>Content/app.manifest</ApplicationManifest>
 		<ApplicationIcon>Content/Icon.ico</ApplicationIcon>
 	</PropertyGroup>
@@ -24,6 +25,11 @@
 	<ItemGroup>
 		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
 		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+	</ItemGroup>
+
+	<!-- PROJECT -->
+	<ItemGroup>
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj" />
 	</ItemGroup>
 
 	<!-- TARGETS -->

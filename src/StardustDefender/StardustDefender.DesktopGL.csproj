@@ -16,6 +16,7 @@
 	
 	<!-- SYSTEM -->
 	<PropertyGroup>
+		<RootNamespace>StardustDefender</RootNamespace>
 		<ApplicationManifest>Content/app.manifest</ApplicationManifest>
 		<ApplicationIcon>Content/Icon.ico</ApplicationIcon>
 	</PropertyGroup>
@@ -24,6 +25,11 @@
 	<ItemGroup>
 		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
 		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+	</ItemGroup>
+
+	<!-- PROJECT -->
+	<ItemGroup>
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.DesktopGL.csproj" />
 	</ItemGroup>
 
 	<!-- TARGETS -->

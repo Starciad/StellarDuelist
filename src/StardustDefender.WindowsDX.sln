@@ -3,20 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardustDefender.WindowsDX", "StardustDefender\StardustDefender.WindowsDX.csproj", "{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.WindowsDX", "StardustDefender\StardustDefender.WindowsDX.csproj", "{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.Core.WindowsDX", "StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj", "{6AB3598A-431C-4E67-8727-6485F2879BA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {492DE8F8-FB1D-48E6-BBB6-ECB78817FAEB}
 	EndGlobalSection
 EndGlobal

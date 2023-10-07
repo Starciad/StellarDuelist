@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StardustDefender.Core;
+
+using System;
 
 namespace StardustDefender
 {
@@ -7,7 +9,7 @@ namespace StardustDefender
         [STAThread]
         private static void Main()
         {
-            using SGame game = new();
+            using SGame game = new(typeof(Program).Assembly);
             game.Run();
         }
     }
