@@ -127,7 +127,7 @@ namespace StardustDefender.Entities.Player
             if (SInput.Started(Keys.D3))
             {
                 this.ShootDelay -= 0.1f;
-                this.ShootDelay = Math.Clamp(this.ShootDelay, 0, 100f);
+                this.ShootDelay = Math.Clamp(this.ShootDelay, 0.1f, 100f);
             }
 
             if (SInput.Started(Keys.D4))

@@ -165,7 +165,7 @@ namespace StardustDefender.Entities.Enemies
         {
             for (int i = 0; i < 3; i++)
             {
-                if (this.IsDead)
+                if (this.IsDestroyed)
                 {
                     return;
                 }

@@ -16,7 +16,7 @@ namespace StardustDefender.Items
         protected override void OnEffect(SPlayerEntity player)
         {
             player.ShootDelay -= 0.1f;
-            player.ShootDelay = Math.Clamp(player.ShootDelay, 0, 100f);
+            player.ShootDelay = Math.Clamp(player.ShootDelay, 0.1f, 100f);
         }
     }
 }

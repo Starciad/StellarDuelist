@@ -34,13 +34,13 @@ namespace StardustDefender.Entities.Bosses
                 this.Classification = SEntityClassification.Boss;
             }
 
-            protected override bool OnSpawningCondition()
-            {
-                SPlayerEntity player = SLevelController.Player;
+            //protected override bool OnSpawningCondition()
+            //{
+            //    SPlayerEntity player = SLevelController.Player;
 
-                return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                       player.HealthValue >= 2 && player.HealthValue >= 3.6f && player.BulletLifeTime >= 3.6f;
-            }
+            //    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+            //           player.HealthValue >= 2 && player.HealthValue >= 3.6f && player.BulletLifeTime >= 3.6f;
+            //}
         }
 
         // ==================================================== //
@@ -295,7 +295,7 @@ namespace StardustDefender.Entities.Bosses
             int shotBurstCount = SRandom.Range(25, 35);
             for (int i = 0; i < shotBurstCount; i++)
             {
-                if (this.IsDead)
+                if (this.IsDestroyed)
                 {
                     break;
                 }

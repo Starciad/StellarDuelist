@@ -29,7 +29,7 @@ namespace StardustDefender.Core.Entities
         public float Rotation { get; set; }
 
         // Attributes
-        public bool IsDead => HealthValue <= 0;
+        public bool IsDestroyed { get; private set; }
         public int HealthValue { get; set; }
         public int DamageValue { get; set; }
 
@@ -86,6 +86,7 @@ namespace StardustDefender.Core.Entities
 
         public void Destroy()
         {
+            IsDestroyed = true;
             SEntityManager.Remove(this);
             OnDestroy();
         }
