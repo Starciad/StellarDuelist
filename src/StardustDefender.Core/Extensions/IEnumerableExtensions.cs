@@ -6,9 +6,9 @@ using System;
 
 namespace StardustDefender.Core.Extensions
 {
-    internal static class IEnumerableExtensions
+    public static class IEnumerableExtensions
     {
-        internal static T SelectRandom<T>(this IEnumerable<T> values)
+        public static T SelectRandom<T>(this IEnumerable<T> values)
         {
             if (values == null)
                 throw new InvalidOperationException("Sequence contains no elements");
