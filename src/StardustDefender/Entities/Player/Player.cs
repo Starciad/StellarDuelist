@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
+using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
@@ -28,6 +29,11 @@ namespace StardustDefender.Entities.Player
                 this.Classification = SEntityClassification.Player;
             }
         }
+
+        // ==================================================== //
+
+        private readonly STimer invincibilityTimer = new(10f);
+        private bool isHurt;
 
         // ==================================================== //
 
@@ -67,21 +73,19 @@ namespace StardustDefender.Entities.Player
         protected override void OnUpdate()
         {
             TimersUpdate();
+            HurtUpdate();
             InputsUpdate();
         }
         protected override void OnDamaged(int value)
         {
             SLevelController.PlayerDamaged(value);
 
+            this.isHurt = true;
+            this.IsInvincible = true;
+            this.invincibilityTimer.Restart();
+
             _ = SSounds.Play("Damage_10");
             _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
-
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
         }
         protected override void OnDestroy()
         {
@@ -96,6 +100,23 @@ namespace StardustDefender.Entities.Player
         private void TimersUpdate()
         {
             this.ShootTimer.Update();
+
+        }
+        private void HurtUpdate()
+        {
+            if (this.isHurt)
+            {
+                this.Color = Color.Red;
+                this.invincibilityTimer.Update();
+
+                if (this.invincibilityTimer.IsFinished)
+                {
+                    this.Color = Color.White;
+                    this.isHurt = false;
+                    this.IsInvincible = false;
+                    this.invincibilityTimer.Stop();
+                }
+            }
         }
 
         #region INPUTS

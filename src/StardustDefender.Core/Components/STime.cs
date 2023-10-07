@@ -2,10 +2,10 @@
 
 namespace StardustDefender.Core.Components
 {
-    internal static class STime
+    public static class STime
     {
-        internal static GameTime UpdateTime { get; private set; }
-        internal static GameTime DrawTime { get; private set; }
+        public static GameTime UpdateTime { get; private set; }
+        public static GameTime DrawTime { get; private set; }
 
         internal static void Update(GameTime updateTime = null, GameTime drawTime = null)
         {
