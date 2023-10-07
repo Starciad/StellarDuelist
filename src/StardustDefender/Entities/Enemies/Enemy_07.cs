@@ -34,10 +34,10 @@ namespace StardustDefender.Entities.Enemies
                 this.Classification = SEntityClassification.Enemy;
             }
 
-            //protected override bool OnSpawningCondition()
-            //{
-            //    return SDifficultyController.DifficultyRate >= 13;
-            //}
+            protected override bool OnSpawningCondition()
+            {
+                return SDifficultyController.DifficultyRate >= 13;
+            }
         }
 
         // ==================================================== //
