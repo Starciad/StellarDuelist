@@ -31,6 +31,31 @@ namespace StardustDefender.Entities.Player
 
         // ==================================================== //
 
+        public override void Reset()
+        {
+            // Animations
+            this.Animation.Reset();
+            this.Animation.Clear();
+            this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+
+            // Team
+            this.Team = STeam.Good;
+
+            // Attributes
+            this.HealthValue = 3;
+            this.DamageValue = 1;
+            this.ChanceOfKnockback = 0;
+            this.KnockbackForce = 0;
+
+            this.ShootDelay = 3f;
+            this.BulletLifeTime = 3f;
+            this.BulletSpeed = 3f;
+
+            // Timers
+            this.ShootTimer.SetDelay(this.ShootDelay);
+        }
+
         protected override void OnAwake()
         {
             Reset();
@@ -66,31 +91,6 @@ namespace StardustDefender.Entities.Player
             SLevelController.GameOver();
 
             _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
-        }
-
-        public override void Reset()
-        {
-            // Animations
-            this.Animation.Reset();
-            this.Animation.Clear();
-            this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
-
-            // Team
-            this.Team = STeam.Good;
-
-            // Attributes
-            this.HealthValue = 3;
-            this.DamageValue = 1;
-            this.ChanceOfKnockback = 0;
-            this.KnockbackForce = 0;
-
-            this.ShootDelay = 3f;
-            this.BulletLifeTime = 3f;
-            this.BulletSpeed = 3f;
-
-            // Timers
-            this.ShootTimer.SetDelay(this.ShootDelay);
         }
 
         private void TimersUpdate()
