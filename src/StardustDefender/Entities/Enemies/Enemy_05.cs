@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace StardustDefender.Entities.Enemies
 {
     [SEntityRegister(typeof(Header))]
-    internal sealed class Enemy_03 : SEnemyEntity
+    internal sealed class Enemy_05 : SEnemyEntity
     {
         // ==================================================== //
 
@@ -28,20 +28,11 @@ namespace StardustDefender.Entities.Enemies
 
             protected override bool OnSpawningCondition()
             {
-                return SDifficultyController.DifficultyRate >= 6;
+                return SDifficultyController.DifficultyRate >= 10;
             }
         }
 
         // ==================================================== //
-
-        private const float SPEED = 0.01f;
-
-        // Bullets
-        private const float BULLET_SPEED = 1f;
-        private const float BULLET_LIFE_TIME = 50f;
-
-        private const int NUMBER_OF_BULLETS = 12;
-        private const float SPREAD_ANGLE_DEGRESS = 360f;
 
         // ==================================================== //
         // RESET
@@ -52,13 +43,13 @@ namespace StardustDefender.Entities.Enemies
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 2));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 2));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 4));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 4));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
 
-            this.HealthValue = 6;
+            this.HealthValue = 25;
             this.DamageValue = 2;
 
             this.ChanceOfKnockback = 0;
@@ -75,12 +66,12 @@ namespace StardustDefender.Entities.Enemies
             // Behaviour
             CollideWithPlayer();
 
-            // AI
-            MovementUpdate();
+            // AI (Move + Shoot)
+
         }
         protected override void OnDamaged(int value)
         {
-            _ = SSounds.Play("Damage_04");
+            _ = SSounds.Play("Damage_05");
             _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
 
             _ = Task.Run(async () =>
@@ -94,51 +85,19 @@ namespace StardustDefender.Entities.Enemies
         {
             SLevelController.EnemyKilled();
 
-            _ = SSounds.Play("Explosion_02");
+            _ = SSounds.Play("Explosion_04");
             _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
 
             // Drop
-            if (SRandom.Chance(20, 100))
+            if (SRandom.Chance(15, 100))
             {
                 _ = SItemsManager.CreateRandomItem(this.WorldPosition);
             }
-
-            // Shoot
-            FlurryOfShots();
         }
 
         // UPDATE
-        private void MovementUpdate()
-        {
-            this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + SPEED);
-        }
+
 
         // SKILLS
-        private void FlurryOfShots()
-        {
-            _ = SSounds.Play("Explosion_03");
-
-            float angleIncrement = SPREAD_ANGLE_DEGRESS / (NUMBER_OF_BULLETS - 1);
-            float currentAngle = -SPREAD_ANGLE_DEGRESS / 2;
-
-            for (int i = 0; i < NUMBER_OF_BULLETS; i++)
-            {
-                float radians = MathHelper.ToRadians(currentAngle);
-                Vector2 direction = new((float)Math.Cos(radians), (float)Math.Sin(radians));
-
-                SProjectileManager.Create(new()
-                {
-                    SpriteId = 2,
-                    Team = STeam.Bad,
-                    Position = new(this.WorldPosition.X, this.WorldPosition.Y),
-                    Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
-                    Damage = this.DamageValue,
-                    LifeTime = BULLET_LIFE_TIME,
-                    Range = 7.5f
-                });
-
-                currentAngle += angleIncrement;
-            }
-        }
     }
 }

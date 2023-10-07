@@ -41,6 +41,29 @@ namespace StardustDefender.Entities.Enemies
 
         private Vector2 previousLocalPosition;
 
+        // ==================================================== //
+        // RESET
+        public override void Reset()
+        {
+            this.Animation.Reset();
+            this.Animation.Clear();
+
+            this.Animation.SetMode(SAnimationMode.Forward);
+            this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 3));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 3));
+            this.Animation.SetDuration(3f);
+
+            this.Team = STeam.Bad;
+
+            this.HealthValue = 15;
+            this.DamageValue = 2;
+
+            this.ChanceOfKnockback = 25;
+            this.KnockbackForce = 2;
+        }
+
+        // OVERRIDE
         protected override void OnAwake()
         {
             Reset();
@@ -80,26 +103,8 @@ namespace StardustDefender.Entities.Enemies
                 _ = SItemsManager.CreateRandomItem(this.WorldPosition);
             }
         }
-        public override void Reset()
-        {
-            this.Animation.Reset();
-            this.Animation.Clear();
 
-            this.Animation.SetMode(SAnimationMode.Forward);
-            this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 3));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 3));
-            this.Animation.SetDuration(3f);
-
-            this.Team = STeam.Bad;
-
-            this.HealthValue = 15;
-            this.DamageValue = 2;
-
-            this.ChanceOfKnockback = 25;
-            this.KnockbackForce = 2;
-        }
-
+        // UPDATE
         private void HorizontalMovementUpdate()
         {
             // MOVING

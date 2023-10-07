@@ -8,6 +8,7 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
+using StardustDefender.Enums;
 
 using System.Threading.Tasks;
 
@@ -39,8 +40,31 @@ namespace StardustDefender.Entities.Enemies
         private readonly STimer movementTimer = new(20f);
         private readonly STimer shootTimer = new(35f);
 
-        private int movementDirection = 1;
+        private Direction movementDirection;
 
+        // ==================================================== //
+        // RESET
+        public override void Reset()
+        {
+            this.Animation.Reset();
+            this.Animation.Clear();
+
+            this.Animation.SetMode(SAnimationMode.Forward);
+            this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 1));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 1));
+            this.Animation.SetDuration(3f);
+
+            this.Team = STeam.Bad;
+
+            this.HealthValue = 3;
+            this.DamageValue = 1;
+
+            this.ChanceOfKnockback = 0;
+            this.KnockbackForce = 0;
+        }
+
+        // OVERRIDE
         protected override void OnAwake()
         {
             Reset();
@@ -86,32 +110,13 @@ namespace StardustDefender.Entities.Enemies
                 _ = SItemsManager.CreateRandomItem(this.WorldPosition);
             }
         }
-        public override void Reset()
-        {
-            this.Animation.Reset();
-            this.Animation.Clear();
 
-            this.Animation.SetMode(SAnimationMode.Forward);
-            this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 1));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 1));
-            this.Animation.SetDuration(3f);
-
-            this.Team = STeam.Bad;
-
-            this.HealthValue = 3;
-            this.DamageValue = 1;
-
-            this.ChanceOfKnockback = 0;
-            this.KnockbackForce = 0;
-        }
-
+        // UPDATE
         private void TimersUpdate()
         {
             this.movementTimer.Update();
             this.shootTimer.Update();
         }
-
         private void MovementUpdate()
         {
             if (this.movementTimer.IsFinished)
@@ -119,15 +124,15 @@ namespace StardustDefender.Entities.Enemies
                 this.movementTimer.Restart();
                 switch (this.movementDirection)
                 {
-                    case 1:
+                    case Direction.Horizontal:
                         int direction = SRandom.Chance(50, 100) ? -1 : 1;
                         this.LocalPosition = new(this.LocalPosition.X + direction, this.LocalPosition.Y);
-                        this.movementDirection = 2;
+                        this.movementDirection = Direction.Vertical;
                         break;
 
-                    case 2:
+                    case Direction.Vertical:
                         this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + 1);
-                        this.movementDirection = 1;
+                        this.movementDirection = Direction.Horizontal;
                         break;
                 }
             }
@@ -141,6 +146,7 @@ namespace StardustDefender.Entities.Enemies
             }
         }
 
+        // SKILLS
         private void Shoot()
         {
             _ = SSounds.Play("Shoot_01");
