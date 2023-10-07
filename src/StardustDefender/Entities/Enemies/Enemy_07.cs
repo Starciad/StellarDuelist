@@ -18,7 +18,7 @@ namespace StardustDefender.Entities.Enemies
     /// [ ALIEN SPINNER ]
     /// </summary>
     /// <remarks>
-    /// If there are aliens in the scenario, he randomly chooses a target to position himself around it in a 3x3 area.
+    /// It moves strictly downwards after a few seconds. Constantly fires projectiles in a 360 degree radius.
     /// <br/><br/>
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
