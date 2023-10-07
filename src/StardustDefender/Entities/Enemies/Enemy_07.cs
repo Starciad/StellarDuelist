@@ -7,13 +7,10 @@ using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Core.Extensions;
-using StardustDefender.Core.Entities;
 using StardustDefender.Effects;
 
-using System.Linq;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
 {
@@ -159,15 +156,15 @@ namespace StardustDefender.Entities.Enemies
                 return;
             }
 
-            if (currentBullet > 0)
+            if (this.currentBullet > 0)
             {
                 Shoot();
-                currentAngle += ANGLE_INCREMENT;
-                currentBullet--;
+                this.currentAngle += ANGLE_INCREMENT;
+                this.currentBullet--;
             }
             else
             {
-                currentBullet = TOTAL_ANGLES;
+                this.currentBullet = TOTAL_ANGLES;
             }
 
             this.shootTimer.Restart();
@@ -176,7 +173,7 @@ namespace StardustDefender.Entities.Enemies
         // SKILLS
         private void Shoot()
         {
-            float radians = MathHelper.ToRadians(currentAngle);
+            float radians = MathHelper.ToRadians(this.currentAngle);
             Vector2 direction = new((float)Math.Cos(radians), (float)Math.Sin(radians));
 
             SProjectileManager.Create(new()
