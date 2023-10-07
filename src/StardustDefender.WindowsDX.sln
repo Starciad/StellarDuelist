@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.WindowsDX", "StardustDefender\StardustDefender.WindowsDX.csproj", "{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.Core", "StardustDefender.Core\StardustDefender.Core.csproj", "{6AB3598A-431C-4E67-8727-6485F2879BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.Core.WindowsDX", "StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj", "{6AB3598A-431C-4E67-8727-6485F2879BA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

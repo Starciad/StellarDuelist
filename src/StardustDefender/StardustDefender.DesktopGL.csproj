@@ -29,7 +29,7 @@
 
 	<!-- PROJECT -->
 	<ItemGroup>
-		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.csproj" />
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.DesktopGL.csproj" />
 	</ItemGroup>
 
 	<!-- TARGETS -->
