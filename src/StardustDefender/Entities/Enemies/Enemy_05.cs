@@ -8,6 +8,7 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
+using StardustDefender.Enums;
 
 using System;
 using System.Threading.Tasks;
@@ -28,12 +29,22 @@ namespace StardustDefender.Entities.Enemies
 
             protected override bool OnSpawningCondition()
             {
-                return SDifficultyController.DifficultyRate >= 10;
+                return SDifficultyController.DifficultyRate >= 9;
             }
         }
 
         // ==================================================== //
 
+        private const float BULLET_SPEED = 2.5f;
+        private const float BULLET_LIFE_TIME = 30f;
+
+        private readonly STimer shootTimer = new(6f);
+        private readonly STimer movementTimer = new(20f);
+
+        private SPlayerEntity player;
+
+        private bool canShoot;
+        
         // ==================================================== //
         // RESET
         public override void Reset()
@@ -50,7 +61,7 @@ namespace StardustDefender.Entities.Enemies
             this.Team = STeam.Bad;
 
             this.HealthValue = 25;
-            this.DamageValue = 2;
+            this.DamageValue = 1;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
@@ -61,13 +72,24 @@ namespace StardustDefender.Entities.Enemies
         {
             Reset();
         }
+        protected override void OnStart()
+        {
+            this.movementTimer.Restart();
+            this.shootTimer.Restart();
+
+            this.player = SLevelController.Player;
+        }
         protected override void OnUpdate()
         {
+            // Timers 
+            TimersUpdate();
+
             // Behaviour
             CollideWithPlayer();
 
             // AI (Move + Shoot)
-
+            ShootUpdate();
+            MovementUpdate();
         }
         protected override void OnDamaged(int value)
         {
@@ -96,8 +118,72 @@ namespace StardustDefender.Entities.Enemies
         }
 
         // UPDATE
+        private void TimersUpdate()
+        {
+            this.movementTimer.Update();
+            this.shootTimer.Update();
+        }
+        private void MovementUpdate()
+        {
+            if (!this.movementTimer.IsFinished)
+            {
+                return;
+            }
 
+            this.movementTimer.Restart();
+            this.LocalPosition = new(this.LocalPosition.X + SRandom.Range(-3, 4), this.LocalPosition.Y + SRandom.Range(1, 3));
+
+            this.canShoot = true;
+        }
+        private void ShootUpdate()
+        {
+            if (!this.canShoot)
+                return;
+
+            if (!this.shootTimer.IsFinished)
+            {
+                return;
+            }
+
+            _ = Task.Run(StartShootingAsync);
+
+            this.shootTimer.Restart();
+            this.canShoot = false;
+        }
 
         // SKILLS
+        private async Task StartShootingAsync()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (IsDead)
+                    return;
+
+                await Task.Delay(TimeSpan.FromSeconds(0.15f));
+
+                Vector2 direction = player.WorldPosition - this.WorldPosition;
+
+                if (direction != Vector2.Zero)
+                {
+                    direction.Normalize();
+                }
+
+                direction *= BULLET_SPEED;
+
+                SProjectileManager.Create(new()
+                {
+                    SpriteId = 1,
+                    Team = STeam.Bad,
+                    Position = new(this.WorldPosition.X, this.WorldPosition.Y),
+                    Speed = direction,
+                    Damage = this.DamageValue,
+                    LifeTime = BULLET_LIFE_TIME,
+                    Range = 10f,
+                    Color = Color.White,
+                });
+
+                _ = SSounds.Play("Shoot_06");
+            }
+        }
     }
 }

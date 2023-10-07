@@ -62,7 +62,6 @@ namespace StardustDefender.Entities.Bosses
 
         private State state;
 
-        private bool isDied;
         private bool isShooting;
         private bool canMove;
         private bool canShoot;
@@ -73,6 +72,65 @@ namespace StardustDefender.Entities.Bosses
         private readonly STimer shootTimer = new(20f);
 
         private Vector2 previousLocalPosition;
+
+        // RESET
+        public override void Reset()
+        {
+            // Attributes
+            this.HealthValue = 45;
+            this.DamageValue = 1;
+            this.CollisionRange = 55f;
+
+            // Team
+            this.Team = STeam.Bad;
+
+            // States
+            this.verticalDirection = false;
+            this.horizontalDirection = false;
+
+            // Animation
+            this.texture = STextures.GetTexture("ENEMIES_Bosses");
+            this.A_Intro.SetTexture(this.texture);
+            this.A_Normal.SetTexture(this.texture);
+            this.A_Shoot.SetTexture(this.texture);
+
+            this.A_Idle.Reset();
+            this.A_Intro.Reset();
+            this.A_Normal.Reset();
+            this.A_Shoot.Reset();
+
+            this.A_Idle.Clear();
+            this.A_Intro.Clear();
+            this.A_Normal.Clear();
+            this.A_Shoot.Clear();
+
+            this.A_Idle.SetMode(SAnimationMode.Disable);
+            this.A_Intro.SetMode(SAnimationMode.Once);
+            this.A_Normal.SetMode(SAnimationMode.Disable);
+            this.A_Shoot.SetMode(SAnimationMode.Once);
+
+            this.A_Intro.SetDuration(3f);
+            this.A_Normal.SetDuration(1f);
+            this.A_Shoot.SetDuration(3f);
+
+            this.A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
+
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
+            this.A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
+
+            this.A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
+
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
+            this.A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
+
+            this.Animation = this.A_Normal;
+        }
 
         // Override
         protected override void OnAwake()
@@ -119,7 +177,6 @@ namespace StardustDefender.Entities.Bosses
         }
         protected override void OnDestroy()
         {
-            this.isDied = true;
             SLevelController.BossKilled();
 
             _ = SSounds.Play("Explosion_05");
@@ -129,64 +186,6 @@ namespace StardustDefender.Entities.Bosses
             _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X, this.WorldPosition.Y - 16));
             _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X + 16, this.WorldPosition.Y));
             _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X - 16, this.WorldPosition.Y));
-        }
-        public override void Reset()
-        {
-            // Attributes
-            this.HealthValue = 45;
-            this.DamageValue = 1;
-            this.CollisionRange = 55f;
-
-            // Team
-            this.Team = STeam.Bad;
-
-            // States
-            this.isDied = false;
-            this.verticalDirection = false;
-            this.horizontalDirection = false;
-
-            // Animation
-            this.texture = STextures.GetTexture("ENEMIES_Bosses");
-            this.A_Intro.SetTexture(this.texture);
-            this.A_Normal.SetTexture(this.texture);
-            this.A_Shoot.SetTexture(this.texture);
-
-            this.A_Idle.Reset();
-            this.A_Intro.Reset();
-            this.A_Normal.Reset();
-            this.A_Shoot.Reset();
-
-            this.A_Idle.Clear();
-            this.A_Intro.Clear();
-            this.A_Normal.Clear();
-            this.A_Shoot.Clear();
-
-            this.A_Idle.SetMode(SAnimationMode.Disable);
-            this.A_Intro.SetMode(SAnimationMode.Once);
-            this.A_Normal.SetMode(SAnimationMode.Disable);
-            this.A_Shoot.SetMode(SAnimationMode.Once);
-
-            this.A_Intro.SetDuration(3f);
-            this.A_Normal.SetDuration(1f);
-            this.A_Shoot.SetDuration(3f);
-
-            this.A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
-
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
-
-            this.A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
-
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
-
-            this.Animation = this.A_Normal;
         }
 
         // Actions
@@ -290,7 +289,7 @@ namespace StardustDefender.Entities.Bosses
             int shotBurstCount = SRandom.Range(25, 35);
             for (int i = 0; i < shotBurstCount; i++)
             {
-                if (this.isDied)
+                if (this.IsDead)
                 {
                     break;
                 }

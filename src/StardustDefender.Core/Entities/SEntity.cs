@@ -29,6 +29,7 @@ namespace StardustDefender.Core.Entities
         public float Rotation { get; set; }
 
         // Attributes
+        public bool IsDead => HealthValue <= 0;
         public int HealthValue { get; set; }
         public int DamageValue { get; set; }
 

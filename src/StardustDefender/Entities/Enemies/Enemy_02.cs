@@ -28,7 +28,7 @@ namespace StardustDefender.Entities.Enemies
 
             protected override bool OnSpawningCondition()
             {
-                return SDifficultyController.DifficultyRate >= 3;
+                return SDifficultyController.DifficultyRate >= 2;
             }
         }
 
