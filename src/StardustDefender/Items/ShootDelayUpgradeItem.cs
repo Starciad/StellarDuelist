@@ -2,6 +2,8 @@
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Items;
 
+using System;
+
 namespace StardustDefender.Items
 {
     internal sealed class ShootDelayUpgradeItem : SItemRegister
@@ -14,6 +16,7 @@ namespace StardustDefender.Items
         protected override void OnEffect(SPlayerEntity player)
         {
             player.ShootDelay -= 0.1f;
+            player.ShootDelay = Math.Clamp(player.ShootDelay, 0, 100f);
         }
     }
 }

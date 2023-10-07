@@ -11,6 +11,7 @@ using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
 
+using System;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Player
@@ -105,11 +106,41 @@ namespace StardustDefender.Entities.Player
             ShootInputUpdate();
 
 #if DEBUG
+            DEBUG_Increase_Power();
             DEBUG_Kill_Enemies();
 #endif
         }
 
 #if DEBUG
+        private void DEBUG_Increase_Power()
+        {
+            if (SInput.Started(Keys.D1))
+            {
+                this.HealthValue += 1;
+            }
+
+            if (SInput.Started(Keys.D2))
+            {
+                this.DamageValue += 1;
+            }
+
+            if (SInput.Started(Keys.D3))
+            {
+                this.ShootDelay -= 0.1f;
+                this.ShootDelay = Math.Clamp(this.ShootDelay, 0, 100f);
+            }
+
+            if (SInput.Started(Keys.D4))
+            {
+                this.BulletLifeTime += 0.1f;
+            }
+
+            if (SInput.Started(Keys.D5))
+            {
+                this.BulletSpeed += 0.1f;
+            }
+        }
+
         private void DEBUG_Kill_Enemies()
         {
             if (SInput.Started(Keys.D0))
