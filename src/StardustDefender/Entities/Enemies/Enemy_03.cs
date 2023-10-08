@@ -126,7 +126,7 @@ namespace StardustDefender.Entities.Enemies
             _ = SSounds.Play("Explosion_03");
 
             float angleIncrement = SPREAD_ANGLE_DEGRESS / (NUMBER_OF_BULLETS - 1);
-            float currentAngle = 0;
+            float currentAngle = SRandom.Range(0, 361);
 
             for (int i = 0; i < NUMBER_OF_BULLETS; i++)
             {
