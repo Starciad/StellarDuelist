@@ -4,6 +4,7 @@ using StardustDefender.Core.Entities;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Items;
 using StardustDefender.Core.Managers;
+using StardustDefender.Core.Projectiles;
 using StardustDefender.Core.World;
 
 namespace StardustDefender.Controllers
@@ -54,6 +55,17 @@ namespace StardustDefender.Controllers
         private static bool IsPositionOutOfBounds(Vector2 position, Vector2 minLimit, Vector2 maxLimit)
         {
             return position.X < minLimit.X || position.Y < minLimit.Y || position.X > maxLimit.X || position.Y > maxLimit.Y;
+        }
+
+        private static void CleanProjectiles()
+        {
+            foreach (SProjectile projectile in SProjectileManager.Projectiles)
+            {
+                if (projectile == null)
+                    continue;
+
+                SProjectileManager.Remove(projectile);
+            }
         }
 
         private static void ResetPlayerPosition()

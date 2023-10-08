@@ -74,6 +74,8 @@ namespace StardustDefender.Controllers
             // Start a boss battle if possible.
             if (bossIncoming)
             {
+                CleanProjectiles();
+
                 SSongs.Stop();
                 SFade.FadeIn(Color.White, 0.5f);
                 await Task.Delay(TimeSpan.FromSeconds(1f));
@@ -97,6 +99,7 @@ namespace StardustDefender.Controllers
             }
 
             // Perform the level transition and advance the difficulty.
+            CleanProjectiles();
             await LevelTransitionAsync();
             SDifficultyController.Next();
 
