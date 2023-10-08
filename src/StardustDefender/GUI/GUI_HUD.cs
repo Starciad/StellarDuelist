@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Controllers;
 using StardustDefender.Core.Camera;
@@ -19,10 +20,12 @@ namespace StardustDefender.GUI
         // Textures
         private Texture2D borderTexture;
         private Texture2D logoTexture;
+        private Texture2D tutorialTexture;
 
         // Origins
         private Vector2 borderTextureOrigin;
         private Vector2 logoTextureOrigin;
+        private Vector2 tutorialTextureOrigin;
 
         // Fonts
         private SpriteFont font;
@@ -41,6 +44,8 @@ namespace StardustDefender.GUI
         private readonly StringBuilder S_TotalGameTime = new();
 
         // Properties
+        private bool viewedTheTutorial = false;
+        private byte tutorialTimeout;
         private int warningPalleteColorIndex;
 
         protected override bool ConditionToBeDrawn()
@@ -53,10 +58,12 @@ namespace StardustDefender.GUI
             // Textures
             this.borderTexture = STextures.GetTexture("UI_SolidBackground");
             this.logoTexture = STextures.GetTexture("UI_Logo");
+            this.tutorialTexture = STextures.GetTexture("TEXTS_Tutorial");
 
             // Origins
             this.borderTextureOrigin = this.borderTexture.GetOriginPosition();
             this.logoTextureOrigin = this.logoTexture.GetOriginPosition();
+            this.tutorialTextureOrigin = this.tutorialTexture.GetOriginPosition();
 
             // Fonts
             this.font = SFonts.Impact;
@@ -80,6 +87,20 @@ namespace StardustDefender.GUI
             _ = this.S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
             _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
             _ = this.S_TotalGameTime.Append($"{SLevelController.TotalGameTime.ToString(@"hh\:mm\:ss")}");
+
+            if (!viewedTheTutorial)
+            {
+                if (SInput.Started(Keys.A) || SInput.Started(Keys.D) || SInput.Started(Keys.K) ||
+                    SInput.Started(Keys.Left) || SInput.Started(Keys.Right) || SInput.Started(Keys.P))
+                {
+                    tutorialTimeout++;
+                }
+
+                if (tutorialTimeout >= 6)
+                {
+                    viewedTheTutorial = true;
+                }
+            }
         }
         protected override void OnDraw()
         {
@@ -106,6 +127,12 @@ namespace StardustDefender.GUI
             // Infos (Right)
             SGraphics.SpriteBatch.DrawString(this.font, this.S_TotalGameTime_Label, new Vector2(SCamera.Center.X + 180, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
             SGraphics.SpriteBatch.DrawString(this.font, this.S_TotalGameTime, new Vector2(SCamera.Center.X + 186, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+
+            // Tutorial
+            if (!viewedTheTutorial)
+            {
+                SGraphics.SpriteBatch.Draw(this.tutorialTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, Color.White, 0f, this.tutorialTextureOrigin, new Vector2(0.75f), SpriteEffects.None, 0f);
+            }
         }
 
         private void UpdateColors()

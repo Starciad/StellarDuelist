@@ -82,7 +82,7 @@ namespace StardustDefender.Core
         {
             STime.Update(gameTime, null);
             SInput.Update();
-
+            
             if (this.IsActive && SGameController.State == SGameState.Running)
             {
                 // Managers
