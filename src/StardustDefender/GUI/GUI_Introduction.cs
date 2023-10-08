@@ -54,7 +54,7 @@ namespace StardustDefender.GUI
         protected override void OnDraw()
         {
             SGraphics.SpriteBatch.Draw(this.logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, this.logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_Intro, new Vector2(SCamera.Center.X - (this.S_IntroMeasure.X / 1.5f), SCamera.Center.Y + 96), Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Intro, new Vector2(SCamera.Center.X + 110, SCamera.Center.Y + 128), Color.White, 0f, S_IntroMeasure, 0.5f, SpriteEffects.None, 0f);
         }
     }
 }
