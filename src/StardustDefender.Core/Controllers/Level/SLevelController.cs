@@ -26,6 +26,7 @@ namespace StardustDefender.Controllers
 
         // Entities (Boss)
         private static Type bossTypeSelected;
+        private static bool bossIncoming;
         private static bool bossDead;
 
         // Positions

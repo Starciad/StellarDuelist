@@ -71,7 +71,7 @@ namespace StardustDefender.Core.Components
 
             foreach ((string, string) asset in assets)
             {
-                songs.Add(asset.Item1, SContent.Sprites.Load<Song>(asset.Item2));
+                songs.Add(asset.Item1, SContent.Songs.Load<Song>(asset.Item2));
             }
         }
 

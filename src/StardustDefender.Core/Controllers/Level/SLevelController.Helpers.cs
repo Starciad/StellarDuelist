@@ -1,9 +1,13 @@
-﻿namespace StardustDefender.Controllers
+﻿using StardustDefender.Core.Components;
+
+namespace StardustDefender.Controllers
 {
     public static partial class SLevelController
     {
         public static void GameOver()
         {
+            SSongs.Play($"Game_Over_{SRandom.Range(1, 4)}");
+
             gameEnded = true;
             initialized = false;
 
@@ -23,6 +27,7 @@
 
         public static void BossKilled()
         {
+            SSongs.Play($"Victory_Boss");
             bossDead = true;
         }
     }

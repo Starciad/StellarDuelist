@@ -32,6 +32,8 @@ namespace StardustDefender.GUI
 
             this.pausedTextureOrigin = this.pausedTexture.GetOriginPosition();
             this.backgroundTextureOrigin = this.backgroundTexture.GetOriginPosition();
+
+            SSongs.Volume = 0.2f;
         }
         protected override void OnUpdate()
         {
@@ -39,6 +41,7 @@ namespace StardustDefender.GUI
             {
                 SGameController.SetGameState(SGameState.Running);
                 Disable();
+                SSongs.Volume = 0.5f;
             }
         }
         protected override void OnDraw()
