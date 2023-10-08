@@ -28,7 +28,6 @@ Você pode encontrar as versões mais recentes do jogo para download nas seguint
 [![GitHub](.github/assets/imgs/buttons/b_github.webp)](LINK_PARA_GITHUB)
 
 # Requisitos
-
 ## DirectX (Versão)
 - DirectX 10.0 ou superior;
 - .NET Runtime.
