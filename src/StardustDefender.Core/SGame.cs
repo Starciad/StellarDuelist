@@ -53,6 +53,7 @@ namespace StardustDefender.Core
         protected override void LoadContent()
         {
             STextures.Load();
+            SSongs.Load();
             SSounds.Load();
             SFonts.Load();
             SFade.Load();

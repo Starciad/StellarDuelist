@@ -13,8 +13,8 @@ namespace StardustDefender.Core.Components
         private static readonly (string, string)[] assets = new (string, string)[]
         {
             // Inputs
-            ("Player_Movement","Input/player_movement"),
-            ("Player_Upgrade", "Input/player_upgrade"),
+            ("Player_Movement", "Input/Player_Movement"),
+            ("Player_Upgrade", "Input/Player_Upgrade"),
 
             // Explosion
             ("Explosion_01", "Explosion/Explosion_01"),
