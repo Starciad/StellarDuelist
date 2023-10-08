@@ -17,6 +17,8 @@ namespace StardustDefender.Controllers
         public static int Level => level;
         public static TimeSpan TotalGameTime => totalGameTime.Elapsed;
         internal static int PlayerCumulativeDamage => playerCumulativeDamage;
+        public static bool BossIncoming => bossIncoming;
+        public static bool BossAppeared => bossAppeared;
 
         // Consts
         private const int ENEMY_SPAWN_RANGE = 4;
@@ -27,6 +29,7 @@ namespace StardustDefender.Controllers
         // Entities (Boss)
         private static Type bossTypeSelected;
         private static bool bossIncoming;
+        private static bool bossAppeared;
         private static bool bossDead;
 
         // Positions

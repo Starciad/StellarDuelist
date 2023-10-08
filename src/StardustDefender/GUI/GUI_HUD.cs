@@ -8,6 +8,7 @@ using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Extensions;
 using StardustDefender.Core.GUI;
+using StardustDefender.Core.Colors;
 
 using System.Text;
 
@@ -27,6 +28,7 @@ namespace StardustDefender.GUI
         private SpriteFont font;
 
         // INFOS (Left)
+        private readonly StringBuilder S_Boss_Incoming = new("BOSS INCOMING!");
         private readonly StringBuilder S_Level = new();
         private readonly StringBuilder S_Health = new();
         private readonly StringBuilder S_Damage = new();
@@ -37,6 +39,9 @@ namespace StardustDefender.GUI
         // INFOS (Right)
         private readonly StringBuilder S_TotalGameTime_Label = new("Game Time");
         private readonly StringBuilder S_TotalGameTime = new();
+
+        // Properties
+        private int warningPalleteColorIndex;
 
         protected override bool ConditionToBeDrawn()
         {
@@ -58,6 +63,8 @@ namespace StardustDefender.GUI
         }
         protected override void OnUpdate()
         {
+            UpdateColors();
+
             _ = this.S_Level.Clear();
             _ = this.S_Health.Clear();
             _ = this.S_Damage.Clear();
@@ -84,16 +91,26 @@ namespace StardustDefender.GUI
             SGraphics.SpriteBatch.Draw(this.logoTexture, new Vector2(SCamera.Center.X - 208, SCamera.Center.Y - 112), null, Color.White, 0f, this.logoTextureOrigin, new Vector2(0.5f), SpriteEffects.None, 0f);
 
             // Infos (Left)
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_Level, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 45), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_Health, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 61), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_Damage, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 77), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletDelay, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 93), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletSpeed, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletLife, new Vector2(SCamera.Center.X - 248, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            if (SLevelController.BossIncoming && !SLevelController.BossAppeared)
+            {
+                SGraphics.SpriteBatch.DrawString(this.font, this.S_Boss_Incoming, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 29), Palettes.WARNING_PALETTE[warningPalleteColorIndex], 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            }
+
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Level, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 45), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Health, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 61), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Damage, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 77), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletDelay, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 93), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletSpeed, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_BulletLife, new Vector2(SCamera.Center.X - 250, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
 
             // Infos (Right)
             SGraphics.SpriteBatch.DrawString(this.font, this.S_TotalGameTime_Label, new Vector2(SCamera.Center.X + 180, SCamera.Center.Y + 109), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
             SGraphics.SpriteBatch.DrawString(this.font, this.S_TotalGameTime, new Vector2(SCamera.Center.X + 186, SCamera.Center.Y + 125), Color.White, 0f, Vector2.Zero, new Vector2(0.8f), SpriteEffects.None, 0f);
+        }
+
+        private void UpdateColors()
+        {
+            warningPalleteColorIndex = warningPalleteColorIndex < Palettes.WARNING_PALETTE.Length - 1 ? warningPalleteColorIndex + 1 : 0;
         }
     }
 }

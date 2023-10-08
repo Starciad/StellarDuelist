@@ -74,6 +74,7 @@ namespace StardustDefender.Controllers
             // Start a boss battle if possible.
             if (bossIncoming)
             {
+                bossAppeared = true;
                 CleanProjectiles();
 
                 SSongs.Stop();
@@ -91,7 +92,9 @@ namespace StardustDefender.Controllers
                 }
 
                 // Wait for a delay after boss defeat.
-                await Task.Delay(TimeSpan.FromSeconds(12f));
+                await Task.Delay(TimeSpan.FromSeconds(10.5f));
+                bossAppeared = false;
+                bossIncoming = false;
             }
             else
             {
