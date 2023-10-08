@@ -31,7 +31,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj" />
 	</ItemGroup>
-
+	
 	<!-- TARGETS -->
 	<Target Name="RestoreDotnetTools" BeforeTargets="Restore">
 		<Message Text="[ Restoring Dotnet Tools ]" Importance="high" />
