@@ -1,63 +1,70 @@
 ﻿<div align="center">
-	<img width="75%" src=".github/assets/imgs/logo/sd_logo.webp"/>
+	<img width="85%" src=".github/assets/imgs/logo/sd_logo.webp"/>
 </div>
 
-# Visão Geral
-Bem-vindo(a) ao emocionante mundo de **Stardust Defender!** Este é um jogo do gênero **Shoot-Em-Up**, no qual você assume o controle de uma nave espacial com a missão de exterminar alienígenas super malévolos e libertar o espaço de sua presença maligna.
+# Stardust Defender
 
-Com uma jogabilidade envolvente e simples, você se lançará em uma jornada interminável, enfrentando dezenas e dezenas de hordas malignas de alienígenas até chegar às grandes ameaças do universo, conhecidas como "chefes". Esses desafios representarão um teste monumental de suas habilidades adquiridas ao longo do jogo.
+Bem-vindo ao emocionante mundo de **Stardust Defender!** Este é um jogo do gênero **Shoot-Em-Up**, onde você assume o controle de uma nave espacial com a missão de exterminar alienígenas malignos e libertar o espaço de sua presença maligna.
 
-Está preparado para embarcar nessa aventura épica e enfrentar monstros alienígenas malevolentes? Não perca tempo e faça o download agora mesmo! 👾
+Com uma jogabilidade envolvente e simples, você embarcará em uma jornada interminável, enfrentando dezenas de hordas de alienígenas até chegar às grandes ameaças do universo, conhecidas como "chefes". Esses desafios testarão suas habilidades adquiridas ao longo do jogo.
 
 ## Descrição
-Stardust Defender se desenrola em um cenário espacial, apresentando uma jogabilidade infinita e procedural. Todos os inimigos que surgem no jogo são cuidadosamente selecionados com base em fatores que os posicionam em ordens predefinidas aleatórias no início de cada nível.
 
-Além disso, para uma experiência ainda mais gratificante, os jogadores têm a oportunidade de adquirir vários pequenos aprimoramentos que os fortalecem de forma exponencial.
+Stardust Defender se desenrola em um cenário espacial com jogabilidade infinita e procedural. Cada inimigo no jogo é cuidadosamente selecionado e posicionado aleatoriamente no início de cada nível. Além disso, os jogadores podem adquirir aprimoramentos que os fortalecem ao longo do jogo.
 
-Seu único objetivo é sobreviver pelo maior tempo possível, enfrentando todas as ameaças que se escondem nas sombras do espaço. Prepare-se para uma jornada emocionante e desafiadora!
+Seu único objetivo é sobreviver o máximo possível, enfrentando ameaças no espaço. Prepare-se para uma jornada emocionante e desafiadora!
 
-## Capturas
+## Capturas de Tela
+
 <div align="center">
 	<img src=".github/assets/screenshots/screenshot_01.webp"/>
 </div>
 
 # Download
-- Você pode encontrar as versões mais recentes do jogo para baixar em ambas as plataformas abaixo:
 
-<div align="center">
-	<a href="">
-		<img width="75%" src=".github/assets/imgs/buttons/b_itch.webp"/>
-	</a>
-</div>
+Você pode encontrar as versões mais recentes do jogo para download nas seguintes plataformas:
 
-<div align="center">
-	<a href="">
-		<img width="75%" src=".github/assets/imgs/buttons/b_github.webp"/>
-	</a>
-</div>
+[![Itch.io](.github/assets/imgs/buttons/b_itch.webp)](LINK_PARA_ITCH.IO)
+[![GitHub](.github/assets/imgs/buttons/b_github.webp)](LINK_PARA_GITHUB)
 
 # Requisitos
 
-# Controles do Jogo
+## DirectX (Versão)
+- DirectX 10.0 ou superior;
+- .NET Runtime.
 
-# Mecânicas de Jogo
+## OpenGL (Versão)
+- OpenGL 2.0 ou superior;
+- .NET Runtime.
 
 # Documentação
 
+Se deseja entender como o código funciona, consulte a [Wiki do Projeto](LINK_PARA_WIKI) (em construção).
+
 # Compilação/Construção
 
-# Ferramentas
+Para saber como compilar o projeto com todos os assets, consulte os [artigos de compilação da Wiki](LINK_PARA_WIKI) (em construção).
 
-# Changelog
+# Histórico de Mudanças
 
-# F.A.Q (Perguntas Frequentes)
+Para saber mais sobre o histórico de mudanças do jogo, consulte o arquivo [Changelog](CHANGELOG.md).
 
-# Comunidade
+# Perguntas Frequentes
 
-# Código de Conduta
+Tem alguma pergunta sobre o projeto? Verifique o [F.A.Q.](FAQ.md) (em construção) para ver se já foi respondida!
 
 # Contribuições
 
-# Licenças
+Para mais informações sobre como contribuir para o projeto, [clique aqui](CONTRIBUTING.md) (em construção).
+
+# Código de Conduta
+
+Para mais informações sobre nosso código de conduta, [clique aqui](CODE_OF_CONDUCT.md) (em construção).
 
 # Créditos
+
+Para mais detalhes sobre os créditos, [clique aqui](CREDITS.md).
+
+# Licenças
+
+Este projeto está sob licença MIT. Consulte o arquivo [LICENSE](LICENSE.txt) para obter mais detalhes.
