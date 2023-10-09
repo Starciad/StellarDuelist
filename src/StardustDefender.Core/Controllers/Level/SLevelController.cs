@@ -48,7 +48,7 @@ namespace StardustDefender.Controllers
         private static int playerCumulativeDamage = 0;
 
         // States
-        private static bool initialized;
+        private static bool levelInitialized;
         private static bool gameEnded;
 
         // Timers
@@ -84,7 +84,7 @@ namespace StardustDefender.Controllers
             spawnedEnemies = 0;
             playerCumulativeDamage = 0;
 
-            initialized = false;
+            levelInitialized = false;
         }
     }
 }

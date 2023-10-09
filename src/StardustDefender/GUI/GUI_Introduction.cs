@@ -47,7 +47,7 @@ namespace StardustDefender.GUI
             if (SInput.Started(Keys.Space))
             {
                 SGameController.SetGameState(SGameState.Running);
-                SLevelController.RunLevel();
+                SLevelController.StartNewLevel();
                 Disable();
             }
         }

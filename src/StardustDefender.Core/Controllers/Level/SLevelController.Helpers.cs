@@ -9,7 +9,7 @@ namespace StardustDefender.Controllers
             SSongs.Play($"Game_Over_{SRandom.Range(1, 4)}");
 
             gameEnded = true;
-            initialized = false;
+            levelInitialized = false;
 
             totalGameTime.Stop();
             OnGameFinished?.Invoke();

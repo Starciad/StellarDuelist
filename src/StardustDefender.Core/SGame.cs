@@ -15,6 +15,7 @@ namespace StardustDefender.Core
     public sealed class SGame : Game
     {
         internal static Assembly Assembly { get; private set; }
+        internal static SGame Instance { get; private set; }
 
         public SGame(Assembly assembly)
         {
@@ -41,6 +42,9 @@ namespace StardustDefender.Core
             this.IsMouseVisible = true;
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = SGraphics.FPS;
+
+            // Finally
+            Instance = this;
         }
 
         protected override void Initialize()
