@@ -99,9 +99,7 @@ For more detailed information on C# documentation comments and tags, you can ref
 
 ## Code Review
 
-All code change commits must compile successfully, as verified by our CI. When you open a Pull Request, GitHub will trigger a build action and create PR artifacts. You can track the progress in the Checks section on the PR overview page.
-
-**Note:** PRs that do not build successfully will not be accepted.
+Each PR will be reviewed and analyzed very carefully in an attempt to check if everything is in compliance with the standards and if that PR fits the project. If you are refused, you will always have a justification from one of the project's main collaborators for making that decision.
 
 # Conclusion
 
