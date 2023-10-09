@@ -1,4 +1,4 @@
-﻿# Credits
+﻿<h1 align="center">✨ ● CREDITS ● ✨</h1>
 
 This project was conceived and developed by me, <a href="https://github.com/starciad">Starciad</a>, with the educational purpose of promoting learning and experimentation. The game was created with the intention of allowing the exploration of various skills.
 

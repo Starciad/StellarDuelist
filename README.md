@@ -2,7 +2,7 @@
 	<img width="85%" src=".github/assets/imgs/logo/sd_logo.webp"/>
 </div>
 
-<h1 align="center">✨ Stardust Defender ✨</h1>
+<h1 align="center">✨ ● STARDUST DEFENDER ● ✨</h1>
 
 Welcome to the exciting world of **Stardust Defender!** This is a **Shoot-Em-Up** game where you take control of a spaceship with the mission to exterminate malicious aliens and free space from their evil presence.
 

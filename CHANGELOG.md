@@ -1,4 +1,4 @@
-# CHANGELOG
+﻿<h1 align="center">✨ ● CHANGELOG ● ✨</h1>
 
 Welcome to the Stardust Defender Game Changelog! Here, you will discover a meticulous log of all significant alterations made across various project versions. This log has been meticulously compiled into a user-friendly and dynamic document for your convenience.
 

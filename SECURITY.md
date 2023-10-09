@@ -1,5 +1,5 @@
 ﻿<br/>
-<h1>✨ ● SECURITY POLICE ● ✨</h1>
+<h1 align="center">✨ ● SECURITY POLICE ● ✨</h1>
 
 Stardust Defender is a collaborative public project that grows and develops slowly, developers and supporters strive to ensure safety and speed in using this package and this is not possible without constant regulation of the project. Sometimes the smallest things can become big things and in these cases it is always good to report them to us!
 

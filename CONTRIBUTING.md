@@ -1,4 +1,4 @@
-# Contributing to Stardust Defender
+﻿<h1 align="center">✨ ● CONTRIBUTING ● ✨</h1>
 
 Welcome to the Stardust Defender project! We are excited to receive your contributions. However, it is important to follow some guidelines to ensure effective collaboration.
 
