@@ -34,6 +34,8 @@ namespace StardustDefender.Core.Components
             // TEXTS
             ("TEXTS_Paused", "UI/Texts/Paused"),
             ("TEXTS_GameOver", "UI/Texts/GameOver"),
+            ("TEXTS_Tutorial", "UI/Texts/Tutorial"),
+            ("TEXTS_MadeByStarciad", "UI/Texts/MadeByStarciad"),
 
             // ITEMS
             ("ITEMS_Upgrades", "Items/Upgrades"),

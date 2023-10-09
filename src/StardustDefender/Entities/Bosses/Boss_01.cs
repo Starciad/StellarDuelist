@@ -83,7 +83,7 @@ namespace StardustDefender.Entities.Bosses
         public override void Reset()
         {
             // Attributes
-            this.HealthValue = 45;
+            this.HealthValue = 50;
             this.DamageValue = 1;
             this.CollisionRange = 55f;
 

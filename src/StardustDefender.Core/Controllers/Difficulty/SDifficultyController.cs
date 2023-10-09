@@ -49,13 +49,13 @@ namespace StardustDefender.Controllers
             // Easy
             if (SLevelController.PlayerCumulativeDamage <= 0)
             {
-                difficultyRate++;
+                difficultyRate += 1 + SRandom.NextFloat();
                 enemySpawnDelay -= SRandom.Range(0, 2) * SRandom.NextFloat();
                 totalEnemyCount += SRandom.Range(4, 9);
             }
-            else // hard
+            else // Hard
             {
-                difficultyRate--;
+                difficultyRate -= SRandom.NextFloat();
                 enemySpawnDelay += SRandom.Range(0, 2) * SRandom.NextFloat();
                 totalEnemyCount -= SRandom.Range(3, 7);
             }
@@ -80,6 +80,20 @@ namespace StardustDefender.Controllers
             difficultyRate = 1f;
             enemySpawnDelay = 2.5f;
             totalEnemyCount = SRandom.Range(5, 11);
+        }
+
+        public static string GetDifficultyLabel()
+        {
+            return difficultyRate switch
+            {
+                <= 1 => "VERY EASY",
+                <= 2 => "EASY",
+                <= 4 => "NORMAL",
+                <= 8 => "UNUSUAL",
+                <= 16 => "HARD",
+                <= 32 => "VERY HARD",
+                _ => "ULTRA+",
+            };
         }
     }
 }

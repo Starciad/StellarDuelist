@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardustDefender.Controllers;
 using StardustDefender.Core.Animation;
 using StardustDefender.Core.Collections;
+using StardustDefender.Core.Colors;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
@@ -58,8 +59,8 @@ namespace StardustDefender.Core.Items
             else
             {
                 this.currentColorUpdateDelay = 0;
-                this.colorIndex = this.colorIndex < SItemRegister.COLOR_PALETTE.Length - 1 ? this.colorIndex + 1 : 0;
-                this.color = SItemRegister.COLOR_PALETTE[this.colorIndex];
+                this.colorIndex = this.colorIndex < Palettes.WARNING_PALETTE.Length - 1 ? this.colorIndex + 1 : 0;
+                this.color = Palettes.WARNING_PALETTE[this.colorIndex];
             }
         }
         private void MovementUpdate()

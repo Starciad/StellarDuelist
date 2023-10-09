@@ -28,6 +28,18 @@ namespace StardustDefender.Controllers
 
         private static async Task RunLevelAsync()
         {
+            // Select a random boss
+            if (TrySelectingRandomBoss())
+            {
+                bossIncoming = true;
+                SSongs.Play($"Boss_Incoming_{SRandom.Range(1, 6)}");
+            }
+            else
+            {
+                bossIncoming = false;
+                SSongs.Play($"Area_{SRandom.Range(1, 17)}");
+            }
+
             // Wait until the number of enemies killed equals the total number of enemies in the level.
             while (enemiesKilled < SDifficultyController.TotalEnemyCount)
             {
@@ -59,14 +71,19 @@ namespace StardustDefender.Controllers
 
             await Task.Delay(TimeSpan.FromSeconds(1f));
 
-            // Select a random boss and start a boss battle if possible.
-            if (TrySelectingRandomBoss())
+            // Start a boss battle if possible.
+            if (bossIncoming)
             {
+                bossAppeared = true;
+                CleanProjectiles();
+
+                SSongs.Stop();
                 SFade.FadeIn(Color.White, 0.5f);
                 await Task.Delay(TimeSpan.FromSeconds(1f));
                 CreateBoss();
                 await Task.Delay(TimeSpan.FromSeconds(1f));
                 SFade.FadeOut(0.05f);
+                SSongs.Play($"Boss_{SRandom.Range(1, 6)}");
 
                 // Wait until the boss is defeated.
                 while (!bossDead)
@@ -75,10 +92,17 @@ namespace StardustDefender.Controllers
                 }
 
                 // Wait for a delay after boss defeat.
-                await Task.Delay(TimeSpan.FromSeconds(3.5f));
+                await Task.Delay(TimeSpan.FromSeconds(10.5f));
+                bossAppeared = false;
+                bossIncoming = false;
+            }
+            else
+            {
+                SSongs.Play($"Victory_{SRandom.Range(1, 4)}");
             }
 
             // Perform the level transition and advance the difficulty.
+            CleanProjectiles();
             await LevelTransitionAsync();
             SDifficultyController.Next();
 

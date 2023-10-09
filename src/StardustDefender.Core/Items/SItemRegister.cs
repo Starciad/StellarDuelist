@@ -10,14 +10,6 @@ namespace StardustDefender.Core.Items
     {
         public SAnimation Animation { get; private set; } = new();
 
-        internal static Color[] COLOR_PALETTE = new Color[] {
-            Color.Yellow,
-            Color.LightYellow,
-            Color.Orange,
-            Color.MonoGameOrange,
-            Color.White,
-        };
-
         // Const values
         public const byte SPRITE_SCALE = 16;
 
