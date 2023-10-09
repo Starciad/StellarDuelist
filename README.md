@@ -55,11 +55,11 @@ Have a question about the project? Check the [F.A.Q.](FAQ.md) (under constructio
 
 # Contributions
 
-For more information on how to contribute to the project, [click here](CONTRIBUTING.md) (under construction).
+For more information on how to contribute to the project, [click here](CONTRIBUTING.md).
 
 # Code of Conduct
 
-For more information regarding our code of conduct, [click here](CODE_OF_CONDUCT.md) (under construction).
+For more information regarding our code of conduct, [click here](CODE_OF_CONDUCT.md).
 
 # Credits
 
