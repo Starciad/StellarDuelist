@@ -67,7 +67,7 @@ namespace StardustDefender.Core.Managers
 
         public static SItem CreateRandomItem(Vector2 position)
         {
-            return Create(templates.Keys.SelectRandom(), position);
+            return Create(templates.Where(x => x.Value.CanSpawn).Select(x => x.Key).SelectRandom(), position);
         }
 
         internal static SItem Create<T>(Vector2 position) where T : SItemRegister

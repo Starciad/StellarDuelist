@@ -18,5 +18,10 @@ namespace StardustDefender.Items
             player.ShootDelay -= 0.1f;
             player.ShootDelay = Math.Clamp(player.ShootDelay, 0.1f, 100f);
         }
+
+        protected override bool SpawnCondition(SPlayerEntity player)
+        {
+            return player.ShootDelay > 0.5f;
+        }
     }
 }
