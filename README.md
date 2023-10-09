@@ -15,9 +15,11 @@ Stardust Defender unfolds in a space setting with infinite and procedural gamepl
 Your sole objective is to survive as long as possible, facing threats in space. Get ready for an exciting and challenging journey!
 
 ## Screenshots
+
 Under construction.
 
 ## Videos
+
 Under construction.
 
 # Download
@@ -51,7 +53,7 @@ To find out more about the game's changelog, consult the [Changelog](CHANGELOG.m
 
 # Frequently Asked Questions
 
-Have a question about the project? Check the [F.A.Q.](FAQ.md) (under construction) to see if it has already been answered!
+Have a question about the project? Check the [F.A.Q.](FAQ.md) to see if it has already been answered!
 
 # Contributions
 
