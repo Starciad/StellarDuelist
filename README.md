@@ -8,7 +8,7 @@ Welcome to the exciting world of **Stardust Defender!** This is a **Shoot-Em-Up*
 
 With engaging and straightforward gameplay, you will embark on an endless journey, facing dozens of waves of aliens until you reach the universe's major threats, known as "bosses." These challenges will test the skills you acquire throughout the game.
 
-<br/><br/>
+<br/>
 <div align="center">
 	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
 </div>
@@ -21,7 +21,6 @@ With engaging and straightforward gameplay, you will embark on an endless journe
 	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
 </div>
 <br/>
-<br/>
 
 ## 📚 ➥ Description
 
@@ -29,31 +28,13 @@ Stardust Defender unfolds in a space setting with infinite and procedural gamepl
 
 Your sole objective is to survive as long as possible, facing threats in space. Get ready for an exciting and challenging journey!
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 ## 📷 ➥​ Screenshots
 
 Under construction.
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 ## 🎥 ➥ Videos
 
 Under construction.
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # 🧩​​​ ➥ Download
 
@@ -61,12 +42,6 @@ You can find the latest versions of the game for download on the following platf
 
 [![Itch.io](.github/assets/imgs/buttons/b_itch.webp)](LINK_TO_ITCH.IO)
 [![GitHub](.github/assets/imgs/buttons/b_github.webp)](LINK_TO_GITHUB)
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # 🕹️ ➥​ Requirements
 Below you can find an overview of the requirements that are needed to make the game run correctly.
@@ -87,81 +62,33 @@ Below you can find an overview of the requirements that are needed to make the g
 - 64x System;
 - .NET Runtime.
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 # 📖 ➥ Documentation
 
 If you want to understand how the code works, check out the [Project Wiki](LINK_TO_WIKI) (under construction).
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # 🛠 ➥ Compilation/Building
 
 To learn how to compile the project with all the assets, refer to the [Compilation Articles in the Wiki](LINK_TO_WIKI) (under construction).
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 # 📜 ➥ Changelog
 
 To find out more about the game's changelog, consult the [Changelog](CHANGELOG.md) file.
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # ⁉ ➥ Frequently Asked Questions
 
 Have a question about the project? Check the [F.A.Q.](FAQ.md) to see if it has already been answered!
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 # 💼 ➥ Contributions
 
 For more information on how to contribute to the project, [click here](CONTRIBUTING.md).
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # 🤝 ➥ Code of Conduct
 
 For more information regarding our code of conduct, [click here](CODE_OF_CONDUCT.md).
 
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
-
 # 🙌 ➥ Credits
 
 For more details about the credits, [click here](CREDITS.md).
-
-<br/>
-<div align="center">
-	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
-</div>
-<br/>
 
 # 📄 ➥ License
 
