@@ -6,7 +6,30 @@ namespace StardustDefender.Core.Components
 {
     public static class SSongs
     {
-        public static float Volume { get; set; } = 0.5f;
+        public static float Volume
+        {
+            get
+            {
+                return MediaPlayer.Volume;
+            }
+
+            set
+            {
+                MediaPlayer.Volume = value;
+            }
+        }
+        public static bool IsRepeating
+        {
+            get
+            {
+                return MediaPlayer.IsRepeating;
+            }
+
+            set
+            {
+                MediaPlayer.IsRepeating = value;
+            }
+        }
 
         private static Song currentSong;
 
@@ -66,8 +89,8 @@ namespace StardustDefender.Core.Components
 
         internal static void Load()
         {
-            MediaPlayer.Volume = Volume;
-            MediaPlayer.IsRepeating = true;
+            Volume = 0.5f;
+            IsRepeating = true;
 
             foreach ((string, string) asset in assets)
             {

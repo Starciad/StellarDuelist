@@ -34,25 +34,5 @@ namespace StardustDefender.Core.Managers
                 gui.Draw();
             }
         }
-
-        public static T Get<T>() where T : SGUI
-        {
-            return (T)_GUIs[typeof(T)];
-        }
-        public static void Enable<T>() where T : SGUI
-        {
-            _GUIs[typeof(T)].Enable();
-        }
-        public static void Disable<T>() where T : SGUI
-        {
-            _GUIs[typeof(T)].Disable();
-        }
-        public static void DisableAll()
-        {
-            foreach (SGUI gui in _GUIs.Values)
-            {
-                gui.Disable();
-            }
-        }
     }
 }
