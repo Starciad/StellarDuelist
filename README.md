@@ -8,19 +8,20 @@ Welcome to the exciting world of **Stardust Defender!** This is a **Shoot-Em-Up*
 
 With engaging and straightforward gameplay, you will embark on an endless journey, facing dozens of waves of aliens until you reach the universe's major threats, known as "bosses." These challenges will test the skills you acquire throughout the game.
 
+<br/><br/>
 <div align="center">
 	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
 </div>
 
 <div align="center">
-	<img width="32%" src=".github/assets/imgs/gifs/a_1.webp"/>
-	<img width="32%" src=".github/assets/imgs/gifs/a_1.webp"/>
-	<img width="32%" src=".github/assets/imgs/gifs/a_1.webp"/>
+	<img width="100%" src=".github/assets/imgs/gifs/a_1.webp"/>
 </div>
 
 <div align="center">
 	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
 </div>
+<br/>
+<br/>
 
 ## 📚 ➥ Description
 
@@ -165,3 +166,17 @@ For more details about the credits, [click here](CREDITS.md).
 # 📄 ➥ License
 
 This project is under the MIT license. See the [LICENSE](LICENSE.txt) file for more details.
+
+
+<br/>
+<div align="center">
+	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
+</div>
+
+<div align="center">
+	<img width="100%" src=".github/assets/imgs/gifs/a_2.webp"/>
+</div>
+
+<div align="center">
+	<img width="100%" src=".github/assets/imgs/borders/b_1.webp"/>
+</div>
