@@ -61,6 +61,42 @@ Maintain the ordering of code members as follows:
 5. Constructors
 6. Methods
 
+## Documenting
+
+When contributing to the Stardust Defender project, it's essential to provide clear and informative documentation for your code. Proper documentation helps other developers understand your changes and ensures the maintainability of the project. In C#, we use documentation comments with special tags to generate documentation automatically.
+
+### Documentation Tags
+
+C# documentation comments start with `///` and can be placed above classes, methods, properties, fields, and other code elements. These comments are used to generate XML documentation files, which tools like Visual Studio can use to provide IntelliSense and create documentation.
+
+Here are some common documentation tags:
+
+- `summary`: Provides a brief description of the code element.
+- `param`: Describes parameters for methods, constructors, and delegates.
+- `returns`: Explains the return value of a method.
+- `exception`: Documents exceptions that can be thrown by a method.
+- `remarks`: Offers additional context or details about the code element.
+- `example`: Provides code examples illustrating how to use the code element.
+
+Here's an example of how to use documentation tags:
+
+```csharp
+/// <summary>
+/// Adds two numbers and returns the result.
+/// </summary>
+/// <param name="a">The first number to add.</param>
+/// <param name="b">The second number to add.</param>
+/// <returns>The sum of the two numbers.</returns>
+public int Add(int a, int b)
+{
+    return a + b;
+}
+```
+
+By following these conventions and documenting your code, you make it easier for your fellow contributors to understand, use, and extend your work.
+
+For more detailed information on C# documentation comments and tags, you can refer to the [Microsoft documentation on XML Documentation Comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags).
+
 ## Code Review
 
 All code change commits must compile successfully, as verified by our CI. When you open a Pull Request, GitHub will trigger a build action and create PR artifacts. You can track the progress in the Checks section on the PR overview page.
