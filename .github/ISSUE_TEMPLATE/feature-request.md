@@ -1,7 +1,7 @@
 ---
-name: FEATURE_REQUEST
+name: Feature request
 about: Suggest an idea for this project.
-title: Feature Request
+title: Feature request.
 labels: "《 \U0001F4A1 Feature Request 》"
 assignees: ''
 

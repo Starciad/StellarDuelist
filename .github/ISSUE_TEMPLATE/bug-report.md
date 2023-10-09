@@ -1,7 +1,7 @@
 ---
-name: BUG_REPORT
+name: Bug report
 about: Create a report to help us improve.
-title: Bug Report
+title: Bug report.
 labels: "《 \U0001F41B Bug 》"
 assignees: ''
 
