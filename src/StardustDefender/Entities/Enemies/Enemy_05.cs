@@ -44,12 +44,15 @@ namespace StardustDefender.Entities.Enemies
 
         private const float BULLET_SPEED = 2.5f;
         private const float BULLET_LIFE_TIME = 30f;
+        private const int MAX_BULLETS = 3;
 
-        private readonly STimer shootTimer = new(6f);
+        private readonly STimer shootTimer = new(10f);
+        private readonly STimer intervalBetweenShots = new(1f);
         private readonly STimer movementTimer = new(20f);
 
         private SPlayerEntity player;
 
+        private int currentBullet;
         private bool canShoot;
 
         // ==================================================== //
@@ -83,6 +86,7 @@ namespace StardustDefender.Entities.Enemies
         {
             this.movementTimer.Restart();
             this.shootTimer.Restart();
+            this.intervalBetweenShots.Start();
 
             this.player = SLevelController.Player;
         }
@@ -95,7 +99,7 @@ namespace StardustDefender.Entities.Enemies
             CollideWithPlayer();
 
             // AI (Move + Shoot)
-            ShootUpdate();
+            ShootingUpdate();
             MovementUpdate();
         }
         protected override void OnDamaged(int value)
@@ -142,7 +146,7 @@ namespace StardustDefender.Entities.Enemies
 
             this.canShoot = true;
         }
-        private void ShootUpdate()
+        private void ShootingUpdate()
         {
             if (!this.canShoot)
             {
@@ -154,47 +158,56 @@ namespace StardustDefender.Entities.Enemies
                 return;
             }
 
-            _ = Task.Run(StartShootingAsync);
-
-            this.shootTimer.Restart();
-            this.canShoot = false;
+            if (this.currentBullet < MAX_BULLETS)
+            {
+                Shoot();
+            }
+            else
+            {
+                this.canShoot = false;
+                this.currentBullet = 0;
+                this.intervalBetweenShots.Restart();
+                this.shootTimer.Restart();
+            }
         }
 
         // SKILLS
-        private async Task StartShootingAsync()
+        private void Shoot()
         {
-            for (int i = 0; i < 3; i++)
+            // ========================= //
+            // Delay
+
+            this.intervalBetweenShots.Update();
+            if (!this.intervalBetweenShots.IsFinished)
+                return;
+
+            this.intervalBetweenShots.Restart();
+            this.currentBullet++;
+
+            // ========================= //
+
+            Vector2 direction = this.player.WorldPosition - this.WorldPosition;
+
+            if (direction != Vector2.Zero)
             {
-                if (this.IsDestroyed)
-                {
-                    return;
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(0.15f));
-
-                Vector2 direction = this.player.WorldPosition - this.WorldPosition;
-
-                if (direction != Vector2.Zero)
-                {
-                    direction.Normalize();
-                }
-
-                direction *= BULLET_SPEED;
-
-                SProjectileManager.Create(new()
-                {
-                    SpriteId = 1,
-                    Team = STeam.Bad,
-                    Position = new(this.WorldPosition.X, this.WorldPosition.Y),
-                    Speed = direction,
-                    Damage = this.DamageValue,
-                    LifeTime = BULLET_LIFE_TIME,
-                    Range = 10f,
-                    Color = Color.White,
-                });
-
-                _ = SSounds.Play("Shoot_06");
+                direction.Normalize();
             }
+
+            direction *= BULLET_SPEED;
+
+            SProjectileManager.Create(new()
+            {
+                SpriteId = 1,
+                Team = STeam.Bad,
+                Position = new(this.WorldPosition.X, this.WorldPosition.Y),
+                Speed = direction,
+                Damage = this.DamageValue,
+                LifeTime = BULLET_LIFE_TIME,
+                Range = 10f,
+                Color = Color.White,
+            });
+
+            _ = SSounds.Play("Shoot_06");
         }
     }
 }

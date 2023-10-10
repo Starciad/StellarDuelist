@@ -3,7 +3,7 @@
 	<!-- INFORMATIONS -->
 	<PropertyGroup>
 		<Title>Stardust Defender</Title>
-		<Version>0.0.1</Version>
+		<Version>1.0.1.0</Version>
 		<Authors>Starciad</Authors>
 		<PackageProjectUrl>https://github.com/Starciad/SMBTE-Project</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

@@ -30,6 +30,12 @@ namespace StardustDefender.GUI
         {
             return SGameController.State == SGameState.Introduction;
         }
+
+        protected override void OnEnable()
+        {
+            SSongs.Play($"Opening_{SRandom.Range(1, 6)}");
+        }
+
         protected override void OnInitialize()
         {
             this.logo = STextures.GetTexture("UI_Logo");
@@ -39,15 +45,13 @@ namespace StardustDefender.GUI
             _ = this.S_Intro.Append("Press Space to Continue!");
 
             this.S_IntroMeasure = this.font.MeasureString(this.S_Intro);
-
-            SSongs.Play($"Opening_{SRandom.Range(1, 6)}");
         }
         protected override void OnUpdate()
         {
             if (SInput.Started(Keys.Space))
             {
                 SGameController.SetGameState(SGameState.Running);
-                SLevelController.RunLevel();
+                SLevelController.StartNewLevel();
                 Disable();
             }
         }

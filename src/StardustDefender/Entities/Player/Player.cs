@@ -127,12 +127,21 @@ namespace StardustDefender.Entities.Player
             ShootInputUpdate();
 
 #if DEBUG
+            DEBUG_Error();
             DEBUG_Increase_Power();
             DEBUG_Kill_Enemies();
 #endif
         }
 
 #if DEBUG
+        private static void DEBUG_Error()
+        {
+            if (SInput.Started(Keys.F5))
+            {
+                throw new Exception("Player - Experimental Exception.");
+            }
+        }
+
         private void DEBUG_Increase_Power()
         {
             if (SInput.Started(Keys.D1))
