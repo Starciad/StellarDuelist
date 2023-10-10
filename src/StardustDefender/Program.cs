@@ -1,27 +1,42 @@
-﻿using StardustDefender.Core;
-using StardustDefender.Core.Components;
+﻿using System;
 
-using System;
-using System.IO;
+using StardustDefender.Core;
+using StardustDefender.Core.IO;
+
+#if !DEBUG
+using StardustDefender.Core.Components;
+#endif
+
+#if WINDOWS_DX
 using System.Windows.Forms;
+#endif
 
 namespace StardustDefender
 {
     internal static class Program
     {
-#if !DEBUG
-        private static string LOGS_DIRECTORY => Path.Combine(Directory.GetCurrentDirectory(), "Logs");
-#endif
-
         [STAThread]
         private static void Main()
         {
-            using SGame game = new(typeof(Program).Assembly);
+            SDirectory.Initialize();
 
 #if DEBUG
-            game.Run();
+            EXECUTE_DEBUG_VERSION();
 #else
-            ConfigureDirectories();
+            EXECUTE_PUBLISHED_VERSION();
+#endif
+        }
+
+#if DEBUG
+        private static void EXECUTE_DEBUG_VERSION()
+        {
+            using SGame game = new(typeof(Program).Assembly);
+            game.Run();
+        }
+#else
+        private static void EXECUTE_PUBLISHED_VERSION()
+        {
+            using SGame game = new(typeof(Program).Assembly);
 
             try
             {
@@ -29,13 +44,14 @@ namespace StardustDefender
             }
             catch (Exception e)
             {
-                string logFileName =CreateExceptionLog(e);
-
-#if WINDOWS
-                MessageBox.Show($"An unexpected error caused StardustDefender to crash!\n\nCheck the log file created at: {Path.Combine(LOGS_DIRECTORY, logFileName)}\n\n\n\n\nException: {e.Message}",
+#if WINDOWS_DX
+                string logFilename = SFile.WriteException(e);
+                MessageBox.Show($"An unexpected error caused StardustDefender to crash!\n\nCheck the log file created at: {logFilename}\n\n\n\n\nException: {e.Message}",
                                 $"{SInfos.GetTitle()} - Fatal Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+#else
+                _ = SFile.WriteException(e);
 #endif
             }
             finally
@@ -43,25 +59,6 @@ namespace StardustDefender
                 game.Dispose();
                 game.Exit();
             }
-#endif
-        }
-
-#if !DEBUG
-        private static void ConfigureDirectories()
-        {
-            if (!Directory.Exists(LOGS_DIRECTORY))
-            {
-                Directory.CreateDirectory(LOGS_DIRECTORY);
-            }
-        }
-
-        private static string CreateExceptionLog(Exception exception)
-        {
-            string dateTimeString = DateTime.Now.ToString().Replace("/", "_").Replace(" ", "_").Replace(":", "_");
-            string fileName = $"StardustDefender_Log_{dateTimeString}.txt";
-
-            File.WriteAllText(Path.Combine(LOGS_DIRECTORY, fileName), exception.ToString());
-            return fileName;
         }
 #endif
     }
