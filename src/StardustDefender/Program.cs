@@ -31,7 +31,7 @@ namespace StardustDefender
             {
                 string logFileName =CreateExceptionLog(e);
 
-#if WindowsDX
+#if WINDOWS
                 MessageBox.Show($"An unexpected error caused StardustDefender to crash!\n\nCheck the log file created at: {Path.Combine(LOGS_DIRECTORY, logFileName)}\n\n\n\n\nException: {e.Message}",
                                 $"{SInfos.GetTitle()} - Fatal Error",
                                 MessageBoxButtons.OK,
