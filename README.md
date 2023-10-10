@@ -32,27 +32,21 @@ Your sole objective is to survive as long as possible, facing threats in space. 
 
 You can find the latest versions of the game for download on the following platforms:
 
-[![Itch.io](.github/assets/imgs/buttons/b_itch.webp)](LINK_TO_ITCH.IO)
-[![GitHub](.github/assets/imgs/buttons/b_github.webp)](LINK_TO_GITHUB)
+[![Itch.io](.github/assets/imgs/buttons/b_itch.webp)](https://starciad.itch.io/stardust-defender)
+[![GitHub](.github/assets/imgs/buttons/b_github.webp)](https://github.com/Starciad/StardustDefender)
 
 # 🕹️ ➥​ Requirements
 Below you can find an overview of the requirements that are needed to make the game run correctly.
 
 > Building the source code will also require the same requirements.
 
-## DirectX (Version)
-- DirectX 9.0c or newer;
-- 500MB Ram;
-- 100MB HardDisk Space;
-- 64x System;
-- .NET Runtime.
-
-## OpenGL (Version)
-- OpenGL 2.0 or newer;
-- 500MB Ram;
-- 100MB HardDisk Space;
-- 64x System;
-- .NET Runtime.
+- **Operating System:** Windows, MacOs, or Linux;
+- **DirectX:** Version 9.0c or higher;
+- **OpenGL:** Version 2.0 or higher;
+- **RAM:** At least 500 MB;
+- **Disk Space:** Minimum of 100 MB available;
+- **System Architecture:** x64 (64-bit);
+- **.NET Runtime:** Required for the game to run.
 
 # 📖 ➥ Documentation
 
