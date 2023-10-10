@@ -2,9 +2,25 @@
 
 Welcome to the Stardust Defender project! We are excited to receive your contributions. However, it is important to follow some guidelines to ensure effective collaboration.
 
-## Branching Base
+## Branch Selection
 
-When creating a Pull Request (PR), make sure that your branch is targeting the latest main branch. This will help avoid conflicts and ensure smooth integration of your changes.
+When creating a pull request (PR) on this project, it is essential to choose the right branch to target. Choosing the target branch ensures smooth and conflict-free integration of your changes. Here is a detailed guide to help you make the right branch selection:
+
+### Target the latest `stable-*` branch
+
+For this project, contributors should target the latest `stable-*` branch when creating a pull request. These branches are designed to provide a stable, pristine version of the code without bugs in assets that are not accessible to programmers.
+
+### Why target a `stable-*` branch?
+
+- **Stability:** `stable-*` branches provide a stable code base that does not include assets or features that have not been publicly released. This stability is crucial to ensure your changes don't conflict with unreleased features.
+
+- **Isolation:** When targeting a `stable-*` branch, your changes are isolated to a specific version of the project. This is particularly useful when you want to resolve issues or contribute features related to a specific stable release.
+
+### Avoid the `main` branch
+
+The `main` branch is considered unstable for contributors because it may contain features that have not yet been publicly released. Therefore, it should be avoided for pull requests.
+
+Remember that the choice of target branch depends on the nature of your contribution. Always select the latest `stable-*` branch to align with the stable version of the project.
 
 ## Versioning
 
