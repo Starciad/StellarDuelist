@@ -9,8 +9,6 @@
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<RollForward>Major</RollForward>
 		<RootNamespace>StardustDefender.Core</RootNamespace>
-		<DefineConstants>WindowsDX</DefineConstants>
-		<MonoGamePlatform>Windows</MonoGamePlatform>
 	</PropertyGroup>
 	
 	<!-- DEPENDENCIES -->
