@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿roject Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
 	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
 	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />
@@ -15,8 +15,8 @@
 	<!-- SYSTEM -->
 	<PropertyGroup>
 		<RootNamespace>StardustDefender</RootNamespace>
-		<ApplicationManifest>Content/app.manifest</ApplicationManifest>
-		<ApplicationIcon>Content/Icon.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<!-- DEPENDENCIES -->
