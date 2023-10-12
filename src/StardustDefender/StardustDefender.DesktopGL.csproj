@@ -15,8 +15,8 @@
 	<!-- SYSTEM -->
 	<PropertyGroup>
 		<RootNamespace>StardustDefender</RootNamespace>
-		<ApplicationManifest>Content/app.manifest</ApplicationManifest>
-		<ApplicationIcon>Content/Icon.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<!-- DEPENDENCIES -->
