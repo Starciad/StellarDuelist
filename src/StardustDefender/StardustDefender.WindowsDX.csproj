@@ -1,4 +1,4 @@
-﻿roject Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
 	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
 	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />
@@ -18,6 +18,24 @@
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
+
+	<!-- FILES (REMOVE) -->
+    <ItemGroup>
+	    <None Remove="Icon.ico" />
+	    <None Remove="Icon.bmp" />
+    </ItemGroup>
+
+	<!-- FILES (RESOURCE) -->
+    <ItemGroup>
+		<EmbeddedResource Include="Icon.ico">
+			<LogicalName>Icon.ico</LogicalName>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Icon.bmp">
+			<LogicalName>Icon.bmp</LogicalName>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+    </ItemGroup>
 
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
