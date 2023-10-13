@@ -12,9 +12,9 @@
 Clear-Host
 
 # Define solutions and publishing directories
-$desktopGL = "..\src\StardustDefender\StardustDefender.DesktopGL.csproj"
-$windowsDX = "..\src\StardustDefender\StardustDefender.WindowsDX.csproj"
-$outputDirectory = "..\src\Publish"
+$desktopGL = "..\StardustDefender\StardustDefender.DesktopGL.csproj"
+$windowsDX = "..\StardustDefender\StardustDefender.WindowsDX.csproj"
+$outputDirectory = "..\Publish"
 
 # List of target platforms
 $platforms = @("win-x64", "linux-x64", "osx-x64")
@@ -62,7 +62,7 @@ Write-Host "All publishing processes have been completed."
 # Copy content folder and delete specific subdirectories
 Write-Host "Copying content folder..."
 
-$source = "..\src\StardustDefender\Content"
+$source = "..\StardustDefender\Content"
 $destination = "$outputDirectory\stardust-defender-v0.0.0.0-assets-full\Content"
 $subdirectoriesToDelete = @("bin", "obj")
 
