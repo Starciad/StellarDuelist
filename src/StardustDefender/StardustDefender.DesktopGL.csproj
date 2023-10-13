@@ -19,6 +19,24 @@
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
+	<!-- FILES (REMOVE) -->
+	<ItemGroup>
+	    <None Remove="Icon.ico" />
+	    <None Remove="Icon.bmp" />
+	</ItemGroup>
+
+	<!-- FILES (RESOURCE) -->
+	<ItemGroup>
+		<EmbeddedResource Include="Icon.ico">
+			<LogicalName>Icon.ico</LogicalName>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Icon.bmp">
+			<LogicalName>Icon.bmp</LogicalName>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
 		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
