@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.WindowsDX", "StardustDefender\StardustDefender.WindowsDX.csproj", "{A7ED6C33-071F-4ADD-9206-F3FD89CB9233}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.Core.WindowsDX", "StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj", "{6AB3598A-431C-4E67-8727-6485F2879BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.WindowsDX.Core", "StardustDefender.Core\StardustDefender.WindowsDX.Core.csproj", "{6AB3598A-431C-4E67-8727-6485F2879BA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.DiscordRPC.WindowsDX", "StardustDefender.DiscordRPC\StardustDefender.DiscordRPC.WindowsDX.csproj", "{9C180587-C870-4DFA-83D3-C5A61FEA932F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.WindowsDX.Discord", "StardustDefender.Discord\StardustDefender.WindowsDX.Discord.csproj", "{E8A77D7E-9CC6-4D6A-A5C3-77DFC233CF28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AB3598A-431C-4E67-8727-6485F2879BA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C180587-C870-4DFA-83D3-C5A61FEA932F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C180587-C870-4DFA-83D3-C5A61FEA932F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C180587-C870-4DFA-83D3-C5A61FEA932F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C180587-C870-4DFA-83D3-C5A61FEA932F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8A77D7E-9CC6-4D6A-A5C3-77DFC233CF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A77D7E-9CC6-4D6A-A5C3-77DFC233CF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A77D7E-9CC6-4D6A-A5C3-77DFC233CF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A77D7E-9CC6-4D6A-A5C3-77DFC233CF28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

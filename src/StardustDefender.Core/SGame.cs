@@ -140,5 +140,9 @@ namespace StardustDefender.Core
 
             base.Draw(gameTime);
         }
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+        }
     }
 }

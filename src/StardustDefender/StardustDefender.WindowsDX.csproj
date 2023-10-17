@@ -9,11 +9,11 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<RollForward>Major</RollForward>
-		<AssemblyName>StardustDefender</AssemblyName>
 	</PropertyGroup>
 
 	<!-- SYSTEM -->
 	<PropertyGroup>
+		<AssemblyName>StardustDefender</AssemblyName>
 		<RootNamespace>StardustDefender</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
@@ -45,7 +45,8 @@
 
 	<!-- PROJECT -->
 	<ItemGroup>
-		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj" />
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.WindowsDX.Core.csproj" />
+		<ProjectReference Include="..\StardustDefender.Discord\StardustDefender.WindowsDX.Discord.csproj" />
 	</ItemGroup>
 	
 	<!-- TARGETS -->
