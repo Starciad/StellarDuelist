@@ -3,7 +3,10 @@
 using StardustDefender.Core;
 using StardustDefender.Core.IO;
 using Microsoft.Xna.Framework;
+
+#if PC
 using StardustDefender.Discord;
+#endif
 
 #if !DEBUG
 using StardustDefender.Core.Components;
@@ -17,13 +20,18 @@ namespace StardustDefender
 {
     internal static class Program
     {
+#if PC
         private static readonly RPCClient _rpcClient = new();
+#endif
 
         [STAThread]
         private static void Main()
         {
             SDirectory.Initialize();
+
+#if PC
             _rpcClient.Start();
+#endif
 
 #if DEBUG
             EXECUTE_DEBUG_VERSION();
@@ -72,7 +80,9 @@ namespace StardustDefender
 
         private static void OnGameExiting(object sender, EventArgs e)
         {
+#if PC
             _rpcClient.Stop();
+#endif
         }
     }
 }
