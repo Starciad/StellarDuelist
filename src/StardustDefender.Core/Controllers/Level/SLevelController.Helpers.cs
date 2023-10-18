@@ -1,6 +1,6 @@
 ﻿using StardustDefender.Core.Components;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {

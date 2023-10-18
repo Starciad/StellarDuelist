@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SDifficultyController
     {
@@ -18,7 +18,7 @@ namespace StardustDefender.Controllers
         private static float currentDelayForNextBoss = 0;
 
         private static SEntityHeader[] allBosses = Array.Empty<SEntityHeader>();
-        private static readonly List<SEntityHeader> remainingBosses = new ();
+        private static readonly List<SEntityHeader> remainingBosses = new();
 
         internal static bool TryGetRandomBossType(out Type bossType)
         {
@@ -36,7 +36,9 @@ namespace StardustDefender.Controllers
 
             // === GAME (SELECT A BOSS BASED ON VARIOUS CONDITIONS) ===
             if (remainingBosses.Count == 0)
+            {
                 remainingBosses.AddRange(allBosses);
+            }
 
             SEntityHeader entityHeader = remainingBosses.Where(x => x.CanSpawn).SelectRandom() ?? default;
 
@@ -46,7 +48,7 @@ namespace StardustDefender.Controllers
                 return false;
             }
 
-            remainingBosses.Remove(entityHeader);
+            _ = remainingBosses.Remove(entityHeader);
             bossType = entityHeader.EntityType;
             return true;
         }

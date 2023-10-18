@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Core;
 using StardustDefender.Core.Components;
-using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
 
 using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {

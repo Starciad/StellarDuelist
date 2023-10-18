@@ -9,6 +9,7 @@ namespace StardustDefender.Core.IO
         private static string[] DEFAULT_DIRECTORIES => new string[]
         {
             "Logs",
+            "Settings",
         };
 
         private static readonly Dictionary<string, string> directories = new();
@@ -20,7 +21,7 @@ namespace StardustDefender.Core.IO
                 string targetDirectoryPath = Path.Combine(GAME_DIRECTORY, directoryName);
                 if (!Directory.Exists(targetDirectoryPath))
                 {
-                    Directory.CreateDirectory(targetDirectoryPath);
+                    _ = Directory.CreateDirectory(targetDirectoryPath);
                 }
 
                 directories.Add(directoryName, targetDirectoryPath);

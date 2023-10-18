@@ -1,20 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Animation;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Bosses
+namespace StardustDefender.Game.Entities.Bosses
 {
     /// <summary>
     /// [ BLOODY EYE ALIEN ]
@@ -301,7 +301,7 @@ namespace StardustDefender.Entities.Bosses
                 }
 
                 Vector2 bulletSpeed = new(
-                    BULLET_SPEED * (SRandom.Range(-1, 2) + (-SRandom.NextFloat() / 1.5f)),
+                    BULLET_SPEED * (SRandom.Range(-1, 2) + -SRandom.NextFloat() / 1.5f),
                     BULLET_SPEED
                 );
 

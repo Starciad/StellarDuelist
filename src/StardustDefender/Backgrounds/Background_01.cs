@@ -1,7 +1,7 @@
 ﻿using StardustDefender.Core.Background;
 using StardustDefender.Core.Components;
 
-namespace StardustDefender.Backgrounds
+namespace StardustDefender.Game.Backgrounds
 {
     internal sealed class Background_01 : SBackground
     {

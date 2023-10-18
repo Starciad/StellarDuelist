@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Enemies
+namespace StardustDefender.Game.Entities.Enemies
 {
     /// <summary>
     /// [ EATER ]

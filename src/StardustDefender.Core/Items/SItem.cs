@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Animation;
 using StardustDefender.Core.Collections;
 using StardustDefender.Core.Colors;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 

@@ -1,4 +1,4 @@
-﻿namespace StardustDefender.Enums
+﻿namespace StardustDefender.Game.Enums
 {
     internal enum Direction : byte
     {

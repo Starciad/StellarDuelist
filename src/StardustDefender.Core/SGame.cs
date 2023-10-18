@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Camera;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
@@ -86,7 +85,7 @@ namespace StardustDefender.Core
         {
             STime.Update(gameTime, null);
             SInput.Update();
-            
+
             if (this.IsActive && SGameController.State == SGameState.Running)
             {
                 // Managers
@@ -139,6 +138,10 @@ namespace StardustDefender.Core
             SGraphics.SpriteBatch.End();
 
             base.Draw(gameTime);
+        }
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
         }
     }
 }

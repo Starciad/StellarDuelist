@@ -1,7 +1,7 @@
 ﻿using StardustDefender.Core.Components;
 using StardustDefender.Core.Effects;
 
-namespace StardustDefender.Effects
+namespace StardustDefender.Game.Effects
 {
     internal sealed class ImpactEffect : SEffectRegister
     {
