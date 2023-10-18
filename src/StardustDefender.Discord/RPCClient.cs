@@ -1,5 +1,6 @@
 ﻿using DiscordRPC;
 
+using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
@@ -7,11 +8,12 @@ using StardustDefender.Core.Enums;
 using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Core.Discord
+namespace StardustDefender.Discord
 {
     public sealed class RPCClient
     {
         private readonly DiscordRpcClient _client = new("1161852580801019965", autoEvents: false);
+        private readonly RichPresence _presence = new();
         private readonly ulong initializeUnixTimestamp;
 
         private string details;
@@ -36,23 +38,23 @@ namespace StardustDefender.Core.Discord
         {
             try
             {
+                _presence.WithTimestamps(new() { StartUnixMilliseconds = initializeUnixTimestamp });
+
                 while (!_client.IsDisposed)
                 {
                     await GetInfosAsync();
 
-                    _client.SetPresence(new()
+                    _presence.WithDetails(details);
+                    _presence.WithState(state);
+                    _presence.WithAssets(new()
                     {
-                        Details = details,
-                        State = state,
-                        Timestamps = new() { StartUnixMilliseconds = initializeUnixTimestamp },
-                        Assets = new()
-                        {
-                            LargeImageKey = "large_1",
-                            LargeImageText = SInfos.GetTitle(),
-                        }
+                        LargeImageKey = "large_1",
+                        LargeImageText = SInfos.GetTitle(),
                     });
 
-                    await Task.Delay(TimeSpan.FromSeconds(2.5f));
+                    _client.SetPresence(_presence);
+
+                    await Task.Delay(TimeSpan.FromSeconds(3f));
                 }
             }
             catch (Exception)
@@ -70,37 +72,54 @@ namespace StardustDefender.Core.Discord
             switch (SGameController.State)
             {
                 case SGameState.Introduction:
+                    details = "Starting a new adventure!";
                     state = "On Introduction.";
-                    details = string.Empty;
                     break;
 
                 case SGameState.Running:
-                    state = $"Battling {0} enemies. - Level {0} ({0}).";
-                    details = $"HP: {0} || ATK: {0}";
+                    if (SLevelController.BossAppeared)
+                    {
+                        details = $"Battling a Boss.";
+                        state = GetStatusString();
+                    }
+                    else
+                    {
+                        details = $"Battling {SDifficultyController.TotalEnemyCount - SLevelController.EnemiesKilled} enemies.";
+                        state = GetStatusString();
+                    }
                     break;
 
                 case SGameState.Paused:
-                    state = "Paused.";
-                    details = string.Empty;
+                    details = "Paused.";
+                    state = string.Empty;
                     break;
 
                 case SGameState.Victory:
-                    state = $"Victory - Finished level {0}.";
-                    details = $"HP: {0} || ATK: {0}";
+                    details = $"Victory.";
+                    state = $"Finished level {SLevelController.Level + 1}.";
                     break;
 
                 case SGameState.GameOver:
-                    state = "Game Over!";
-                    details = "";
+                    details = "Game Over!";
+                    state = string.Empty;
                     break;
 
                 default:
-                    state = string.Empty;
                     details = string.Empty;
+                    state = string.Empty;
                     break;
             }
 
             await Task.CompletedTask;
+
+            string GetStatusString()
+            {
+                ReadOnlySpan<char> s_lvl = (SLevelController.Level + 1).ToString();
+                ReadOnlySpan<char> s_hp = SLevelController.Player.HealthValue.ToString();
+                ReadOnlySpan<char> s_atk = SLevelController.Player.DamageValue.ToString();
+
+                return $"Lvl. {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
+            }
         }
     }
 }

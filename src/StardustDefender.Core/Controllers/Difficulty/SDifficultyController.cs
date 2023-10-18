@@ -8,8 +8,8 @@ namespace StardustDefender.Controllers
     public static partial class SDifficultyController
     {
         public static float DifficultyRate => difficultyRate;
+        public static int TotalEnemyCount => totalEnemyCount;
         internal static float EnemySpawnDelay => enemySpawnDelay + SRandom.NextFloat();
-        internal static int TotalEnemyCount => totalEnemyCount;
 
         private static float difficultyRate = 0;
         private static float enemySpawnDelay = 0;

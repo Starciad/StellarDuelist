@@ -19,6 +19,7 @@ namespace StardustDefender.Controllers
         internal static int PlayerCumulativeDamage => playerCumulativeDamage;
         public static bool BossIncoming => bossIncoming;
         public static bool BossAppeared => bossAppeared;
+        public static int EnemiesKilled => enemiesKilled;
 
         // Consts
         private const int ENEMY_SPAWN_RANGE = 4;
