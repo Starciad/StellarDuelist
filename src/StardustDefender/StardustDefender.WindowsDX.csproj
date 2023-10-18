@@ -20,13 +20,13 @@
 	</PropertyGroup>
 
 	<!-- FILES (REMOVE) -->
-    <ItemGroup>
-	    <None Remove="Icon.ico" />
-	    <None Remove="Icon.bmp" />
-    </ItemGroup>
+	<ItemGroup>
+		<None Remove="Icon.ico" />
+		<None Remove="Icon.bmp" />
+	</ItemGroup>
 
 	<!-- FILES (RESOURCE) -->
-    <ItemGroup>
+	<ItemGroup>
 		<EmbeddedResource Include="Icon.ico">
 			<LogicalName>Icon.ico</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -35,7 +35,7 @@
 			<LogicalName>Icon.bmp</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>
-    </ItemGroup>
+	</ItemGroup>
 
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
@@ -48,7 +48,14 @@
 		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.WindowsDX.Core.csproj" />
 		<ProjectReference Include="..\StardustDefender.Discord\StardustDefender.WindowsDX.Discord.csproj" />
 	</ItemGroup>
-	
+
+	<!-- FILES -->
+	<ItemGroup>
+		<None Update="System\Environment">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 	<!-- TARGETS -->
 	<Target Name="RestoreDotnetTools" BeforeTargets="Restore">
 		<Message Text="[ Restoring Dotnet Tools ]" Importance="high" />

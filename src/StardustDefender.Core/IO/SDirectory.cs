@@ -9,6 +9,7 @@ namespace StardustDefender.Core.IO
         private static string[] DEFAULT_DIRECTORIES => new string[]
         {
             "Logs",
+            "Settings",
         };
 
         private static readonly Dictionary<string, string> directories = new();

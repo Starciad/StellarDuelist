@@ -1,11 +1,12 @@
 ﻿using System;
 
 using StardustDefender.Core;
-using StardustDefender.Core.IO;
 using Microsoft.Xna.Framework;
 
 #if PC
 using StardustDefender.Discord;
+using StardustDefender.Core.System;
+using StardustDefender.Core.IO;
 #endif
 
 #if !DEBUG
@@ -27,6 +28,7 @@ namespace StardustDefender
         [STAThread]
         private static void Main()
         {
+            SEnvironment.Initialize();
             SDirectory.Initialize();
 
 #if PC

@@ -12,20 +12,20 @@ namespace StardustDefender.Discord
 {
     public sealed class RPCClient
     {
-        private readonly DiscordRpcClient _client = new("1161852580801019965", autoEvents: false);
-        private readonly RichPresence _presence = new();
-        private readonly ulong initializeUnixTimestamp;
+        private DiscordRpcClient _client;
+        private RichPresence _presence;
 
+        private ulong initializeUnixTimestamp;
         private string details;
         private string state;
 
-        public RPCClient()
-        {
-            initializeUnixTimestamp = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        }
-
         public void Start()
         {
+            _client = new(Environment.GetEnvironmentVariable("DISCORD_RPC_CLIENT_ID"));
+            _presence = new();
+
+            initializeUnixTimestamp = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
             _ = _client.Initialize();
             _ = Task.Run(UpdateAsync);
         }
