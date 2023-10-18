@@ -9,12 +9,12 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Extensions;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Enemies
+namespace StardustDefender.Game.Entities.Enemies
 {
     /// <summary>
     /// [ ALIEN DEFENSE FLAMES ]

@@ -2,7 +2,7 @@
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Items;
 
-namespace StardustDefender.Items
+namespace StardustDefender.Game.Items
 {
     internal sealed class ShootLifeTimeUpgradeItem : SItemRegister
     {

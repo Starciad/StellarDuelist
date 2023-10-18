@@ -4,7 +4,7 @@ using StardustDefender.Core.Items;
 
 using System;
 
-namespace StardustDefender.Items
+namespace StardustDefender.Game.Items
 {
     internal sealed class ShootDelayUpgradeItem : SItemRegister
     {

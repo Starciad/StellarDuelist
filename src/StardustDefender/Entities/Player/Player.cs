@@ -8,9 +8,9 @@ using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
-namespace StardustDefender.Entities.Player
+namespace StardustDefender.Game.Entities.Player
 {
     [SEntityRegister(typeof(Header))]
     internal sealed class Player : SPlayerEntity

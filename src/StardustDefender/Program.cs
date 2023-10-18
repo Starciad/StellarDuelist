@@ -16,7 +16,7 @@ using StardustDefender.Core.Components;
 using System.Windows.Forms;
 #endif
 
-namespace StardustDefender
+namespace StardustDefender.Game
 {
     internal static class Program
     {

@@ -11,7 +11,7 @@ using StardustDefender.Core.GUI;
 
 using System.Text;
 
-namespace StardustDefender.GUI
+namespace StardustDefender.Game.GUI
 {
     internal sealed class GUI_Introduction : SGUI
     {

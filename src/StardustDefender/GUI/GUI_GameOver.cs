@@ -12,7 +12,7 @@ using StardustDefender.Core.GUI;
 using System;
 using System.Text;
 
-namespace StardustDefender.GUI
+namespace StardustDefender.Game.GUI
 {
     internal sealed class GUI_GameOver : SGUI
     {
