@@ -38,6 +38,11 @@ namespace StardustDefender.Discord
             try
             {
                 _ = this._presence.WithTimestamps(new() { StartUnixMilliseconds = this.initializeUnixTimestamp });
+                _ = this._presence.WithAssets(new()
+                {
+                    LargeImageKey = "large_1",
+                    LargeImageText = SInfos.GetTitle(),
+                });
 
                 while (!this._client.IsDisposed)
                 {
@@ -45,15 +50,9 @@ namespace StardustDefender.Discord
 
                     _ = this._presence.WithDetails(this.details);
                     _ = this._presence.WithState(this.state);
-                    _ = this._presence.WithAssets(new()
-                    {
-                        LargeImageKey = "large_1",
-                        LargeImageText = SInfos.GetTitle(),
-                    });
-
                     this._client.SetPresence(this._presence);
-
-                    await Task.Delay(TimeSpan.FromSeconds(3f));
+                    
+                    await Task.Delay(TimeSpan.FromSeconds(2f));
                 }
             }
             catch (Exception)
@@ -107,7 +106,7 @@ namespace StardustDefender.Discord
                     break;
 
                 default:
-                    this.details = string.Empty;
+                    this.details = "Idle.";
                     this.state = string.Empty;
                     break;
             }
@@ -120,7 +119,7 @@ namespace StardustDefender.Discord
                 ReadOnlySpan<char> s_hp = SLevelController.Player.HealthValue.ToString();
                 ReadOnlySpan<char> s_atk = SLevelController.Player.DamageValue.ToString();
 
-                return $"Lvl. {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
+                return $"LVL. {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
             }
         }
     }
