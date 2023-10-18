@@ -27,6 +27,12 @@
 
 	<!-- FILES (RESOURCE) -->
 	<ItemGroup>
+		<!-- INCLUDE -->
+		<None Update="System\Environment">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+
+		<!-- EMBED -->
 		<EmbeddedResource Include="Icon.ico">
 			<LogicalName>Icon.ico</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -47,13 +53,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.WindowsDX.Core.csproj" />
 		<ProjectReference Include="..\StardustDefender.Discord\StardustDefender.WindowsDX.Discord.csproj" />
-	</ItemGroup>
-
-	<!-- FILES -->
-	<ItemGroup>
-		<None Update="System\Environment">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 	<!-- TARGETS -->

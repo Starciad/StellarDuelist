@@ -27,6 +27,12 @@
 
 	<!-- FILES (RESOURCE) -->
 	<ItemGroup>
+		<!-- INCLUDE -->
+		<None Update="System\Environment">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+				
+		<!-- EMBED -->
 		<EmbeddedResource Include="Icon.ico">
 			<LogicalName>Icon.ico</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
