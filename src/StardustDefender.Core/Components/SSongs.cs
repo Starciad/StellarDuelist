@@ -8,27 +8,15 @@ namespace StardustDefender.Core.Components
     {
         public static float Volume
         {
-            get
-            {
-                return MediaPlayer.Volume;
-            }
+            get => MediaPlayer.Volume;
 
-            set
-            {
-                MediaPlayer.Volume = value;
-            }
+            set => MediaPlayer.Volume = value;
         }
         public static bool IsRepeating
         {
-            get
-            {
-                return MediaPlayer.IsRepeating;
-            }
+            get => MediaPlayer.IsRepeating;
 
-            set
-            {
-                MediaPlayer.IsRepeating = value;
-            }
+            set => MediaPlayer.IsRepeating = value;
         }
 
         private static Song currentSong;

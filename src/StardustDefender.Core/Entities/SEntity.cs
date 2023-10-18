@@ -86,7 +86,7 @@ namespace StardustDefender.Core.Entities
 
         public void Destroy()
         {
-            IsDestroyed = true;
+            this.IsDestroyed = true;
             SEntityManager.Remove(this);
             OnDestroy();
         }

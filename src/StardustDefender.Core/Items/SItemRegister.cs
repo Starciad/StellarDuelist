@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-
-using StardustDefender.Controllers;
-using StardustDefender.Core.Animation;
+﻿using StardustDefender.Core.Animation;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Entities.Templates;
 
 namespace StardustDefender.Core.Items

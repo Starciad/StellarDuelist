@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
+using StardustDefender.Core.Controllers;
 
 namespace StardustDefender.Core.Entities.Templates
 {

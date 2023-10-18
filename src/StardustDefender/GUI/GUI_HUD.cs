@@ -2,14 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Camera;
+using StardustDefender.Core.Colors;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Extensions;
 using StardustDefender.Core.GUI;
-using StardustDefender.Core.Colors;
 
 using System.Text;
 
@@ -95,17 +94,17 @@ namespace StardustDefender.GUI
             _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
             _ = this.S_TotalGameTime.Append($"{SLevelController.TotalGameTime.ToString(@"hh\:mm\:ss")}");
 
-            if (!viewedTheTutorial)
+            if (!this.viewedTheTutorial)
             {
                 if (SInput.Started(Keys.A) || SInput.Started(Keys.D) || SInput.Started(Keys.K) ||
                     SInput.Started(Keys.Left) || SInput.Started(Keys.Right) || SInput.Started(Keys.P))
                 {
-                    tutorialTimeout++;
+                    this.tutorialTimeout++;
                 }
 
-                if (tutorialTimeout >= 6)
+                if (this.tutorialTimeout >= 6)
                 {
-                    viewedTheTutorial = true;
+                    this.viewedTheTutorial = true;
                 }
             }
         }
@@ -137,11 +136,11 @@ namespace StardustDefender.GUI
 
             if (SLevelController.BossIncoming && !SLevelController.BossAppeared)
             {
-                SGraphics.SpriteBatch.DrawString(this.font, this.S_Boss_Incoming, new Vector2(SCamera.Center.X + 168, SCamera.Center.Y + 90), Palettes.WARNING_PALETTE[warningPalleteColorIndex], 0f, Vector2.Zero, new Vector2(0.3f), SpriteEffects.None, 0f);
+                SGraphics.SpriteBatch.DrawString(this.font, this.S_Boss_Incoming, new Vector2(SCamera.Center.X + 168, SCamera.Center.Y + 90), Palettes.WARNING_PALETTE[this.warningPalleteColorIndex], 0f, Vector2.Zero, new Vector2(0.3f), SpriteEffects.None, 0f);
             }
 
             // Tutorial
-            if (!viewedTheTutorial)
+            if (!this.viewedTheTutorial)
             {
                 SGraphics.SpriteBatch.Draw(this.tutorialTexture, new Vector2(SCamera.Center.X, SCamera.Center.Y), null, Color.White, 0f, this.tutorialTextureOrigin, new Vector2(0.75f), SpriteEffects.None, 0f);
             }
@@ -149,7 +148,7 @@ namespace StardustDefender.GUI
 
         private void UpdateColors()
         {
-            warningPalleteColorIndex = warningPalleteColorIndex < Palettes.WARNING_PALETTE.Length - 1 ? warningPalleteColorIndex + 1 : 0;
+            this.warningPalleteColorIndex = this.warningPalleteColorIndex < Palettes.WARNING_PALETTE.Length - 1 ? this.warningPalleteColorIndex + 1 : 0;
         }
     }
 }

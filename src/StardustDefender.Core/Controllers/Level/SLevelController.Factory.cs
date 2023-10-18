@@ -1,11 +1,11 @@
 ﻿using StardustDefender.Core.Components;
-using StardustDefender.Core.Managers;
+using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
+using StardustDefender.Core.Managers;
 
 using System;
-using StardustDefender.Core.Entities.Templates;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
@@ -9,7 +9,6 @@ using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 using StardustDefender.Effects;
 
-using System;
 using System.Threading.Tasks;
 
 namespace StardustDefender.Entities.Enemies
@@ -179,7 +178,9 @@ namespace StardustDefender.Entities.Enemies
 
             this.intervalBetweenShots.Update();
             if (!this.intervalBetweenShots.IsFinished)
+            {
                 return;
+            }
 
             this.intervalBetweenShots.Restart();
             this.currentBullet++;

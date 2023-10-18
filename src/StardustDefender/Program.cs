@@ -1,7 +1,6 @@
 ﻿using System;
 
 using StardustDefender.Core;
-using Microsoft.Xna.Framework;
 
 #if PC
 using StardustDefender.Discord;

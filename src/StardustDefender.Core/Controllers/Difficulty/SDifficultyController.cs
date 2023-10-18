@@ -1,9 +1,9 @@
 ﻿using StardustDefender.Core.Components;
 using StardustDefender.Core.Entities.Register;
-using StardustDefender.Core.Managers;
 using StardustDefender.Core.Enums;
+using StardustDefender.Core.Managers;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SDifficultyController
     {

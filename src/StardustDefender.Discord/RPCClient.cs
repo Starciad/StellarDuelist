@@ -1,6 +1,5 @@
 ﻿using DiscordRPC;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Enums;
@@ -21,38 +20,38 @@ namespace StardustDefender.Discord
 
         public void Start()
         {
-            _client = new(Environment.GetEnvironmentVariable("DISCORD_RPC_CLIENT_ID"));
-            _presence = new();
+            this._client = new(Environment.GetEnvironmentVariable("DISCORD_RPC_CLIENT_ID"));
+            this._presence = new();
 
-            initializeUnixTimestamp = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            this.initializeUnixTimestamp = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-            _ = _client.Initialize();
+            _ = this._client.Initialize();
             _ = Task.Run(UpdateAsync);
         }
         public void Stop()
         {
-            _client.Dispose();
+            this._client.Dispose();
         }
 
         private async Task UpdateAsync()
         {
             try
             {
-                _presence.WithTimestamps(new() { StartUnixMilliseconds = initializeUnixTimestamp });
+                _ = this._presence.WithTimestamps(new() { StartUnixMilliseconds = this.initializeUnixTimestamp });
 
-                while (!_client.IsDisposed)
+                while (!this._client.IsDisposed)
                 {
                     await GetInfosAsync();
 
-                    _presence.WithDetails(details);
-                    _presence.WithState(state);
-                    _presence.WithAssets(new()
+                    _ = this._presence.WithDetails(this.details);
+                    _ = this._presence.WithState(this.state);
+                    _ = this._presence.WithAssets(new()
                     {
                         LargeImageKey = "large_1",
                         LargeImageText = SInfos.GetTitle(),
                     });
 
-                    _client.SetPresence(_presence);
+                    this._client.SetPresence(this._presence);
 
                     await Task.Delay(TimeSpan.FromSeconds(3f));
                 }
@@ -63,8 +62,10 @@ namespace StardustDefender.Discord
             }
             finally
             {
-                if (!_client.IsDisposed)
-                    _client.Dispose();
+                if (!this._client.IsDisposed)
+                {
+                    this._client.Dispose();
+                }
             }
         }
         private async Task GetInfosAsync()
@@ -72,41 +73,42 @@ namespace StardustDefender.Discord
             switch (SGameController.State)
             {
                 case SGameState.Introduction:
-                    details = "Starting a new adventure!";
-                    state = "On Introduction.";
+                    this.details = "Starting a new adventure!";
+                    this.state = "On Introduction.";
                     break;
 
                 case SGameState.Running:
                     if (SLevelController.BossAppeared)
                     {
-                        details = $"Battling a Boss.";
-                        state = GetStatusString();
+                        this.details = $"Battling a Boss.";
+                        this.state = GetStatusString();
                     }
                     else
                     {
-                        details = $"Battling {SDifficultyController.TotalEnemyCount - SLevelController.EnemiesKilled} enemies.";
-                        state = GetStatusString();
+                        this.details = $"Battling {SDifficultyController.TotalEnemyCount - SLevelController.EnemiesKilled} enemies.";
+                        this.state = GetStatusString();
                     }
+
                     break;
 
                 case SGameState.Paused:
-                    details = "Paused.";
-                    state = string.Empty;
+                    this.details = "Paused.";
+                    this.state = string.Empty;
                     break;
 
                 case SGameState.Victory:
-                    details = $"Victory.";
-                    state = $"Finished level {SLevelController.Level + 1}.";
+                    this.details = $"Victory.";
+                    this.state = $"Finished level {SLevelController.Level + 1}.";
                     break;
 
                 case SGameState.GameOver:
-                    details = "Game Over!";
-                    state = string.Empty;
+                    this.details = "Game Over!";
+                    this.state = string.Empty;
                     break;
 
                 default:
-                    details = string.Empty;
-                    state = string.Empty;
+                    this.details = string.Empty;
+                    this.state = string.Empty;
                     break;
             }
 

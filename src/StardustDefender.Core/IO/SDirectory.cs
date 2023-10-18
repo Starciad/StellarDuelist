@@ -21,7 +21,7 @@ namespace StardustDefender.Core.IO
                 string targetDirectoryPath = Path.Combine(GAME_DIRECTORY, directoryName);
                 if (!Directory.Exists(targetDirectoryPath))
                 {
-                    Directory.CreateDirectory(targetDirectoryPath);
+                    _ = Directory.CreateDirectory(targetDirectoryPath);
                 }
 
                 directories.Add(directoryName, targetDirectoryPath);

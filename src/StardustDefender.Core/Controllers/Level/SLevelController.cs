@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardustDefender.Core.Camera;
-using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.World;
@@ -9,7 +8,7 @@ using StardustDefender.Core.World;
 using System;
 using System.Diagnostics;
 
-namespace StardustDefender.Controllers
+namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {
