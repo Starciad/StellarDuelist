@@ -7,17 +7,14 @@ namespace StardustDefender.Core.Components
         public static GameTime UpdateTime { get; private set; }
         public static GameTime DrawTime { get; private set; }
 
-        internal static void Update(GameTime updateTime = null, GameTime drawTime = null)
+        internal static void SetUpdateGameTime(GameTime value)
         {
-            if (updateTime != null)
-            {
-                UpdateTime = updateTime;
-            }
+            UpdateTime = value;
+        }
 
-            if (drawTime != null)
-            {
-                DrawTime = drawTime;
-            }
+        internal static void SetDrawGameTime(GameTime value)
+        {
+            DrawTime = value;
         }
     }
 }
