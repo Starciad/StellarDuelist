@@ -3,6 +3,7 @@
 using StardustDefender.Core;
 using StardustDefender.Core.System;
 using StardustDefender.Core.IO;
+using StardustDefender.Core.Components;
 
 #if PC
 using StardustDefender.Discord;
