@@ -10,9 +10,7 @@ namespace StardustDefender.Core.Components
     /// Static utility for accessing a collection of content managers.
     /// </summary>
     /// <remarks>
-    ///     <para>
-    ///         This utility houses a series of content managers that access specific directories and locations based on their designated function. It assists in the organization and logical loading of content in the game while serving as a shortcut to finding particular assets.
-    ///     </para>
+    /// This utility houses a series of content managers that access specific directories and locations based on their designated function. It assists in the organization and logical loading of content in the game while serving as a shortcut to finding particular assets.
     /// </remarks>
     internal static class SContent
     {
