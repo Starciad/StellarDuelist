@@ -37,7 +37,7 @@ namespace StardustDefender.Core.Effects
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.TextureRectangle, this.Color, this.Rotation, new Vector2(this._animation.SpriteScale / 2), this.Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.Frame, this.Color, this.Rotation, new Vector2(this._animation.SpriteScale / 2), this.Scale, SpriteEffects.None, 0f);
         }
 
         private void OnFinished()

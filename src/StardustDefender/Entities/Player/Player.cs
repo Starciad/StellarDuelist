@@ -39,9 +39,9 @@ namespace StardustDefender.Game.Entities.Player
         {
             // Animations
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
             this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 0));
 
             // Team
             this.Team = STeam.Good;

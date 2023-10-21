@@ -36,7 +36,7 @@ namespace StardustDefender.Core.Projectiles
             this.LifeTime = builder.LifeTime;
             this.Color = builder.Color;
 
-            this.Animation.AddSprite(STextures.GetSprite(32, this.SpriteId, 0));
+            this.Animation.AddFrame(STextures.GetSprite(32, this.SpriteId, 0));
             this.Animation.Initialize();
         }
 
@@ -53,7 +53,7 @@ namespace StardustDefender.Core.Projectiles
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.Position, this.Animation.TextureRectangle, this.Color, 0f, new Vector2(this.Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.Position, this.Animation.Frame, this.Color, 0f, new Vector2(this.Animation.SpriteScale / 2), 1, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {
@@ -63,7 +63,7 @@ namespace StardustDefender.Core.Projectiles
         public void Reset()
         {
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
 
             this.Team = STeam.None;
             this.SpriteId = 0;

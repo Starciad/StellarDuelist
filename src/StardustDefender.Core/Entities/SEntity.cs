@@ -81,7 +81,7 @@ namespace StardustDefender.Core.Entities
                 return;
             }
 
-            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.WorldPosition, this.Animation.TextureRectangle, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.WorldPosition, this.Animation.Frame, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
         }
 
         public void Destroy()

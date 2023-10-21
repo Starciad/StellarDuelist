@@ -105,10 +105,10 @@ namespace StardustDefender.Game.Entities.Bosses
             this.A_Normal.Reset();
             this.A_Shoot.Reset();
 
-            this.A_Idle.Clear();
-            this.A_Intro.Clear();
-            this.A_Normal.Clear();
-            this.A_Shoot.Clear();
+            this.A_Idle.ClearFrames();
+            this.A_Intro.ClearFrames();
+            this.A_Normal.ClearFrames();
+            this.A_Shoot.ClearFrames();
 
             this.A_Idle.SetMode(SAnimationMode.Disable);
             this.A_Intro.SetMode(SAnimationMode.Once);
@@ -119,21 +119,21 @@ namespace StardustDefender.Game.Entities.Bosses
             this.A_Normal.SetDuration(1f);
             this.A_Shoot.SetDuration(3f);
 
-            this.A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
+            this.A_Idle.AddFrame(STextures.GetSprite(64, 0, 0));
 
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 0, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 1, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 2, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 3, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 4, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 5, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 6, 0));
 
-            this.A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Normal.AddFrame(STextures.GetSprite(64, 6, 0));
 
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 6, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 7, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 8, 0));
 
             this.Animation = this.A_Normal;
         }

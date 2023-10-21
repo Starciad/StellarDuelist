@@ -42,7 +42,7 @@ namespace StardustDefender.Core.Items
         }
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.TextureRectangle, this.color, 0f, new Vector2(SItemRegister.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.Frame, this.color, 0f, new Vector2(SItemRegister.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
         }
         internal void Destroy()
         {

@@ -59,12 +59,12 @@ namespace StardustDefender.Game.Entities.Enemies
         public override void Reset()
         {
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 4));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 4));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 4));
+            this.Animation.AddFrame(STextures.GetSprite(32, 1, 4));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
