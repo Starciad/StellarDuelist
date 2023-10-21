@@ -10,6 +10,9 @@ namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {
+        /// <summary>
+        /// Starts a new game level, initializing necessary components and routines.
+        /// </summary>
         public static void StartNewLevel()
         {
             // Checks if the level is initialized, if it is false, the first components are created/initialized.
