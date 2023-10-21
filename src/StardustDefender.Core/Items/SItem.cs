@@ -59,8 +59,8 @@ namespace StardustDefender.Core.Items
             else
             {
                 this.currentColorUpdateDelay = 0;
-                this.colorIndex = this.colorIndex < Palettes.WARNING_PALETTE.Length - 1 ? this.colorIndex + 1 : 0;
-                this.color = Palettes.WARNING_PALETTE[this.colorIndex];
+                this.colorIndex = this.colorIndex < SPalettes.WARNING_PALETTE.Length - 1 ? this.colorIndex + 1 : 0;
+                this.color = SPalettes.WARNING_PALETTE[this.colorIndex];
             }
         }
         private void MovementUpdate()
