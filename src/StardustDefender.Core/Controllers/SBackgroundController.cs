@@ -6,12 +6,21 @@ using System.Linq;
 
 namespace StardustDefender.Core.Controllers
 {
+    /// <summary>
+    /// A static class responsible for managing background elements.
+    /// </summary>
     internal static class SBackgroundController
     {
+        /// <summary>
+        /// Gets or sets the global parallax factor that affects all background elements.
+        /// </summary>
         internal static float GlobalParallaxFactor { get; set; }
 
         private static readonly List<SBackground> backgrounds = new();
 
+        /// <summary>
+        /// Initializes the background controller and loads background elements from the game assembly.
+        /// </summary>
         internal static void BeginRun()
         {
             Reset();
@@ -24,14 +33,26 @@ namespace StardustDefender.Core.Controllers
                 backgrounds.Add(background);
             }
         }
+
+        /// <summary>
+        /// Updates all background elements.
+        /// </summary>
         internal static void Update()
         {
             backgrounds.ForEach(x => x.Update());
         }
+
+        /// <summary>
+        /// Render all background elements with their parallax effects.
+        /// </summary>
         internal static void Draw()
         {
             backgrounds.ForEach(x => x.Draw());
         }
+
+        /// <summary>
+        /// Resets the background controller.
+        /// </summary>
         internal static void Reset()
         {
             GlobalParallaxFactor = 1f;
