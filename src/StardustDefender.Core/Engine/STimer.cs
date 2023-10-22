@@ -2,15 +2,35 @@
 
 namespace StardustDefender.Core.Engine
 {
+    /// <summary>
+    /// Represents a timer that can be used for various timing operations.
+    /// </summary>
     public sealed class STimer
     {
-        public bool IsFinished => this.enable && this.current == 0;
+        /// <summary>
+        /// Gets a value indicating whether the timer has finished counting down.
+        /// </summary>
+        public bool IsFinished => enable && current == 0;
 
-        public bool IsEnable => this.enable;
-        public bool IsActive => this.active;
+        /// <summary>
+        /// Gets a value indicating whether the timer is enabled.
+        /// </summary>
+        public bool IsEnabled => enable;
 
-        public float TargetDelay => this.target;
-        public float CurrentDelay => this.target;
+        /// <summary>
+        /// Gets a value indicating whether the timer is actively counting down.
+        /// </summary>
+        public bool IsActive => active;
+
+        /// <summary>
+        /// Gets the target delay value for the timer.
+        /// </summary>
+        public float TargetDelay => target;
+
+        /// <summary>
+        /// Gets the current delay value for the timer.
+        /// </summary>
+        public float CurrentDelay => current;
 
         private bool enable = true;
         private bool active = false;
@@ -18,30 +38,53 @@ namespace StardustDefender.Core.Engine
         private float target = 0;
         private float current = 0;
 
+        /// <summary>
+        /// Initializes a new instance of the STimer class with a target delay of 0.
+        /// </summary>
         public STimer()
         {
             this.target = 0f;
             this.current = 0f;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the STimer class with a specified target delay.
+        /// </summary>
+        /// <param name="value">The target delay value in seconds.</param>
         public STimer(float value)
         {
             this.target = value;
             this.current = value;
         }
 
+        /// <summary>
+        /// Starts the timer, allowing it to count down.
+        /// </summary>
         public void Start()
         {
             this.active = true;
         }
+
+        /// <summary>
+        /// Restarts the timer, setting the current delay to the target delay and starting it.
+        /// </summary>
         public void Restart()
         {
             this.current = this.target;
             Start();
         }
+
+        /// <summary>
+        /// Stops the timer, preventing it from counting down further.
+        /// </summary>
         public void Stop()
         {
             this.active = false;
         }
+
+        /// <summary>
+        /// Updates the timer's current delay if it is active and enabled.
+        /// </summary>
         public void Update()
         {
             if (!this.active || !this.enable)
@@ -49,37 +92,46 @@ namespace StardustDefender.Core.Engine
                 return;
             }
 
-            if (this.current > 0)
+            this.current = Math.Max(0, this.current - 0.1f);
+
+            if (this.current == 0)
             {
-                this.current -= 0.1f;
-            }
-            else
-            {
-                this.current = 0;
                 this.active = false;
             }
-
-            this.current = Math.Clamp(this.current, 0, this.target);
         }
 
+        /// <summary>
+        /// Enables the timer, allowing it to count down if it is active.
+        /// </summary>
         public void Enable()
         {
             this.enable = true;
         }
+
+        /// <summary>
+        /// Disables the timer, preventing it from counting down even if it is active.
+        /// </summary>
         public void Disable()
         {
             this.enable = false;
         }
 
+        /// <summary>
+        /// Sets the target delay value for the timer and adjusts the current delay accordingly.
+        /// </summary>
+        /// <param name="value">The new target delay value in seconds.</param>
         public void SetDelay(float value)
         {
             this.target = value;
-            this.current = Math.Clamp(this.current, 0, this.target);
+            this.current = Math.Min(this.current, this.target);
         }
 
+        /// <summary>
+        /// Returns a string representation of the timer's current and target delay values.
+        /// </summary>
         public override string ToString()
         {
-            return $"{this.current}/{this.target}";
+            return $"{{ {this.current}/{this.target} }}";
         }
     }
 }
