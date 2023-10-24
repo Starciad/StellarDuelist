@@ -11,8 +11,14 @@ using StardustDefender.Core.Managers;
 
 namespace StardustDefender.Core.Items
 {
+    /// <summary>
+    /// Represents an in-game item.
+    /// </summary>
     public sealed class SItem : IPoolableObject
     {
+        /// <summary>
+        /// Gets or sets the position of the item.
+        /// </summary>
         internal Vector2 Position { get; set; }
 
         private const float VERTICAL_SPEED = 1.5f;
@@ -26,6 +32,12 @@ namespace StardustDefender.Core.Items
         private int colorIndex;
         private Color color;
 
+        /// <summary>
+        /// Builds the item with the provided register, animation, and position.
+        /// </summary>
+        /// <param name="register">The item's register.</param>
+        /// <param name="animation">The item's animation.</param>
+        /// <param name="position">The initial position of the item.</param>
         internal void Build(SItemRegister register, SAnimation animation, Vector2 position)
         {
             this._register = register;
@@ -34,16 +46,39 @@ namespace StardustDefender.Core.Items
 
             this.Position = position;
         }
+
+        /// <summary>
+        /// Resets the item's properties to their initial state.
+        /// </summary>
+        public void Reset()
+        {
+            this.Position = Vector2.Zero;
+            this.currentColorUpdateDelay = 0f;
+            this.colorIndex = 0;
+            this.color = Color.White;
+        }
+
+        /// <summary>
+        /// Updates the item's properties and behavior.
+        /// </summary>
         internal void Update()
         {
             ColorUpdate();
             MovementUpdate();
             CollisionCheckUpdate();
         }
+
+        /// <summary>
+        /// Draws the item on the screen.
+        /// </summary>
         internal void Draw()
         {
             SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.Frame, this.color, 0f, new Vector2(SItemRegister.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
         }
+
+        /// <summary>
+        /// Destroys the item, triggering any associated effects.
+        /// </summary>
         internal void Destroy()
         {
             _ = SSounds.Play("Player_Upgrade");
@@ -77,14 +112,6 @@ namespace StardustDefender.Core.Items
                 this._register.ApplyEffect();
                 Destroy();
             }
-        }
-
-        public void Reset()
-        {
-            this.Position = Vector2.Zero;
-            this.currentColorUpdateDelay = 0f;
-            this.colorIndex = 0;
-            this.color = Color.White;
         }
     }
 }
