@@ -4,7 +4,7 @@ using System.IO;
 namespace StardustDefender.Core.System
 {
     /// <summary>
-    /// Manages the initialization of environment variables from a settings file.
+    /// Utility static manager for environment variables.
     /// </summary>
     public static class SEnvironment
     {
