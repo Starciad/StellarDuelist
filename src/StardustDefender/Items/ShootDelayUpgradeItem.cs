@@ -6,6 +6,9 @@ using System;
 
 namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item for shortening the delay of the player's shots.
+    /// </summary>
     internal sealed class ShootDelayUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()

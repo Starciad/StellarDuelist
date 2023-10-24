@@ -4,6 +4,9 @@ using StardustDefender.Core.Items;
 
 namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item to increase the speed of the player's bullets.
+    /// </summary>
     internal sealed class ShootSpeedUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()

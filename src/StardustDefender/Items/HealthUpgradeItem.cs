@@ -4,6 +4,9 @@ using StardustDefender.Core.Items;
 
 namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item for the player's health.
+    /// </summary>
     internal sealed class HealthUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()

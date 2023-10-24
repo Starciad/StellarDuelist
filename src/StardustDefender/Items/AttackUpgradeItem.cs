@@ -4,6 +4,9 @@ using StardustDefender.Core.Items;
 
 namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item for the player's attack.
+    /// </summary>
     internal sealed class AttackUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()
