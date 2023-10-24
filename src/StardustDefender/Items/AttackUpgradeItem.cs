@@ -13,7 +13,7 @@ namespace StardustDefender.Game.Items
         }
         protected override void OnEffect(SPlayerEntity player)
         {
-            player.DamageValue += 1;
+            player.AttackValue += 1;
         }
     }
 }

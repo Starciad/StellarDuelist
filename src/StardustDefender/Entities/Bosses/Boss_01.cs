@@ -82,9 +82,11 @@ namespace StardustDefender.Game.Entities.Bosses
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             // Attributes
             this.HealthValue = 50;
-            this.DamageValue = 1;
+            this.AttackValue = 1;
             this.CollisionRange = 55f;
 
             // Team
@@ -139,10 +141,6 @@ namespace StardustDefender.Game.Entities.Bosses
         }
 
         // Override
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnStart()
         {
             this.verticalDirectionTimer.Restart();
@@ -197,7 +195,7 @@ namespace StardustDefender.Game.Entities.Bosses
         // Actions
         private void BOSS_Boost()
         {
-            this.HealthValue *= SLevelController.Player.DamageValue;
+            this.HealthValue *= SLevelController.Player.AttackValue;
         }
         private void BOSS_Introduction()
         {
@@ -311,7 +309,7 @@ namespace StardustDefender.Game.Entities.Bosses
                     Team = STeam.Bad,
                     Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
                     Speed = bulletSpeed,
-                    Damage = this.DamageValue,
+                    Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
                     Range = 10f,
                     Color = new Color(255, 0, 0, 255),

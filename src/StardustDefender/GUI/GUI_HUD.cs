@@ -88,7 +88,7 @@ namespace StardustDefender.Game.GUI
             _ = this.S_Difficulty.Append($"{SDifficultyController.GetDifficultyLabel()}");
             _ = this.S_Level.Append($"Level: {SLevelController.Level + 1}");
             _ = this.S_Health.Append($"Health: {SLevelController.Player.HealthValue}");
-            _ = this.S_Damage.Append($"Damage: {SLevelController.Player.DamageValue}");
+            _ = this.S_Damage.Append($"Damage: {SLevelController.Player.AttackValue}");
             _ = this.S_BulletSpeed.Append($"Bullet Speed: {SLevelController.Player.BulletSpeed.ToString("#.0")}");
             _ = this.S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
             _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");

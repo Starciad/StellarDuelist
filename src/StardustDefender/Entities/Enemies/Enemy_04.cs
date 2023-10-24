@@ -51,6 +51,8 @@ namespace StardustDefender.Game.Entities.Enemies
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             this.Animation.Reset();
             this.Animation.ClearFrames();
 
@@ -63,17 +65,13 @@ namespace StardustDefender.Game.Entities.Enemies
             this.Team = STeam.Bad;
 
             this.HealthValue = 15;
-            this.DamageValue = 2;
+            this.AttackValue = 2;
 
             this.ChanceOfKnockback = 25;
             this.KnockbackForce = 2;
         }
 
         // OVERRIDE
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnUpdate()
         {
             // Behaviour

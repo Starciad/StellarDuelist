@@ -117,9 +117,9 @@ namespace StardustDefender.Discord
             {
                 ReadOnlySpan<char> s_lvl = (SLevelController.Level + 1).ToString();
                 ReadOnlySpan<char> s_hp = SLevelController.Player.HealthValue.ToString();
-                ReadOnlySpan<char> s_atk = SLevelController.Player.DamageValue.ToString();
+                ReadOnlySpan<char> s_atk = SLevelController.Player.AttackValue.ToString();
 
-                return $"LVL. {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
+                return $"LVL: {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
             }
         }
     }

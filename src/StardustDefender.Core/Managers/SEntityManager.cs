@@ -68,7 +68,7 @@ namespace StardustDefender.Core.Managers
         {
             foreach (SEntity entity in Entities)
             {
-                entityPool.ReturnToPool(entity);
+                entityPool.Add(entity);
             }
 
             entities.Clear();
@@ -105,10 +105,9 @@ namespace StardustDefender.Core.Managers
         }
         public static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get(type) ?? (SEntity)Activator.CreateInstance(type);
+            SEntity entity = entityPool.Get(type);
 
             entity.LocalPosition = position;
-            entity.WorldPosition = SWorld.GetWorldPosition(position);
             entity.Scale = scale;
             entity.Rotation = rotation;
 
@@ -120,7 +119,7 @@ namespace StardustDefender.Core.Managers
         internal static void Remove(SEntity entity)
         {
             _ = entities.Remove(entity);
-            entityPool.ReturnToPool(entity);
+            entityPool.Add(entity);
         }
     }
 }

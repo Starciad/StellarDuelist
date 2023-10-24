@@ -37,6 +37,8 @@ namespace StardustDefender.Game.Entities.Player
 
         public override void Reset()
         {
+            base.Reset();
+
             // Animations
             this.Animation.Reset();
             this.Animation.ClearFrames();
@@ -48,7 +50,7 @@ namespace StardustDefender.Game.Entities.Player
 
             // Attributes
             this.HealthValue = 3;
-            this.DamageValue = 1;
+            this.AttackValue = 1;
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
 
@@ -149,7 +151,7 @@ namespace StardustDefender.Game.Entities.Player
 
             if (SInput.Started(Keys.D2))
             {
-                this.DamageValue += 1;
+                this.AttackValue += 1;
             }
 
             if (SInput.Started(Keys.D3))
@@ -222,9 +224,9 @@ namespace StardustDefender.Game.Entities.Player
                 {
                     SpriteId = 0,
                     Team = STeam.Good,
-                    Position = new(this.WorldPosition.X, this.WorldPosition.Y - 32f),
+                    Position = new(this.CurrentPosition.X, this.CurrentPosition.Y - 32f),
                     Speed = new(0, this.BulletSpeed * -1),
-                    Damage = this.DamageValue,
+                    Damage = this.AttackValue,
                     LifeTime = this.BulletLifeTime,
                     Range = 10f
                 });

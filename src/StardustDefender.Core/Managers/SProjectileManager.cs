@@ -40,7 +40,7 @@ namespace StardustDefender.Core.Managers
         {
             foreach (SProjectile projectile in Projectiles)
             {
-                projectilePool.ReturnToPool(projectile);
+                projectilePool.Add(projectile);
             }
 
             projectiles.Clear();
@@ -50,19 +50,15 @@ namespace StardustDefender.Core.Managers
         {
             SProjectile projectile = projectilePool.Get<SProjectile>();
 
-            if (projectile == null)
-            {
-                projectile = new();
-                projectile.Initialize();
-            }
-
+            projectile.Initialize();
             projectile.Build(builder);
+
             projectiles.Add(projectile);
         }
         internal static void Remove(SProjectile projectile)
         {
             _ = projectiles.Remove(projectile);
-            projectilePool.ReturnToPool(projectile);
+            projectilePool.Add(projectile);
         }
     }
 }

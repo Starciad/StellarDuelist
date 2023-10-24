@@ -58,7 +58,7 @@ namespace StardustDefender.Core.Managers
         {
             foreach (SEffect effect in Effects)
             {
-                effectPool.ReturnToPool(effect);
+                effectPool.Add(effect);
             }
 
             effects.Clear();
@@ -95,7 +95,7 @@ namespace StardustDefender.Core.Managers
         }
         public static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation, Color color)
         {
-            SEffect effect = effectPool.Get(type) ?? new();
+            SEffect effect = effectPool.Get<SEffect>();
 
             effect.Build(templates[type].Animation);
             effect.Position = position;
@@ -110,7 +110,7 @@ namespace StardustDefender.Core.Managers
         internal static void Remove(SEffect effect)
         {
             _ = effects.Remove(effect);
-            effectPool.ReturnToPool(effect);
+            effectPool.Add(effect);
         }
     }
 }

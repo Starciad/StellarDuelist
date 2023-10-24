@@ -25,8 +25,6 @@ namespace StardustDefender.Core.Projectiles
 
         internal void Build(SProjectileBuilder builder)
         {
-            Reset();
-
             this.Team = builder.Team;
             this.SpriteId = builder.SpriteId;
             this.Position = builder.Position;

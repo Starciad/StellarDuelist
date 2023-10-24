@@ -63,6 +63,8 @@ namespace StardustDefender.Game.Entities.Enemies
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             this.movementTimer.Start();
 
             this.Animation.Reset();
@@ -77,7 +79,7 @@ namespace StardustDefender.Game.Entities.Enemies
             this.Team = STeam.Bad;
 
             this.HealthValue = 45;
-            this.DamageValue = 1;
+            this.AttackValue = 1;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
@@ -86,10 +88,6 @@ namespace StardustDefender.Game.Entities.Enemies
         }
 
         // OVERRIDE
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();
@@ -182,7 +180,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Team = STeam.Bad,
                 Position = new(this.WorldPosition.X, this.WorldPosition.Y),
                 Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
-                Damage = this.DamageValue,
+                Damage = this.AttackValue,
                 LifeTime = BULLET_LIFE_TIME,
                 Range = 7.5f
             });

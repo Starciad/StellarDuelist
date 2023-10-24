@@ -59,7 +59,7 @@ namespace StardustDefender.Core.Managers
         {
             foreach (SItem item in Items)
             {
-                itemPool.ReturnToPool(item);
+                itemPool.Add(item);
             }
 
             items.Clear();
@@ -74,13 +74,13 @@ namespace StardustDefender.Core.Managers
         {
             return Create(typeof(T), position);
         }
+
         internal static SItem Create(Type type, Vector2 position)
         {
-            SItem item = itemPool.Get(type) ?? new();
+            SItem item = itemPool.Get<SItem>();
             SItemRegister template = templates[type];
 
             item.Build(template, template.Animation, position);
-
             items.Add(item);
             return item;
         }
