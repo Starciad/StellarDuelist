@@ -121,6 +121,14 @@ namespace StardustDefender.Core
 
         protected override void Update(GameTime gameTime)
         {
+#if PC
+            // Screenshot
+            if (SInput.Started(Keys.F12))
+            {
+                SScreenshot.Print(SGraphics.DefaultRenderTarget);
+            }
+#endif
+
             // Update time and input.
             STime.SetUpdateGameTime(value: gameTime);
             SInput.Update();
@@ -170,20 +178,6 @@ namespace StardustDefender.Core
             SFade.Draw();
 
             SGraphics.SpriteBatch.End();
-
-#if PC
-            // Screenshot
-            if (SInput.Started(Keys.F12))
-            {
-                SScreenshot.Print(SGraphics.DefaultRenderTarget);
-            }
-
-            // Gif
-            if (SInput.Started(Keys.F11))
-            {
-
-            }
-#endif
 
             // Set the render target back to null and render to the screen.
             this.GraphicsDevice.SetRenderTarget(null);

@@ -18,6 +18,7 @@
 
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
+		<PackageReference Include="AnimatedGif" Version="1.0.5" />
 		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303">
 			<PrivateAssets>All</PrivateAssets>
 		</PackageReference>
