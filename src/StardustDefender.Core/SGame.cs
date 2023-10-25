@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using StardustDefender.Core.Camera;
 using StardustDefender.Core.Components;
@@ -8,6 +9,10 @@ using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 
 using System.Reflection;
+
+#if PC
+using StardustDefender.CaptureSystem;
+#endif
 
 namespace StardustDefender.Core
 {
@@ -165,6 +170,20 @@ namespace StardustDefender.Core
             SFade.Draw();
 
             SGraphics.SpriteBatch.End();
+
+#if PC
+            // Screenshot
+            if (SInput.Started(Keys.F12))
+            {
+                SScreenshot.Print(SGraphics.DefaultRenderTarget);
+            }
+
+            // Gif
+            if (SInput.Started(Keys.F11))
+            {
+
+            }
+#endif
 
             // Set the render target back to null and render to the screen.
             this.GraphicsDevice.SetRenderTarget(null);
