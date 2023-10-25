@@ -4,12 +4,15 @@ using StardustDefender.Core.Items;
 
 namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item to increase the speed of the player's bullets.
+    /// </summary>
     internal sealed class ShootSpeedUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()
         {
             this.Animation.SetTexture(STextures.GetTexture("ITEMS_Upgrades"));
-            this.Animation.AddSprite(STextures.GetSprite(SPRITE_SCALE, 4, 0));
+            this.Animation.AddFrame(STextures.GetSprite(SPRITE_SCALE, 4, 0));
         }
         protected override void OnEffect(SPlayerEntity player)
         {

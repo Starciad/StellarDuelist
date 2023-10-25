@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace StardustDefender.Discord
 {
+    /// <summary>
+    /// RPC communication client with discord for synchronizing in-game information such as status on the player's profile.
+    /// </summary>
     public sealed class RPCClient
     {
         private DiscordRpcClient _client;
@@ -18,6 +21,9 @@ namespace StardustDefender.Discord
         private string details;
         private string state;
 
+        /// <summary>
+        /// Initializes the RPC client and its asynchronous updates.
+        /// </summary>
         public void Start()
         {
             this._client = new(Environment.GetEnvironmentVariable("DISCORD_RPC_CLIENT_ID"));
@@ -28,6 +34,10 @@ namespace StardustDefender.Discord
             _ = this._client.Initialize();
             _ = Task.Run(UpdateAsync);
         }
+
+        /// <summary>
+        /// Stop the RPC client.
+        /// </summary>
         public void Stop()
         {
             this._client.Dispose();
@@ -117,9 +127,9 @@ namespace StardustDefender.Discord
             {
                 ReadOnlySpan<char> s_lvl = (SLevelController.Level + 1).ToString();
                 ReadOnlySpan<char> s_hp = SLevelController.Player.HealthValue.ToString();
-                ReadOnlySpan<char> s_atk = SLevelController.Player.DamageValue.ToString();
+                ReadOnlySpan<char> s_atk = SLevelController.Player.AttackValue.ToString();
 
-                return $"LVL. {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
+                return $"LVL: {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
             }
         }
     }

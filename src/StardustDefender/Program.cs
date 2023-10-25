@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Text;
 
 using StardustDefender.Core;
 using StardustDefender.Core.System;
 using StardustDefender.Core.IO;
+using StardustDefender.Core.Components;
 
 #if PC
 using StardustDefender.Discord;
@@ -90,18 +92,17 @@ namespace StardustDefender.Game
         {
 #if WINDOWS_DX
             string logFilename = SFile.WriteException(value);
-            MessageBox.Show($"An unexpected error caused StardustDefender to crash!{BR()}{BR()}Check the log file created at: {logFilename}{BR()}{BR()}{BR()}{BR()}Exception: {value.Message}",
+            StringBuilder logString = new();
+            logString.AppendLine("An unexpected error caused StardustDefender to crash!");
+            logString.AppendLine($"Exception: {value.Message}");
+
+            MessageBox.Show(logString.ToString(),
                             $"{SInfos.GetTitle()} - Fatal Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
 #else
                 _ = SFile.WriteException(e);
 #endif
-
-            string BR()
-            {
-                return Environment.NewLine;
-            }
         }
     }
 }

@@ -20,6 +20,11 @@ namespace StardustDefender.Core.Controllers
         private static SEntityHeader[] allBosses = Array.Empty<SEntityHeader>();
         private static readonly List<SEntityHeader> remainingBosses = new();
 
+        /// <summary>
+        /// Attempts to retrieve a random boss type for spawning.
+        /// </summary>
+        /// <param name="bossType">The retrieved boss type, if successful.</param>
+        /// <returns><c>true</c> if a boss type is retrieved; otherwise, <c>false</c>.</returns>
         internal static bool TryGetRandomBossType(out Type bossType)
         {
             // === DEBUG (FORCE A BOSS TO APPEAR) ===
@@ -52,6 +57,13 @@ namespace StardustDefender.Core.Controllers
             bossType = entityHeader.EntityType;
             return true;
         }
+
+        /// <summary>
+        /// Creates a boss entity of the specified type at the given position.
+        /// </summary>
+        /// <param name="bossType">The type of boss entity to create.</param>
+        /// <param name="position">The position at which to create the boss.</param>
+        /// <returns>The created boss entity.</returns>
         internal static SBossEntity CreateBossOfType(Type bossType, Vector2 position)
         {
             delayForNextBoss = SRandom.Range(3, 7);

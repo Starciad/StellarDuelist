@@ -5,16 +5,33 @@ using StardustDefender.Core.Managers;
 
 namespace StardustDefender.Core.Controllers
 {
+    /// <summary>
+    /// Manages the difficulty of the game.
+    /// </summary>
     public static partial class SDifficultyController
     {
+        /// <summary>
+        /// Gets the current difficulty rate.
+        /// </summary>
         public static float DifficultyRate => difficultyRate;
+
+        /// <summary>
+        /// Gets the total number of enemies to be spawned.
+        /// </summary>
         public static int TotalEnemyCount => totalEnemyCount;
+
+        /// <summary>
+        /// Gets the delay for enemy spawn.
+        /// </summary>
         internal static float EnemySpawnDelay => enemySpawnDelay + SRandom.NextFloat();
 
         private static float difficultyRate = 0;
         private static float enemySpawnDelay = 0;
         private static int totalEnemyCount = 0;
 
+        /// <summary>
+        /// Initializes the difficulty controller.
+        /// </summary>
         internal static void Initialize()
         {
             foreach (SEntityHeader header in SEntityManager.EntityHeaders)
@@ -40,10 +57,18 @@ namespace StardustDefender.Core.Controllers
             // Setting bosses
             allBosses = remainingBosses.ToArray();
         }
+
+        /// <summary>
+        /// Begins the execution of the difficulty controller.
+        /// </summary>
         internal static void BeginRun()
         {
             Reset();
         }
+
+        /// <summary>
+        /// Adjusts the game's difficulty based on player performance.
+        /// </summary>
         internal static void Next()
         {
             // Easy
@@ -75,6 +100,10 @@ namespace StardustDefender.Core.Controllers
                 enemySpawnDelay = 0;
             }
         }
+
+        /// <summary>
+        /// Resets the difficulty settings to their initial values.
+        /// </summary>
         internal static void Reset()
         {
             difficultyRate = 1f;
@@ -82,6 +111,10 @@ namespace StardustDefender.Core.Controllers
             totalEnemyCount = SRandom.Range(5, 11);
         }
 
+        /// <summary>
+        /// Gets a label indicating the current difficulty level.
+        /// </summary>
+        /// <returns>A string indicating the difficulty level.</returns>
         public static string GetDifficultyLabel()
         {
             return difficultyRate switch

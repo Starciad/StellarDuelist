@@ -88,7 +88,7 @@ namespace StardustDefender.Game.GUI
             _ = this.S_Difficulty.Append($"{SDifficultyController.GetDifficultyLabel()}");
             _ = this.S_Level.Append($"Level: {SLevelController.Level + 1}");
             _ = this.S_Health.Append($"Health: {SLevelController.Player.HealthValue}");
-            _ = this.S_Damage.Append($"Damage: {SLevelController.Player.DamageValue}");
+            _ = this.S_Damage.Append($"Damage: {SLevelController.Player.AttackValue}");
             _ = this.S_BulletSpeed.Append($"Bullet Speed: {SLevelController.Player.BulletSpeed.ToString("#.0")}");
             _ = this.S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
             _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
@@ -136,7 +136,7 @@ namespace StardustDefender.Game.GUI
 
             if (SLevelController.BossIncoming && !SLevelController.BossAppeared)
             {
-                SGraphics.SpriteBatch.DrawString(this.font, this.S_Boss_Incoming, new Vector2(SCamera.Center.X + 168, SCamera.Center.Y + 90), Palettes.WARNING_PALETTE[this.warningPalleteColorIndex], 0f, Vector2.Zero, new Vector2(0.3f), SpriteEffects.None, 0f);
+                SGraphics.SpriteBatch.DrawString(this.font, this.S_Boss_Incoming, new Vector2(SCamera.Center.X + 168, SCamera.Center.Y + 90), SPalettes.WARNING_PALETTE[this.warningPalleteColorIndex], 0f, Vector2.Zero, new Vector2(0.3f), SpriteEffects.None, 0f);
             }
 
             // Tutorial
@@ -148,7 +148,7 @@ namespace StardustDefender.Game.GUI
 
         private void UpdateColors()
         {
-            this.warningPalleteColorIndex = this.warningPalleteColorIndex < Palettes.WARNING_PALETTE.Length - 1 ? this.warningPalleteColorIndex + 1 : 0;
+            this.warningPalleteColorIndex = this.warningPalleteColorIndex < SPalettes.WARNING_PALETTE.Length - 1 ? this.warningPalleteColorIndex + 1 : 0;
         }
     }
 }

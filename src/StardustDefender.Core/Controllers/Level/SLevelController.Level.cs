@@ -10,6 +10,9 @@ namespace StardustDefender.Core.Controllers
 {
     public static partial class SLevelController
     {
+        /// <summary>
+        /// Starts a new game level, initializing necessary components and routines.
+        /// </summary>
         public static void StartNewLevel()
         {
             // Checks if the level is initialized, if it is false, the first components are created/initialized.
@@ -126,7 +129,7 @@ namespace StardustDefender.Core.Controllers
 
                 // Stop music and start fade.
                 SSongs.Stop();
-                SFade.FadeIn(Color.White, 0.5f);
+                SFade.TransitionToColor(Color.White, 0.5f);
                 await Task.Delay(TimeSpan.FromSeconds(1f));
 
                 // Wait for the game to be in the Running state if it is not about to create the boss.
@@ -135,7 +138,7 @@ namespace StardustDefender.Core.Controllers
 
                 // Make fade disappear and start boss theme song.
                 await Task.Delay(TimeSpan.FromSeconds(1f));
-                SFade.FadeOut(0.05f);
+                SFade.TransitionToColor(Color.Transparent, 0.05f);
                 SSongs.Play($"Boss_{SRandom.Range(1, 6)}");
 
                 // Wait until the boss is defeated.
@@ -212,13 +215,13 @@ namespace StardustDefender.Core.Controllers
             }
 
             // Initializes the fade to cover the screen for a short interval.
-            SFade.FadeIn(Color.White, 0.5f);
+            SFade.TransitionToColor(Color.White, 0.5f);
             await Task.Delay(TimeSpan.FromSeconds(1f));
             SBackgroundController.GlobalParallaxFactor = 1;
             ResetPlayerPosition();
             await WaitForActivityAsync();
             await Task.Delay(TimeSpan.FromSeconds(1.5f));
-            SFade.FadeOut(0.05f);
+            SFade.TransitionToColor(Color.Transparent, 0.05f);
         }
         private static async Task WaitForActivityAsync()
         {

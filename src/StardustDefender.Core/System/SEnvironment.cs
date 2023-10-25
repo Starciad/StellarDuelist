@@ -3,10 +3,17 @@ using System.IO;
 
 namespace StardustDefender.Core.System
 {
+    /// <summary>
+    /// Utility static manager for environment variables.
+    /// </summary>
     public static class SEnvironment
     {
         private static readonly string ENV_FILE_PATH = Path.Combine(Directory.GetCurrentDirectory(), "System", "Environment");
 
+        /// <summary>
+        /// Initializes environment variables from a settings file.
+        /// </summary>
+        /// <exception cref="FileNotFoundException">Thrown when the "Environment" settings file is not found.</exception>
         public static void Initialize()
         {
             if (!File.Exists(ENV_FILE_PATH))

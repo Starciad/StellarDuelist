@@ -14,7 +14,7 @@
 	<!-- SYSTEM -->
 	<PropertyGroup>
 		<AssemblyName>StardustDefender</AssemblyName>
-		<RootNamespace>StardustDefender</RootNamespace>
+		<RootNamespace>StardustDefender.Game</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
