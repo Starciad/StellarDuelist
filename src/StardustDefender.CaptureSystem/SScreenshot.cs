@@ -15,7 +15,7 @@ namespace StardustDefender.CaptureSystem
 
         /// <summary>
         /// Capture and save a screenshot from a RenderTarget2D.
-        /// </summary>
+        /// </summary> 
         /// <param name="target">The RenderTarget2D to capture the screenshot from.</param>
         /// <returns>The filename of the saved screenshot.</returns>
         public static string Print(RenderTarget2D target)
