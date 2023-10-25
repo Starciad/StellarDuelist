@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace StardustDefender.CaptureSystem
                 _ = Directory.CreateDirectory(ScreenshotsDirectory);
             }
 
-            string filename = Path.Combine(ScreenshotsDirectory, $"Screenshot_{Directory.GetFiles(ScreenshotsDirectory).Length + 1}.png");
+            string filename = Path.Combine(ScreenshotsDirectory, $"Screenshot_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_{Guid.NewGuid().ToString()[..5]}.png");
 
             using (FileStream screenshotFile = File.Create(filename))
             {
