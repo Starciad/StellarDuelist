@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using StardustDefender.Controllers;
 using StardustDefender.Core.Camera;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
@@ -11,7 +12,7 @@ using StardustDefender.Core.GUI;
 
 using System.Text;
 
-namespace StardustDefender.Game.GUI
+namespace StardustDefender.GUI
 {
     internal sealed class GUI_Introduction : SGUI
     {
@@ -57,7 +58,7 @@ namespace StardustDefender.Game.GUI
         protected override void OnDraw()
         {
             SGraphics.SpriteBatch.Draw(this.logo, new Vector2(SCamera.Center.X, SCamera.Center.Y - 64), null, Color.White, 0f, this.logo.GetOriginPosition(), new Vector2(1.5f), SpriteEffects.None, 0f);
-            SGraphics.SpriteBatch.DrawString(this.font, this.S_Intro, new Vector2(SCamera.Center.X + 110, SCamera.Center.Y + 128), Color.White, 0f, this.S_IntroMeasure, 0.5f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.DrawString(this.font, this.S_Intro, new Vector2(SCamera.Center.X + 110, SCamera.Center.Y + 128), Color.White, 0f, S_IntroMeasure, 0.5f, SpriteEffects.None, 0f);
         }
     }
 }

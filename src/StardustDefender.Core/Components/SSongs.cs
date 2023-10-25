@@ -4,30 +4,35 @@ using System.Collections.Generic;
 
 namespace StardustDefender.Core.Components
 {
-    /// <summary>
-    /// Static utility class for managing music in the game.
-    /// </summary>
     public static class SSongs
     {
-        /// <summary>
-        /// Gets or sets the volume of the currently playing song.
-        /// </summary>
         public static float Volume
         {
-            get => MediaPlayer.Volume;
-            set => MediaPlayer.Volume = value;
-        }
+            get
+            {
+                return MediaPlayer.Volume;
+            }
 
-        /// <summary>
-        /// Gets or sets whether the currently playing song should repeat when it ends.
-        /// </summary>
+            set
+            {
+                MediaPlayer.Volume = value;
+            }
+        }
         public static bool IsRepeating
         {
-            get => MediaPlayer.IsRepeating;
-            set => MediaPlayer.IsRepeating = value;
+            get
+            {
+                return MediaPlayer.IsRepeating;
+            }
+
+            set
+            {
+                MediaPlayer.IsRepeating = value;
+            }
         }
 
         private static Song currentSong;
+
         private static readonly Dictionary<string, Song> songs = new();
         private static readonly (string, string)[] assets = new (string, string)[]
         {
@@ -82,9 +87,6 @@ namespace StardustDefender.Core.Components
             ("Opening_5", "KirbySuperStar/Opening_5"),
         };
 
-        /// <summary>
-        /// Initializes the SSongs class by setting default volume and repeating settings and loading all songs from the specified assets.
-        /// </summary>
         internal static void Load()
         {
             Volume = 0.5f;
@@ -96,10 +98,6 @@ namespace StardustDefender.Core.Components
             }
         }
 
-        /// <summary>
-        /// Plays the specified song by name.
-        /// </summary>
-        /// <param name="name">The name of the song to play.</param>
         public static void Play(string name)
         {
             if (currentSong != null)
@@ -112,42 +110,22 @@ namespace StardustDefender.Core.Components
             MediaPlayer.Play(song);
             currentSong = song;
         }
-
-        /// <summary>
-        /// Mutes the currently playing song.
-        /// </summary>
         public static void Mute()
         {
             MediaPlayer.IsMuted = true;
         }
-
-        /// <summary>
-        /// Unmutes the currently playing song.
-        /// </summary>
         public static void Unmute()
         {
             MediaPlayer.IsMuted = false;
         }
-
-        /// <summary>
-        /// Pauses the currently playing song.
-        /// </summary>
         public static void Pause()
         {
             MediaPlayer.Pause();
         }
-
-        /// <summary>
-        /// Stops the currently playing song.
-        /// </summary>
         public static void Stop()
         {
             MediaPlayer.Stop();
         }
-
-        /// <summary>
-        /// Resumes the currently paused song.
-        /// </summary>
         public static void Resume()
         {
             MediaPlayer.Resume();

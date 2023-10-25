@@ -3,55 +3,35 @@ using System.Collections.Generic;
 
 namespace StardustDefender.Core.Collections
 {
-    /// <summary>
-    /// A generic object pool for managing reusable objects that implement the <see cref="IPoolableObject"/> interface.
-    /// </summary>
-    /// <typeparam name="TObject">The type of objects stored in the pool.</typeparam>
-    public sealed class ObjectPool<TObject> where TObject : IPoolableObject
+    internal sealed class ObjectPool<TObject> where TObject : IPoolableObject
     {
         private readonly Dictionary<Type, Queue<TObject>> _objectPool = new();
 
-        /// <summary>
-        /// Gets an object of type <typeparamref name="TKey"/> from the pool.
-        /// </summary>
-        /// <typeparam name="TKey">The type of object to retrieve from the pool.</typeparam>
-        /// <returns>An object from the pool.</returns>
         public TObject Get<TKey>() where TKey : TObject
         {
             return Get(typeof(TKey));
         }
-
-        /// <summary>
-        /// Gets an object of the specified type from the pool.
-        /// </summary>
-        /// <param name="keyType">The type of object to retrieve from the pool.</param>
-        /// <returns>An object from the pool.</returns>
         public TObject Get(Type keyType)
         {
-            TObject value;
+            TObject target = default;
 
             if (this._objectPool.ContainsKey(keyType))
             {
                 Queue<TObject> objects = this._objectPool[keyType];
                 if (objects.Count > 0)
                 {
-                    value = objects.Dequeue();
-                    value.Reset();
-                    return value;
+                    target = objects.Dequeue();
+                    target.Reset();
+                    return target;
                 }
             }
 
-            value = (TObject)Activator.CreateInstance(keyType);
-            value.Reset();
-            return value;
+            return target;
         }
 
-        /// <summary>
-        /// Adds an object to the pool for reuse.
-        /// </summary>
-        /// <param name="value">The object to add to the pool.</param>
-        public TObject Add(TObject value)
+        public void ReturnToPool(TObject value)
         {
+            value.Reset();
             Type valueType = value.GetType();
 
             if (!this._objectPool.ContainsKey(valueType))
@@ -60,7 +40,6 @@ namespace StardustDefender.Core.Collections
             }
 
             this._objectPool[valueType].Enqueue(value);
-            return value;
         }
     }
 }

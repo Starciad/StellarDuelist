@@ -15,18 +15,14 @@
 
             // It has just been activated.
             if (this.IsActive && !this.previouslyActivated)
-            {
                 Enable();
-            }
 
             // It has just been deactivated.
             if (!this.IsActive && this.previouslyActivated)
-            {
                 Disable();
-            }
 
             // Update previous state.
-            this.previouslyActivated = this.IsActive;
+            this.previouslyActivated = IsActive;
 
             // Update if enabled.
             if (this.IsActive)

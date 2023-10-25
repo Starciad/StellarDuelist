@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 
+using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
-using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Game.Effects;
+using StardustDefender.Effects;
 
+using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Game.Entities.Enemies
+namespace StardustDefender.Entities.Enemies
 {
     /// <summary>
     /// [ ALIEN EYE ]
@@ -58,27 +59,29 @@ namespace StardustDefender.Game.Entities.Enemies
         // RESET
         public override void Reset()
         {
-            base.Reset();
-
             this.Animation.Reset();
-            this.Animation.ClearFrames();
+            this.Animation.Clear();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddFrame(STextures.GetSprite(32, 0, 4));
-            this.Animation.AddFrame(STextures.GetSprite(32, 1, 4));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 4));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 4));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
 
             this.HealthValue = 25;
-            this.AttackValue = 1;
+            this.DamageValue = 1;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
 
         // OVERRIDE
+        protected override void OnAwake()
+        {
+            Reset();
+        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();
@@ -176,9 +179,7 @@ namespace StardustDefender.Game.Entities.Enemies
 
             this.intervalBetweenShots.Update();
             if (!this.intervalBetweenShots.IsFinished)
-            {
                 return;
-            }
 
             this.intervalBetweenShots.Restart();
             this.currentBullet++;
@@ -200,7 +201,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Team = STeam.Bad,
                 Position = new(this.WorldPosition.X, this.WorldPosition.Y),
                 Speed = direction,
-                Damage = this.AttackValue,
+                Damage = this.DamageValue,
                 LifeTime = BULLET_LIFE_TIME,
                 Range = 10f,
                 Color = Color.White,

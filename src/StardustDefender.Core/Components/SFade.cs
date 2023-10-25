@@ -6,9 +6,6 @@ using StardustDefender.Core.Extensions;
 
 namespace StardustDefender.Core.Components
 {
-    /// <summary>
-    /// Utility for controlling the game's universal fade system.
-    /// </summary>
     public static class SFade
     {
         private static Texture2D _fadeTexture;
@@ -17,11 +14,9 @@ namespace StardustDefender.Core.Components
         private static Color _color;
 
         private static Color currentColor;
-        private static float fadeSmoothing = 0.2f;
+        private static float fadeLerp = 0.2f;
+        private static int fadeTarget = 2;
 
-        /// <summary>
-        /// Load standard information for the execution of the Fade system.
-        /// </summary>
         internal static void Load()
         {
             _fadeTexture = STextures.GetTexture("UI_SolidBackground");
@@ -29,41 +24,36 @@ namespace StardustDefender.Core.Components
             _origin = _fadeTexture.GetOriginPosition();
             _color = Color.Transparent;
         }
-
-        /// <summary>
-        /// Update the Fade system.
-        /// </summary>
-        /// <remarks>
-        /// This function is particularly useful because the fade system operates in a single-threaded manner, requiring it to update on each frame to quickly and practically apply solid color changes as specified.
-        /// </remarks>
         internal static void Update()
         {
-            currentColor = Color.Lerp(currentColor, _color, fadeSmoothing);
-        }
+            switch (fadeTarget)
+            {
+                // Fade In
+                case 1:
+                    currentColor = Color.Lerp(currentColor, _color, fadeLerp);
+                    break;
 
-        /// <summary>
-        /// Render the Fade system.
-        /// </summary>
-        /// <remarks>
-        /// Draws the current solid color of the Fade system on the screen.
-        /// </remarks>
+                // Fade Out
+                case 2:
+                    currentColor = Color.Lerp(currentColor, Color.Transparent, fadeLerp);
+                    break;
+            }
+        }
         internal static void Draw()
         {
             SGraphics.SpriteBatch.Draw(_fadeTexture, _position, null, currentColor, 0f, _origin, 1f, SpriteEffects.None, 0f);
         }
 
-        /// <summary>
-        /// Gradually transition the Fade system to the specified solid color.
-        /// </summary>
-        /// <remarks>
-        /// Based on the <paramref name="smoothing" /> value, a gradual color change is defined from the current fade system color to the color specified in <paramref name="color" />.
-        /// </remarks>
-        /// <param name="color">The new color to be gradually displayed.</param>
-        /// <param name="smoothing">The smoothing value for the speed of color transition from the current color to the color specified in <paramref name="color" />.</param>
-        public static void TransitionToColor(Color color, float smoothing)
+        public static void FadeIn(Color color, float lerp)
         {
             _color = color;
-            fadeSmoothing = smoothing;
+            fadeLerp = lerp;
+            fadeTarget = 1;
+        }
+        public static void FadeOut(float lerp)
+        {
+            fadeLerp = lerp;
+            fadeTarget = 2;
         }
     }
 }

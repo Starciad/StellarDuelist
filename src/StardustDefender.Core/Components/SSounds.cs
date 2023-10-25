@@ -4,19 +4,9 @@ using System.Collections.Generic;
 
 namespace StardustDefender.Core.Components
 {
-    /// <summary>
-    /// Static utility class for managing game sound effects and audio settings.
-    /// </summary>
     public static class SSounds
     {
-        /// <summary>
-        /// Gets or sets the volume of all game sound effects.
-        /// </summary>
         public static float Volume { get; set; } = 0.5f;
-
-        /// <summary>
-        /// Gets or sets the pitch for playing sound effects.
-        /// </summary>
         public static float Pitch { get; set; } = 1f;
 
         private static readonly Dictionary<string, SoundEffect> soundEffects = new();
@@ -63,9 +53,6 @@ namespace StardustDefender.Core.Components
             ("Shoot_10", "Shoot/Shoot_10"),
         };
 
-        /// <summary>
-        /// Initializes the SSounds class by setting the master volume for all sound effects and loading all sound effect assets.
-        /// </summary>
         internal static void Load()
         {
             SoundEffect.MasterVolume = Volume;
@@ -75,12 +62,6 @@ namespace StardustDefender.Core.Components
                 soundEffects.Add(asset.Item1, SContent.Sounds.Load<SoundEffect>(asset.Item2));
             }
         }
-
-        /// <summary>
-        /// Plays a sound effect by name and returns a SoundEffectInstance.
-        /// </summary>
-        /// <param name="name">The name of the sound effect to play.</param>
-        /// <returns>A SoundEffectInstance for controlling and managing the played sound effect.</returns>
         public static SoundEffectInstance Play(string name)
         {
             SoundEffectInstance instance = soundEffects[name].CreateInstance();

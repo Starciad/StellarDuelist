@@ -1,18 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 
+using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
-using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Game.Effects;
-using StardustDefender.Game.Enums;
+using StardustDefender.Effects;
+using StardustDefender.Enums;
 
 using System.Threading.Tasks;
 
-namespace StardustDefender.Game.Entities.Enemies
+namespace StardustDefender.Entities.Enemies
 {
     /// <summary>
     /// [ ALIEN SPACESHIP ]
@@ -56,27 +56,29 @@ namespace StardustDefender.Game.Entities.Enemies
         // RESET
         public override void Reset()
         {
-            base.Reset();
-
             this.Animation.Reset();
-            this.Animation.ClearFrames();
+            this.Animation.Clear();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddFrame(STextures.GetSprite(32, 0, 1));
-            this.Animation.AddFrame(STextures.GetSprite(32, 1, 1));
+            this.Animation.AddSprite(STextures.GetSprite(32, 0, 1));
+            this.Animation.AddSprite(STextures.GetSprite(32, 1, 1));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
 
             this.HealthValue = 3;
-            this.AttackValue = 1;
+            this.DamageValue = 1;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
 
         // OVERRIDE
+        protected override void OnAwake()
+        {
+            Reset();
+        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();
@@ -164,7 +166,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Team = STeam.Bad,
                 Position = new(this.WorldPosition.X, this.WorldPosition.Y + 16f),
                 Speed = new(0, SHOOT_SPEED),
-                Damage = this.AttackValue,
+                Damage = this.DamageValue,
                 LifeTime = SHOOT_LIFE_TIME,
                 Range = 10f
             });

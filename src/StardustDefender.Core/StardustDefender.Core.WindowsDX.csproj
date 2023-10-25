@@ -8,11 +8,6 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<RollForward>Major</RollForward>
-	</PropertyGroup>
-
-	<!-- SYSTEM -->
-	<PropertyGroup>
-		<AssemblyName>StardustDefender.Core</AssemblyName>
 		<RootNamespace>StardustDefender.Core</RootNamespace>
 	</PropertyGroup>
 	
@@ -21,8 +16,5 @@
 		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303">
 			<PrivateAssets>All</PrivateAssets>
 		</PackageReference>
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\StardustDefender.CaptureSystem\StardustDefender.WindowsDX.CaptureSystem.csproj" />
 	</ItemGroup>
 </Project>

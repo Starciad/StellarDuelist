@@ -7,7 +7,7 @@ using StardustDefender.Core.Managers;
 using StardustDefender.Core.Projectiles;
 using StardustDefender.Core.World;
 
-namespace StardustDefender.Core.Controllers
+namespace StardustDefender.Controllers
 {
     public static partial class SLevelController
     {
@@ -62,9 +62,7 @@ namespace StardustDefender.Core.Controllers
             foreach (SProjectile projectile in SProjectileManager.Projectiles)
             {
                 if (projectile == null)
-                {
                     continue;
-                }
 
                 SProjectileManager.Remove(projectile);
             }

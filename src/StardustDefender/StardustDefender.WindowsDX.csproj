@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿roject Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
 	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
 	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />
@@ -9,30 +9,24 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<RollForward>Major</RollForward>
+		<AssemblyName>StardustDefender</AssemblyName>
 	</PropertyGroup>
 
 	<!-- SYSTEM -->
 	<PropertyGroup>
-		<AssemblyName>StardustDefender</AssemblyName>
-		<RootNamespace>StardustDefender.Game</RootNamespace>
+		<RootNamespace>StardustDefender</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<!-- FILES (REMOVE) -->
-	<ItemGroup>
-		<None Remove="Icon.ico" />
-		<None Remove="Icon.bmp" />
-	</ItemGroup>
+    <ItemGroup>
+	    <None Remove="Icon.ico" />
+	    <None Remove="Icon.bmp" />
+    </ItemGroup>
 
 	<!-- FILES (RESOURCE) -->
-	<ItemGroup>
-		<!-- INCLUDE -->
-		<None Update="System\Environment">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-
-		<!-- EMBED -->
+    <ItemGroup>
 		<EmbeddedResource Include="Icon.ico">
 			<LogicalName>Icon.ico</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -41,7 +35,7 @@
 			<LogicalName>Icon.bmp</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>
-	</ItemGroup>
+    </ItemGroup>
 
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
@@ -51,10 +45,9 @@
 
 	<!-- PROJECT -->
 	<ItemGroup>
-		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.WindowsDX.Core.csproj" />
-		<ProjectReference Include="..\StardustDefender.Discord\StardustDefender.WindowsDX.Discord.csproj" />
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.WindowsDX.csproj" />
 	</ItemGroup>
-
+	
 	<!-- TARGETS -->
 	<Target Name="RestoreDotnetTools" BeforeTargets="Restore">
 		<Message Text="[ Restoring Dotnet Tools ]" Importance="high" />

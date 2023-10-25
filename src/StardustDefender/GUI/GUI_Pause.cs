@@ -9,7 +9,7 @@ using StardustDefender.Core.Enums;
 using StardustDefender.Core.Extensions;
 using StardustDefender.Core.GUI;
 
-namespace StardustDefender.Game.GUI
+namespace StardustDefender.GUI
 {
     internal class GUI_Pause : SGUI
     {

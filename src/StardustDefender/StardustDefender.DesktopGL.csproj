@@ -9,12 +9,12 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0</TargetFramework>
 		<RollForward>Major</RollForward>
+		<AssemblyName>StardustDefender</AssemblyName>
 	</PropertyGroup>
 	
 	<!-- SYSTEM -->
 	<PropertyGroup>
-		<AssemblyName>StardustDefender</AssemblyName>
-		<RootNamespace>StardustDefender.Game</RootNamespace>
+		<RootNamespace>StardustDefender</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
@@ -27,12 +27,6 @@
 
 	<!-- FILES (RESOURCE) -->
 	<ItemGroup>
-		<!-- INCLUDE -->
-		<None Update="System\Environment">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-				
-		<!-- EMBED -->
 		<EmbeddedResource Include="Icon.ico">
 			<LogicalName>Icon.ico</LogicalName>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -51,8 +45,7 @@
 
 	<!-- PROJECT -->
 	<ItemGroup>
-		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.DesktopGL.Core.csproj" />
-		<ProjectReference Include="..\StardustDefender.Discord\StardustDefender.DesktopGL.Discord.csproj" />
+		<ProjectReference Include="..\StardustDefender.Core\StardustDefender.Core.DesktopGL.csproj" />
 	</ItemGroup>
 
 	<!-- TARGETS -->
