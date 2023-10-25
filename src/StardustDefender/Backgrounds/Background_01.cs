@@ -1,8 +1,14 @@
 ﻿using StardustDefender.Core.Background;
 using StardustDefender.Core.Components;
 
-namespace StardustDefender.Backgrounds
+namespace StardustDefender.Game.Backgrounds
 {
+    /// <summary>
+    /// [ STELLAR SPACE ]
+    /// </summary>
+    /// <remarks>
+    /// Bluish background full of stars and other details.
+    /// </remarks>
     internal sealed class Background_01 : SBackground
     {
         protected override void OnProcess()

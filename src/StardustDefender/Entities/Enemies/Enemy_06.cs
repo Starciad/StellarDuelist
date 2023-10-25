@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities;
 using StardustDefender.Core.Entities.Register;
@@ -9,12 +9,12 @@ using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Extensions;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Enemies
+namespace StardustDefender.Game.Entities.Enemies
 {
     /// <summary>
     /// [ ALIEN DEFENSE FLAMES ]
@@ -51,31 +51,29 @@ namespace StardustDefender.Entities.Enemies
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             this.movementTimer.Start();
 
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 5));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 5));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 5));
+            this.Animation.AddFrame(STextures.GetSprite(32, 1, 5));
             this.Animation.SetDuration(1f);
 
             this.Team = STeam.Bad;
 
             this.HealthValue = 35;
-            this.DamageValue = 2;
+            this.AttackValue = 2;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
 
         // OVERRIDE
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();

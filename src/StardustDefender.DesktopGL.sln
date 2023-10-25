@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.DesktopGL", "StardustDefender\StardustDefender.DesktopGL.csproj", "{E5914C5B-0EA5-467A-82D3-2CA2E38D02C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.Core.DesktopGL", "StardustDefender.Core\StardustDefender.Core.DesktopGL.csproj", "{3919719F-192B-49CD-8A60-FEC94E778B21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.DesktopGL.Core", "StardustDefender.Core\StardustDefender.DesktopGL.Core.csproj", "{3919719F-192B-49CD-8A60-FEC94E778B21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.DesktopGL.Discord", "StardustDefender.Discord\StardustDefender.DesktopGL.Discord.csproj", "{A4897BB7-5EFC-40D1-B53F-9FF968922DA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardustDefender.DesktopGL.CaptureSystem", "StardustDefender.CaptureSystem\StardustDefender.DesktopGL.CaptureSystem.csproj", "{DC285D9F-656E-455E-9AE9-67A646A3451A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +25,19 @@ Global
 		{3919719F-192B-49CD-8A60-FEC94E778B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3919719F-192B-49CD-8A60-FEC94E778B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3919719F-192B-49CD-8A60-FEC94E778B21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4897BB7-5EFC-40D1-B53F-9FF968922DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4897BB7-5EFC-40D1-B53F-9FF968922DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4897BB7-5EFC-40D1-B53F-9FF968922DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4897BB7-5EFC-40D1-B53F-9FF968922DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC285D9F-656E-455E-9AE9-67A646A3451A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC285D9F-656E-455E-9AE9-67A646A3451A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC285D9F-656E-455E-9AE9-67A646A3451A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC285D9F-656E-455E-9AE9-67A646A3451A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF1C8898-E5B0-4316-9371-1D69044E2104}
 	EndGlobalSection
 EndGlobal

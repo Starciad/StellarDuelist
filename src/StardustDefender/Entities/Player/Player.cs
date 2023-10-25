@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
@@ -10,12 +9,11 @@ using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System;
-using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Player
+namespace StardustDefender.Game.Entities.Player
 {
     [SEntityRegister(typeof(Header))]
     internal sealed class Player : SPlayerEntity
@@ -39,18 +37,20 @@ namespace StardustDefender.Entities.Player
 
         public override void Reset()
         {
+            base.Reset();
+
             // Animations
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
             this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 0));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 0));
 
             // Team
             this.Team = STeam.Good;
 
             // Attributes
             this.HealthValue = 3;
-            this.DamageValue = 1;
+            this.AttackValue = 1;
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
 
@@ -151,7 +151,7 @@ namespace StardustDefender.Entities.Player
 
             if (SInput.Started(Keys.D2))
             {
-                this.DamageValue += 1;
+                this.AttackValue += 1;
             }
 
             if (SInput.Started(Keys.D3))
@@ -224,9 +224,9 @@ namespace StardustDefender.Entities.Player
                 {
                     SpriteId = 0,
                     Team = STeam.Good,
-                    Position = new(this.WorldPosition.X, this.WorldPosition.Y - 32f),
+                    Position = new(this.CurrentPosition.X, this.CurrentPosition.Y - 32f),
                     Speed = new(0, this.BulletSpeed * -1),
-                    Damage = this.DamageValue,
+                    Damage = this.AttackValue,
                     LifeTime = this.BulletLifeTime,
                     Range = 10f
                 });

@@ -1,9 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
+using StardustDefender.Core.Controllers;
 
 namespace StardustDefender.Core.Entities.Templates
 {
+    /// <summary>
+    /// Base class template for creating enemies entities.
+    /// </summary>
+    /// <remarks>
+    /// With this template, a variety of functions, properties, and attributes are provided to automate certain processes and have references for internal work/configurations.
+    /// </remarks>
     public abstract class SEnemyEntity : SEntity
     {
         protected void CollideWithPlayer()

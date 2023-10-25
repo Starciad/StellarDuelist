@@ -4,14 +4,17 @@ using StardustDefender.Core.Items;
 
 using System;
 
-namespace StardustDefender.Items
+namespace StardustDefender.Game.Items
 {
+    /// <summary>
+    /// Upgrade item for shortening the delay of the player's shots.
+    /// </summary>
     internal sealed class ShootDelayUpgradeItem : SItemRegister
     {
         protected override void OnInitialize()
         {
             this.Animation.SetTexture(STextures.GetTexture("ITEMS_Upgrades"));
-            this.Animation.AddSprite(STextures.GetSprite(SPRITE_SCALE, 2, 0));
+            this.Animation.AddFrame(STextures.GetSprite(SPRITE_SCALE, 2, 0));
         }
         protected override void OnEffect(SPlayerEntity player)
         {

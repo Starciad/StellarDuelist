@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Enemies
+namespace StardustDefender.Game.Entities.Enemies
 {
     /// <summary>
     /// [ EATER ]
@@ -51,29 +51,27 @@ namespace StardustDefender.Entities.Enemies
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 3));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 3));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 3));
+            this.Animation.AddFrame(STextures.GetSprite(32, 1, 3));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
 
             this.HealthValue = 15;
-            this.DamageValue = 2;
+            this.AttackValue = 2;
 
             this.ChanceOfKnockback = 25;
             this.KnockbackForce = 2;
         }
 
         // OVERRIDE
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnUpdate()
         {
             // Behaviour

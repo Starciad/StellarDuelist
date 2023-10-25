@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Enemies
+namespace StardustDefender.Game.Entities.Enemies
 {
     /// <summary>
     /// [ ALIEN STAR ]
@@ -54,29 +54,27 @@ namespace StardustDefender.Entities.Enemies
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             this.Animation.Reset();
-            this.Animation.Clear();
+            this.Animation.ClearFrames();
 
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
-            this.Animation.AddSprite(STextures.GetSprite(32, 0, 2));
-            this.Animation.AddSprite(STextures.GetSprite(32, 1, 2));
+            this.Animation.AddFrame(STextures.GetSprite(32, 0, 2));
+            this.Animation.AddFrame(STextures.GetSprite(32, 1, 2));
             this.Animation.SetDuration(3f);
 
             this.Team = STeam.Bad;
 
             this.HealthValue = 6;
-            this.DamageValue = 2;
+            this.AttackValue = 2;
 
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
 
         // OVERRIDE
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnUpdate()
         {
             // Behaviour
@@ -139,7 +137,7 @@ namespace StardustDefender.Entities.Enemies
                     Team = STeam.Bad,
                     Position = new(this.WorldPosition.X, this.WorldPosition.Y),
                     Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
-                    Damage = this.DamageValue,
+                    Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
                     Range = 7.5f
                 });

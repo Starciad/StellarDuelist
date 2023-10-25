@@ -1,16 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<!-- IMPORTS -->
 	<Import Project="../Targets/DesktopGL/Project_Compilation.targets" />
 	<Import Project="../Targets/DesktopGL/Project_Settings.targets" />
 	<Import Project="../Targets/DesktopGL/Project_Infos.targets" />
-	
+
 	<!-- HEADER -->
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<RollForward>Major</RollForward>
-		<RootNamespace>StardustDefender.Core</RootNamespace>
 	</PropertyGroup>
-	
+
+	<!-- SYSTEM -->
+	<PropertyGroup>
+		<AssemblyName>StardustDefender.CaptureSystem</AssemblyName>
+		<RootNamespace>StardustDefender.CaptureSystem</RootNamespace>
+	</PropertyGroup>
+
 	<!-- DEPENDENCIES -->
 	<ItemGroup>
 		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303">

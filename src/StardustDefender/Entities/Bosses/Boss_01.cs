@@ -1,20 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using StardustDefender.Controllers;
 using StardustDefender.Core.Animation;
 using StardustDefender.Core.Components;
+using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
 using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
-using StardustDefender.Effects;
+using StardustDefender.Game.Effects;
 
 using System;
 using System.Threading.Tasks;
 
-namespace StardustDefender.Entities.Bosses
+namespace StardustDefender.Game.Entities.Bosses
 {
     /// <summary>
     /// [ BLOODY EYE ALIEN ]
@@ -82,9 +82,11 @@ namespace StardustDefender.Entities.Bosses
         // RESET
         public override void Reset()
         {
+            base.Reset();
+
             // Attributes
             this.HealthValue = 50;
-            this.DamageValue = 1;
+            this.AttackValue = 1;
             this.CollisionRange = 55f;
 
             // Team
@@ -105,10 +107,10 @@ namespace StardustDefender.Entities.Bosses
             this.A_Normal.Reset();
             this.A_Shoot.Reset();
 
-            this.A_Idle.Clear();
-            this.A_Intro.Clear();
-            this.A_Normal.Clear();
-            this.A_Shoot.Clear();
+            this.A_Idle.ClearFrames();
+            this.A_Intro.ClearFrames();
+            this.A_Normal.ClearFrames();
+            this.A_Shoot.ClearFrames();
 
             this.A_Idle.SetMode(SAnimationMode.Disable);
             this.A_Intro.SetMode(SAnimationMode.Once);
@@ -119,30 +121,26 @@ namespace StardustDefender.Entities.Bosses
             this.A_Normal.SetDuration(1f);
             this.A_Shoot.SetDuration(3f);
 
-            this.A_Idle.AddSprite(STextures.GetSprite(64, 0, 0));
+            this.A_Idle.AddFrame(STextures.GetSprite(64, 0, 0));
 
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 0, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 1, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 2, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 3, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 4, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 5, 0));
-            this.A_Intro.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 0, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 1, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 2, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 3, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 4, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 5, 0));
+            this.A_Intro.AddFrame(STextures.GetSprite(64, 6, 0));
 
-            this.A_Normal.AddSprite(STextures.GetSprite(64, 6, 0));
+            this.A_Normal.AddFrame(STextures.GetSprite(64, 6, 0));
 
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 6, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 7, 0));
-            this.A_Shoot.AddSprite(STextures.GetSprite(64, 8, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 6, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 7, 0));
+            this.A_Shoot.AddFrame(STextures.GetSprite(64, 8, 0));
 
             this.Animation = this.A_Normal;
         }
 
         // Override
-        protected override void OnAwake()
-        {
-            Reset();
-        }
         protected override void OnStart()
         {
             this.verticalDirectionTimer.Restart();
@@ -197,7 +195,7 @@ namespace StardustDefender.Entities.Bosses
         // Actions
         private void BOSS_Boost()
         {
-            this.HealthValue *= SLevelController.Player.DamageValue;
+            this.HealthValue *= SLevelController.Player.AttackValue;
         }
         private void BOSS_Introduction()
         {
@@ -301,7 +299,7 @@ namespace StardustDefender.Entities.Bosses
                 }
 
                 Vector2 bulletSpeed = new(
-                    BULLET_SPEED * (SRandom.Range(-1, 2) + (-SRandom.NextFloat() / 1.5f)),
+                    BULLET_SPEED * (SRandom.Range(-1, 2) + -SRandom.NextFloat() / 1.5f),
                     BULLET_SPEED
                 );
 
@@ -311,7 +309,7 @@ namespace StardustDefender.Entities.Bosses
                     Team = STeam.Bad,
                     Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
                     Speed = bulletSpeed,
-                    Damage = this.DamageValue,
+                    Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
                     Range = 10f,
                     Color = new Color(255, 0, 0, 255),
