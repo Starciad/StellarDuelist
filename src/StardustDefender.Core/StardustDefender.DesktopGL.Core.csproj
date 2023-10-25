@@ -22,4 +22,7 @@
 			<PrivateAssets>All</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\StardustDefender.CaptureSystem\StardustDefender.DesktopGL.CaptureSystem.csproj" />
+	</ItemGroup>
 </Project>

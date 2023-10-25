@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Text;
 
 using StardustDefender.Core;
 using StardustDefender.Core.System;
 using StardustDefender.Core.IO;
-using StardustDefender.Core.Components;
 
 #if PC
 using StardustDefender.Discord;
 #endif
 
-#if !DEBUG
-using StardustDefender.Core.Components;
-#endif
-
 #if WINDOWS_DX
+using System.Text;
 using System.Windows.Forms;
+using StardustDefender.Core.Components;
 #endif
 
 namespace StardustDefender.Game
@@ -101,7 +97,7 @@ namespace StardustDefender.Game
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
 #else
-                _ = SFile.WriteException(e);
+                _ = SFile.WriteException(value);
 #endif
         }
     }
