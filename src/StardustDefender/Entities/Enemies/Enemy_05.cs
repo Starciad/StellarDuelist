@@ -89,7 +89,9 @@ namespace StardustDefender.Game.Entities.Enemies
         }
         protected override void OnUpdate()
         {
-            // Timers 
+            base.OnUpdate();
+
+            // Timers
             TimersUpdate();
 
             // Behaviour
@@ -202,7 +204,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Speed = direction,
                 Damage = this.AttackValue,
                 LifeTime = BULLET_LIFE_TIME,
-                Range = 10f,
+                Range = 10,
                 Color = Color.White,
             });
 

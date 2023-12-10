@@ -74,6 +74,8 @@ namespace StardustDefender.Game.Entities.Player
         }
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             ClampUpdate();
             TimersUpdate();
             HurtUpdate();
@@ -251,7 +253,7 @@ namespace StardustDefender.Game.Entities.Player
                     Speed = new(0, this.BulletSpeed * -1),
                     Damage = this.AttackValue,
                     LifeTime = this.BulletLifeTime,
-                    Range = 10f
+                    Range = 10
                 });
             }
         }

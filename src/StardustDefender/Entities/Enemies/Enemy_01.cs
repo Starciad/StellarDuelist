@@ -74,6 +74,8 @@ namespace StardustDefender.Game.Entities.Enemies
         }
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             TimersUpdate();
 
             // Behaviour

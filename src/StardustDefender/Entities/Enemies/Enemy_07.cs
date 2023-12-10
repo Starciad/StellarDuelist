@@ -95,6 +95,8 @@ namespace StardustDefender.Game.Entities.Enemies
         }
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             TimersUpdate();
 
             // Behaviour
@@ -182,7 +184,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
                 Damage = this.AttackValue,
                 LifeTime = BULLET_LIFE_TIME,
-                Range = 7.5f
+                Range = 7
             });
 
             _ = SSounds.Play("Shoot_04");

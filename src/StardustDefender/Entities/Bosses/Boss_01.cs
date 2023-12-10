@@ -87,7 +87,7 @@ namespace StardustDefender.Game.Entities.Bosses
             // Attributes
             this.HealthValue = 50;
             this.AttackValue = 1;
-            this.CollisionRange = 55f;
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(55));
 
             // Team
             this.Team = STeam.Bad;
@@ -151,6 +151,8 @@ namespace StardustDefender.Game.Entities.Bosses
         }
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             AnimationUpdate();
 
             if (this.canMove)
@@ -311,7 +313,7 @@ namespace StardustDefender.Game.Entities.Bosses
                     Speed = bulletSpeed,
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
-                    Range = 10f,
+                    Range = 10,
                     Color = new Color(255, 0, 0, 255),
                 });
                 _ = SSounds.Play("Shoot_05");

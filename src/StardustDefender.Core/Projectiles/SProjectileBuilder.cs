@@ -32,7 +32,7 @@ namespace StardustDefender.Core.Projectiles
         /// <summary>
         /// Gets or sets the maximum range the projectile can travel.
         /// </summary>
-        public float Range { get; set; }
+        public int Range { get; set; }
 
         /// <summary>
         /// Gets or sets the damage inflicted by the projectile on impact.
