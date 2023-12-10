@@ -1,6 +1,7 @@
 ﻿using StardustDefender.Core.Collections;
 using StardustDefender.Core.Projectiles;
 
+using System;
 using System.Collections.Generic;
 
 namespace StardustDefender.Core.Managers
@@ -30,7 +31,7 @@ namespace StardustDefender.Core.Managers
                     continue;
                 }
 
-                projectile?.Update();
+                projectile.Update();
             }
         }
 
@@ -46,7 +47,7 @@ namespace StardustDefender.Core.Managers
                     continue;
                 }
 
-                projectile?.Draw();
+                projectile.Draw();
             }
         }
 
@@ -70,6 +71,11 @@ namespace StardustDefender.Core.Managers
         public static void Create(SProjectileBuilder builder)
         {
             SProjectile projectile = projectilePool.Get<SProjectile>();
+            if (projectiles.Contains(projectile))
+            {
+                projectilePool.Add(projectile);
+                return;
+            }
 
             projectile.Initialize();
             projectile.Build(builder);

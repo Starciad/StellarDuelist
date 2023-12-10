@@ -130,6 +130,7 @@ namespace StardustDefender.Core.Managers
         internal static void Remove(SItem item)
         {
             _ = items.Remove(item);
+            itemPool.Add(item);
         }
     }
 }
