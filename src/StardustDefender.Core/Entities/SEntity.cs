@@ -147,7 +147,7 @@ namespace StardustDefender.Core.Entities
             this.Animation.Update();
 
             this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
-            this.LocalPosition = SWorld.Clamp(this.LocalPosition);
+            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
 
             OnUpdate();
         }

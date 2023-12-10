@@ -96,53 +96,53 @@ namespace StardustDefender.Core.Managers
         }
 
         /// <summary>
-        /// Creates a new effect of type T with the specified position.
+        /// Creates a new effect of type T with the specified world position.
         /// </summary>
         /// <typeparam name="T">The type of effect to create.</typeparam>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 position) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition) where T : SEffectRegister
         {
-            return Create<T>(position, Vector2.One);
+            return Create<T>(worldPosition, Vector2.One);
         }
 
         /// <summary>
-        /// Creates a new effect of type T with the specified position and scale.
+        /// Creates a new effect of type T with the specified worldPosition and scale.
         /// </summary>
         /// <typeparam name="T">The type of effect to create.</typeparam>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 position, Vector2 scale) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale) where T : SEffectRegister
         {
-            return Create<T>(position, scale, 0f, Color.White);
+            return Create<T>(worldPosition, scale, 0f, Color.White);
         }
 
         /// <summary>
-        /// Creates a new effect of type T with the specified position, scale, and rotation.
+        /// Creates a new effect of type T with the specified world position, scale, and rotation.
         /// </summary>
         /// <typeparam name="T">The type of effect to create.</typeparam>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <param name="rotation">The rotation of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 position, Vector2 scale, float rotation) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation) where T : SEffectRegister
         {
-            return Create(typeof(T), position, scale, rotation, Color.White);
+            return Create(typeof(T), worldPosition, scale, rotation, Color.White);
         }
 
         /// <summary>
-        /// Creates a new effect of type T with the specified position, scale, rotation, and color.
+        /// Creates a new effect of type T with the specified world position, scale, rotation, and color.
         /// </summary>
         /// <typeparam name="T">The type of effect to create.</typeparam>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <param name="rotation">The rotation of the effect.</param>
         /// <param name="color">The color of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 position, Vector2 scale, float rotation, Color color) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation, Color color) where T : SEffectRegister
         {
-            return Create(typeof(T), position, scale, rotation, color);
+            return Create(typeof(T), worldPosition, scale, rotation, color);
         }
 
         /// <summary>
@@ -156,56 +156,56 @@ namespace StardustDefender.Core.Managers
         }
 
         /// <summary>
-        /// Creates a new effect of the specified type with the specified position.
+        /// Creates a new effect of the specified type with the specified world position.
         /// </summary>
         /// <param name="type">The type of effect to create.</param>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create(Type type, Vector2 position)
+        public static SEffect Create(Type type, Vector2 worldPosition)
         {
-            return Create(type, position, Vector2.One);
+            return Create(type, worldPosition, Vector2.One);
         }
 
         /// <summary>
-        /// Creates a new effect of the specified type with the specified position and scale.
+        /// Creates a new effect of the specified type with the specified world position and scale.
         /// </summary>
         /// <param name="type">The type of effect to create.</param>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create(Type type, Vector2 position, Vector2 scale)
+        public static SEffect Create(Type type, Vector2 worldPosition, Vector2 scale)
         {
-            return Create(type, position, scale, 0f);
+            return Create(type, worldPosition, scale, 0f);
         }
 
         /// <summary>
-        /// Creates a new effect of the specified type with the specified position, scale, and rotation.
+        /// Creates a new effect of the specified type with the specified world position, scale, and rotation.
         /// </summary>
         /// <param name="type">The type of effect to create.</param>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <param name="rotation">The rotation of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation)
+        public static SEffect Create(Type type, Vector2 worldPosition, Vector2 scale, float rotation)
         {
-            return Create(type, position, scale, rotation, Color.White);
+            return Create(type, worldPosition, scale, rotation, Color.White);
         }
 
         /// <summary>
-        /// Creates a new effect of the specified type with the specified position, scale, rotation, and color.
+        /// Creates a new effect of the specified type with the specified world position, scale, rotation, and color.
         /// </summary>
         /// <param name="type">The type of effect to create.</param>
-        /// <param name="position">The position of the effect.</param>
+        /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <param name="rotation">The rotation of the effect.</param>
         /// <param name="color">The color of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create(Type type, Vector2 position, Vector2 scale, float rotation, Color color)
+        public static SEffect Create(Type type, Vector2 worldPosition, Vector2 scale, float rotation, Color color)
         {
             SEffect effect = effectPool.Get<SEffect>();
 
             effect.Build(templates[type].Animation);
-            effect.Position = position;
+            effect.Position = worldPosition;
             effect.Scale = scale;
             effect.Rotation = rotation;
             effect.Color = color;

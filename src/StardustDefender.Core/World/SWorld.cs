@@ -9,7 +9,7 @@ namespace StardustDefender.Core.World
     /// <summary>
     /// Static class for managing world-related calculations and transformations.
     /// </summary>
-    internal static partial class SWorld
+    public static partial class SWorld
     {
         /// <summary>
         /// The scale of the grid within the world.
@@ -32,11 +32,11 @@ namespace StardustDefender.Core.World
         internal const int Height = 12;
 
         /// <summary>
-        /// Clamps a position within the world boundaries.
+        /// Fixes a position within the horizontal boundaries of the world.
         /// </summary>
         /// <param name="pos">The position to clamp.</param>
         /// <returns>The clamped position.</returns>
-        internal static Vector2 Clamp(Vector2 pos)
+        public static Vector2 ClampHorizontalPosition(Vector2 pos)
         {
             Vector2 cameraCenter = GetLocalPosition(SCamera.Center);
             float leftBorder = cameraCenter.X - Width;
@@ -46,11 +46,23 @@ namespace StardustDefender.Core.World
         }
 
         /// <summary>
+        /// Fixes a position within the vertical limits of the world.
+        /// </summary>
+        /// <param name="pos">The position to clamp.</param>
+        /// <returns>The clamped position.</returns>
+        public static Vector2 ClampVerticalPosition(Vector2 pos)
+        {
+            Vector2 cameraCenter = GetLocalPosition(SCamera.Center);
+
+            return new Vector2(pos.X, Math.Clamp(pos.Y, cameraCenter.Y - 3, cameraCenter.Y + 4));
+        }
+
+        /// <summary>
         /// Converts a local position to a world position based on the grid scale.
         /// </summary>
         /// <param name="pos">The local position to convert.</param>
         /// <returns>The corresponding world position.</returns>
-        internal static Vector2 GetWorldPosition(Vector2 pos)
+        public static Vector2 GetWorldPosition(Vector2 pos)
         {
             return new Vector2(pos.X * GridScale, pos.Y * GridScale);
         }
@@ -60,7 +72,7 @@ namespace StardustDefender.Core.World
         /// </summary>
         /// <param name="pos">The world position to convert.</param>
         /// <returns>The corresponding local position.</returns>
-        internal static Vector2 GetLocalPosition(Vector2 pos)
+        public static Vector2 GetLocalPosition(Vector2 pos)
         {
             return new Vector2((float)Math.Round(pos.X / GridScale), (float)Math.Round(pos.Y / GridScale));
         }
@@ -70,7 +82,7 @@ namespace StardustDefender.Core.World
         /// </summary>
         /// <param name="pos">The position to check.</param>
         /// <returns>True if the position is inside the world dimensions; otherwise, false.</returns>
-        internal static bool InsideTheWorldDimensions(Vector2 pos)
+        public static bool InsideTheWorldDimensions(Vector2 pos)
         {
             return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
         }

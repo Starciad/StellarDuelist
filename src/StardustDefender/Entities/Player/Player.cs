@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+using StardustDefender.Core.Camera;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
 using StardustDefender.Core.Engine;
@@ -9,6 +10,7 @@ using StardustDefender.Core.Entities.Register;
 using StardustDefender.Core.Entities.Templates;
 using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
+using StardustDefender.Core.World;
 using StardustDefender.Game.Effects;
 
 using System;
@@ -72,6 +74,7 @@ namespace StardustDefender.Game.Entities.Player
         }
         protected override void OnUpdate()
         {
+            ClampUpdate();
             TimersUpdate();
             HurtUpdate();
             InputsUpdate();
@@ -97,10 +100,13 @@ namespace StardustDefender.Game.Entities.Player
             _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
         }
 
+        private void ClampUpdate()
+        {
+            this.LocalPosition = SWorld.ClampVerticalPosition(this.LocalPosition);
+        }
         private void TimersUpdate()
         {
             this.ShootTimer.Update();
-
         }
         private void HurtUpdate()
         {
@@ -196,16 +202,33 @@ namespace StardustDefender.Game.Entities.Player
         }
         private void MovementInputUpdate()
         {
+            if (SInput.Started(Keys.W) || SInput.Started(Keys.Up))
+            {
+                PlaySound();
+                this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y - 1);
+            }
+
+            if (SInput.Started(Keys.S) || SInput.Started(Keys.Down))
+            {
+                PlaySound();
+                this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + 1);
+            }
+
             if (SInput.Started(Keys.A) || SInput.Started(Keys.Left))
             {
-                _ = SSounds.Play("Player_Movement");
+                PlaySound();
                 this.LocalPosition = new(this.LocalPosition.X - 1, this.LocalPosition.Y);
             }
 
             if (SInput.Started(Keys.D) || SInput.Started(Keys.Right))
             {
-                _ = SSounds.Play("Player_Movement");
+                PlaySound();
                 this.LocalPosition = new(this.LocalPosition.X + 1, this.LocalPosition.Y);
+            }
+
+            void PlaySound()
+            {
+                _ = SSounds.Play("Player_Movement");
             }
         }
         private void ShootInputUpdate()
