@@ -33,15 +33,15 @@ namespace StardustDefender.Game.Entities.Enemies
                 this.Classification = SEntityClassification.Enemy;
             }
 
-            protected override bool OnSpawningCondition()
-            {
-                return SDifficultyController.DifficultyRate >= 5;
-            }
+            //protected override bool OnSpawningCondition()
+            //{
+            //    return SDifficultyController.DifficultyRate >= 5;
+            //}
         }
 
         // ==================================================== //
 
-        private const float SPEED = 0.01f;
+        private const float SPEED = 0.5f;
 
         // Bullets
         private const float BULLET_SPEED = 1f;
@@ -117,7 +117,7 @@ namespace StardustDefender.Game.Entities.Enemies
         // UPDATE
         private void MovementUpdate()
         {
-            this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + SPEED);
+            this.WorldPosition = new(this.WorldPosition.X, this.WorldPosition.Y + SPEED);
         }
 
         // SKILLS

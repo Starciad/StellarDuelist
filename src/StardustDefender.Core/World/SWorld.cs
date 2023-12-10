@@ -74,7 +74,7 @@ namespace StardustDefender.Core.World
         /// <returns>The corresponding local position.</returns>
         public static Vector2 GetLocalPosition(Vector2 pos)
         {
-            return new Vector2((float)Math.Round(pos.X / GridScale), (float)Math.Round(pos.Y / GridScale));
+            return new Vector2((float)(pos.X / GridScale), (float)(pos.Y / GridScale));
         }
 
         /// <summary>
