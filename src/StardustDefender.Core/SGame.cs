@@ -9,6 +9,7 @@ using StardustDefender.Core.Enums;
 using StardustDefender.Core.Managers;
 
 using System.Reflection;
+using System;
 
 #if PC
 using StardustDefender.CaptureSystem;
@@ -74,6 +75,18 @@ namespace StardustDefender.Core
         // during various stages of processing. They are ordered by the  //
         // order of execution.                                           //
         // ============================================================= //
+
+        protected override void OnActivated(object sender, EventArgs args)
+        {
+            base.OnActivated(sender, args);
+            SSongs.Resume();
+        }
+
+        protected override void OnDeactivated(object sender, EventArgs args)
+        {
+            base.OnDeactivated(sender, args);
+            SSongs.Pause();
+        }
 
         #region GAME ROUTINE
         protected override void Initialize()
