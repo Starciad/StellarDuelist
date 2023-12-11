@@ -74,6 +74,8 @@ namespace StardustDefender.Game.Entities.Enemies
         // OVERRIDE
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             // Behaviour
             CollideWithPlayer();
 

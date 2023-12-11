@@ -16,6 +16,15 @@ namespace StardustDefender.Core.Controllers
             player = (SPlayerEntity)SEntityManager.Create(playerType, playerPosition);
             ResetPlayerPosition();
         }
+        private static void SpawnEnemy()
+        {
+            // Spawns enemies if the number of spawned enemies is less than the total.
+            if (spawnedEnemies < SDifficultyController.TotalEnemyCount)
+            {
+                CreateEnemy();
+                spawnedEnemies++;
+            }
+        }
         private static void CreateEnemy()
         {
             _ = SDifficultyController.CreateRandomEnemy(new(enemyPosition.X + SRandom.Range(-ENEMY_SPAWN_RANGE, ENEMY_SPAWN_RANGE + 1), enemyPosition.Y));

@@ -1,7 +1,9 @@
 ﻿using StardustDefender.Core.Collections;
 using StardustDefender.Core.Projectiles;
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StardustDefender.Core.Managers
 {
@@ -30,7 +32,7 @@ namespace StardustDefender.Core.Managers
                     continue;
                 }
 
-                projectile?.Update();
+                projectile.Update();
             }
         }
 
@@ -46,7 +48,7 @@ namespace StardustDefender.Core.Managers
                     continue;
                 }
 
-                projectile?.Draw();
+                projectile.Draw();
             }
         }
 
@@ -71,6 +73,12 @@ namespace StardustDefender.Core.Managers
         {
             SProjectile projectile = projectilePool.Get<SProjectile>();
 
+            if (projectiles.Contains(projectile))
+            {
+                projectile = Activator.CreateInstance<SProjectile>();
+            }
+
+            projectile.Reset();
             projectile.Initialize();
             projectile.Build(builder);
 

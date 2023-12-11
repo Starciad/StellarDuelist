@@ -43,7 +43,7 @@ namespace StardustDefender.Core.Projectiles
         /// <summary>
         /// Gets the maximum range the projectile can travel.
         /// </summary>
-        public float Range { get; private set; }
+        public int Range { get; private set; }
 
         /// <summary>
         /// Gets the damage inflicted by the projectile on impact.
@@ -60,6 +60,8 @@ namespace StardustDefender.Core.Projectiles
         /// </summary>
         public Color Color { get; private set; }
 
+        private Rectangle collisionBox;
+
         /// <summary>
         /// Builds the projectile using the specified builder.
         /// </summary>
@@ -74,6 +76,7 @@ namespace StardustDefender.Core.Projectiles
             this.Damage = builder.Damage;
             this.LifeTime = builder.LifeTime;
             this.Color = builder.Color;
+            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), new(this.Range));
 
             this.Animation.AddFrame(STextures.GetSprite(32, this.SpriteId, 0));
             this.Animation.Initialize();
@@ -93,9 +96,9 @@ namespace StardustDefender.Core.Projectiles
         /// </summary>
         internal void Update()
         {
-            MovementUpdate();
-            LifeTimeUpdate();
             CollisionUpdate();
+            LifeTimeUpdate();
+            MovementUpdate();
         }
 
         /// <summary>
@@ -126,7 +129,7 @@ namespace StardustDefender.Core.Projectiles
             this.SpriteId = 0;
             this.Position = Vector2.Zero;
             this.Speed = Vector2.Zero;
-            this.Range = 0f;
+            this.Range = 0;
             this.Damage = 0;
             this.LifeTime = 0f;
         }
@@ -150,9 +153,11 @@ namespace StardustDefender.Core.Projectiles
 
         private void CollisionUpdate()
         {
+            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
+
             foreach (SEntity entity in SEntityManager.Entities)
             {
-                if (entity == null || entity.Team == this.Team || Vector2.Distance(this.Position, entity.WorldPosition) > entity.CollisionRange)
+                if (entity == null || entity.Team == this.Team || !this.collisionBox.Intersects(entity.CollisionBox))
                 {
                     continue;
                 }
