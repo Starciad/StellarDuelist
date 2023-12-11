@@ -41,7 +41,7 @@ namespace StardustDefender.Game.Entities.Enemies
 
         // ==================================================== //
 
-        private const float SPEED = 0.01f;
+        private const float SPEED = 0.5f;
 
         // Bullets
         private const float BULLET_SPEED = 1f;
@@ -77,6 +77,8 @@ namespace StardustDefender.Game.Entities.Enemies
         // OVERRIDE
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             // Behaviour
             CollideWithPlayer();
 
@@ -115,7 +117,7 @@ namespace StardustDefender.Game.Entities.Enemies
         // UPDATE
         private void MovementUpdate()
         {
-            this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + SPEED);
+            this.WorldPosition = new(this.WorldPosition.X, this.WorldPosition.Y + SPEED);
         }
 
         // SKILLS
@@ -139,7 +141,7 @@ namespace StardustDefender.Game.Entities.Enemies
                     Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
-                    Range = 7.5f
+                    Range = 3
                 });
 
                 currentAngle += angleIncrement;

@@ -99,9 +99,9 @@ namespace StardustDefender.Core.Entities
 
         #region Collision
         /// <summary>
-        /// Gets or sets the collision range of the entity.
+        /// Gets or sets the collision box of the entity.
         /// </summary>
-        public float CollisionRange { get; set; }
+        public Rectangle CollisionBox { get; set; }
         #endregion
 
         #region Knockback
@@ -147,7 +147,7 @@ namespace StardustDefender.Core.Entities
             this.Animation.Update();
 
             this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
-            this.LocalPosition = SWorld.Clamp(this.LocalPosition);
+            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
 
             OnUpdate();
         }
@@ -254,7 +254,7 @@ namespace StardustDefender.Core.Entities
             this.Rotation = 0f;
             this.CanSufferKnockback = true;
 
-            this.CollisionRange = 22f;
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
             this.Color = Color.White;
 
             this.Animation = new();
@@ -273,7 +273,10 @@ namespace StardustDefender.Core.Entities
         /// <summary>
         /// Invoked at every fixed frame update.
         /// </summary>
-        protected virtual void OnUpdate() { }
+        protected virtual void OnUpdate()
+        {
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
+        }
 
         /// <summary>
         /// Invoked when the entity is damaged.

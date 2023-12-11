@@ -61,7 +61,7 @@ namespace StardustDefender.Core.Controllers
 
             // At the beginning of the level, try to select a random boss.
             // If so, the `bossIncoming` variable is marked as `true` and tense music is chosen for the level's theme.
-            // If not, the `bossIncoming` variable is marked as `false` and a normal song is chosen for the level's theme. 
+            // If not, the `bossIncoming` variable is marked as `false` and a normal song is chosen for the level's theme.
             if (TrySelectingRandomBoss())
             {
                 bossIncoming = true;
@@ -96,11 +96,7 @@ namespace StardustDefender.Core.Controllers
                 await WaitForActivityAsync();
 
                 // Spawns enemies if the number of spawned enemies is less than the total.
-                if (spawnedEnemies < SDifficultyController.TotalEnemyCount)
-                {
-                    CreateEnemy();
-                    spawnedEnemies++;
-                }
+                SpawnEnemy();
 
                 // Wait for a delay before creating the next enemy.
                 if (SDifficultyController.EnemySpawnDelay > 0)
@@ -149,11 +145,6 @@ namespace StardustDefender.Core.Controllers
 
                 // Wait for a delay after boss defeat.
                 await Task.Delay(TimeSpan.FromSeconds(10.5f));
-
-                // Clearing boss variables.
-                bossTypeSelected = null;
-                bossAppeared = false;
-                bossIncoming = false;
             }
 
             // Task completion.
@@ -184,6 +175,11 @@ namespace StardustDefender.Core.Controllers
                 return;
             }
 
+            // Clearing boss variables.
+            bossTypeSelected = null;
+            bossAppeared = false;
+            bossIncoming = false;
+
             // Perform the level transition and advance the difficulty.
             CleanProjectiles();
             await LevelTransitionAsync();
@@ -204,12 +200,11 @@ namespace StardustDefender.Core.Controllers
         private static async Task LevelTransitionAsync()
         {
             // Increases the player's speed in conjunction with the background to give the impression that he is advancing to the next level.
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 25; i++)
             {
                 await WaitForActivityAsync();
 
                 SBackgroundController.GlobalParallaxFactor += 1.5f;
-                Player.LocalPosition = new(Player.LocalPosition.X, Player.LocalPosition.Y - 1f);
 
                 await Task.Delay(250);
             }

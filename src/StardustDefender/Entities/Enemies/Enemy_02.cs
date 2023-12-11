@@ -18,7 +18,7 @@ namespace StardustDefender.Game.Entities.Enemies
     /// [ ALIEN SPACESHIP ]
     /// </summary>
     /// <remarks>
-    /// Moves downwards interspersed with horizontal movements based on a few pre-determined seconds. 
+    /// Moves downwards interspersed with horizontal movements based on a few pre-determined seconds.
     /// <br/><br/>
     /// Shoots lasers that move steadily downwards. They hurt the <see cref="SPlayerEntity"/>.
     /// <br/><br/>
@@ -47,8 +47,8 @@ namespace StardustDefender.Game.Entities.Enemies
         private const float SHOOT_SPEED = 2f;
         private const float SHOOT_LIFE_TIME = 25f;
 
-        private readonly STimer movementTimer = new(20f);
-        private readonly STimer shootTimer = new(35f);
+        private readonly STimer movementTimer = new(10f);
+        private readonly STimer shootTimer = new(17.5f);
 
         private Direction movementDirection;
 
@@ -84,6 +84,8 @@ namespace StardustDefender.Game.Entities.Enemies
         }
         protected override void OnUpdate()
         {
+            base.OnUpdate();
+
             TimersUpdate();
 
             // Behaviour
@@ -166,7 +168,7 @@ namespace StardustDefender.Game.Entities.Enemies
                 Speed = new(0, SHOOT_SPEED),
                 Damage = this.AttackValue,
                 LifeTime = SHOOT_LIFE_TIME,
-                Range = 10f
+                Range = 10
             });
         }
     }

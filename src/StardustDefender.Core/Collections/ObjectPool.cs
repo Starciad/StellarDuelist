@@ -32,10 +32,9 @@ namespace StardustDefender.Core.Collections
 
             if (this._objectPool.ContainsKey(keyType))
             {
-                Queue<TObject> objects = this._objectPool[keyType];
-                if (objects.Count > 0)
+                if (this._objectPool[keyType].Count > 0)
                 {
-                    value = objects.Dequeue();
+                    value = this._objectPool[keyType].Dequeue();
                     value.Reset();
                     return value;
                 }

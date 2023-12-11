@@ -14,7 +14,7 @@ namespace StardustDefender.Core.Entities.Templates
     {
         protected void CollideWithPlayer()
         {
-            if (Vector2.Distance(SLevelController.Player.WorldPosition, this.WorldPosition) < 32)
+            if (this.CollisionBox.Intersects(SLevelController.Player.CollisionBox))
             {
                 SLevelController.Player.Damage(1);
                 Destroy();

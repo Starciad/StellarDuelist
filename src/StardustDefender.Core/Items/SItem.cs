@@ -22,7 +22,6 @@ namespace StardustDefender.Core.Items
         internal Vector2 Position { get; set; }
 
         private const float VERTICAL_SPEED = 1.5f;
-        private const float COLLISION_RANGE = 16f;
         private const float COLOR_UPDATE_DELAY = 0.5f;
 
         private SItemRegister _register;
@@ -31,6 +30,7 @@ namespace StardustDefender.Core.Items
         private float currentColorUpdateDelay;
         private int colorIndex;
         private Color color;
+        private Rectangle collisionBox;
 
         /// <summary>
         /// Builds the item with the provided register, animation, and position.
@@ -45,6 +45,7 @@ namespace StardustDefender.Core.Items
             this._animation.SetMode(SAnimationMode.Disable);
 
             this.Position = position;
+            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), new(18));
         }
 
         /// <summary>
@@ -63,6 +64,7 @@ namespace StardustDefender.Core.Items
         /// </summary>
         internal void Update()
         {
+            CollisionUpdate();
             ColorUpdate();
             MovementUpdate();
             CollisionCheckUpdate();
@@ -98,6 +100,10 @@ namespace StardustDefender.Core.Items
                 this.color = SPalettes.WARNING_PALETTE[this.colorIndex];
             }
         }
+        private void CollisionUpdate()
+        {
+            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
+        }
         private void MovementUpdate()
         {
             float POS_X = this.Position.X;
@@ -107,7 +113,7 @@ namespace StardustDefender.Core.Items
         }
         private void CollisionCheckUpdate()
         {
-            if (Vector2.Distance(SLevelController.Player.WorldPosition, this.Position) < COLLISION_RANGE)
+            if (this.collisionBox.Intersects(SLevelController.Player.CollisionBox))
             {
                 this._register.ApplyEffect();
                 Destroy();
