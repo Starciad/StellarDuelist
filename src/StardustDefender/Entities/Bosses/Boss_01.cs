@@ -40,7 +40,7 @@ namespace StardustDefender.Game.Entities.Bosses
                 SPlayerEntity player = SLevelController.Player;
 
                 return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                       player.HealthValue >= 2 && player.HealthValue >= 3f && player.BulletLifeTime >= 3f;
+                       player.HealthValue >= 2 && player.HealthValue >= 3.5f && player.BulletLifeTime >= 3.5f;
             }
         }
 

@@ -61,6 +61,8 @@ namespace StardustDefender.Game.Entities.Player
             this.BulletSpeed = 3f;
 
             this.isHurt = false;
+            this.IsInvincible = false;
+            this.invincibilityTimer.Stop();
 
             // Timers
             this.ShootTimer.SetDelay(this.ShootDelay);
