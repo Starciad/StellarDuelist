@@ -96,9 +96,9 @@ namespace StardustDefender.Core.Projectiles
         /// </summary>
         internal void Update()
         {
-            MovementUpdate();
-            LifeTimeUpdate();
             CollisionUpdate();
+            LifeTimeUpdate();
+            MovementUpdate();
         }
 
         /// <summary>

@@ -204,14 +204,13 @@ namespace StardustDefender.Core.Controllers
         private static async Task LevelTransitionAsync()
         {
             // Increases the player's speed in conjunction with the background to give the impression that he is advancing to the next level.
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 25; i++)
             {
                 await WaitForActivityAsync();
 
                 SBackgroundController.GlobalParallaxFactor += 1.5f;
-                Player.LocalPosition = new(Player.LocalPosition.X, Player.LocalPosition.Y - 1f);
 
-                await Task.Delay(150);
+                await Task.Delay(250);
             }
 
             // Initializes the fade to cover the screen for a short interval.

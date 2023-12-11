@@ -3,6 +3,7 @@ using StardustDefender.Core.Projectiles;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StardustDefender.Core.Managers
 {
@@ -71,12 +72,14 @@ namespace StardustDefender.Core.Managers
         public static void Create(SProjectileBuilder builder)
         {
             SProjectile projectile = projectilePool.Get<SProjectile>();
+
             if (projectiles.Contains(projectile))
             {
-                projectilePool.Add(projectile);
-                return;
+                Remove(projectile);
+                projectile = Activator.CreateInstance<SProjectile>();
             }
 
+            projectile.Reset();
             projectile.Initialize();
             projectile.Build(builder);
 
