@@ -60,6 +60,8 @@ namespace StardustDefender.Game.Entities.Player
             this.BulletLifeTime = 3f;
             this.BulletSpeed = 3f;
 
+            this.isHurt = false;
+
             // Timers
             this.ShootTimer.SetDelay(this.ShootDelay);
         }

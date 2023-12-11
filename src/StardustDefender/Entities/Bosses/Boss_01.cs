@@ -35,13 +35,13 @@ namespace StardustDefender.Game.Entities.Bosses
                 this.Classification = SEntityClassification.Boss;
             }
 
-            //protected override bool OnSpawningCondition()
-            //{
-            //    SPlayerEntity player = SLevelController.Player;
+            protected override bool OnSpawningCondition()
+            {
+                SPlayerEntity player = SLevelController.Player;
 
-            //    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-            //           player.HealthValue >= 2 && player.HealthValue >= 3.6f && player.BulletLifeTime >= 3.6f;
-            //}
+                return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                       player.HealthValue >= 2 && player.HealthValue >= 3f && player.BulletLifeTime >= 3f;
+            }
         }
 
         // ==================================================== //
