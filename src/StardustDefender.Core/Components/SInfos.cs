@@ -15,7 +15,7 @@ namespace StardustDefender.Core.Components
         /// <summary>
         /// Current game version.
         /// </summary>
-        public static Version GameVersion => new(1, 0, 1, 0);
+        public static Version GameVersion => new(1, 0, 4, 5);
 
         /// <summary>
         /// Get a formatted title that combines <see cref="GameName"/> and <see cref="GameVersion"/>.
