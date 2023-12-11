@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using StardustDefender.Core;
 using StardustDefender.Core.Animation;
 using StardustDefender.Core.Components;
 using StardustDefender.Core.Controllers;
@@ -34,13 +35,13 @@ namespace StardustDefender.Game.Entities.Bosses
                 this.Classification = SEntityClassification.Boss;
             }
 
-            protected override bool OnSpawningCondition()
-            {
-                SPlayerEntity player = SLevelController.Player;
+            //protected override bool OnSpawningCondition()
+            //{
+            //    SPlayerEntity player = SLevelController.Player;
 
-                return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                       player.HealthValue >= 2 && player.HealthValue >= 3.6f && player.BulletLifeTime >= 3.6f;
-            }
+            //    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+            //           player.HealthValue >= 2 && player.HealthValue >= 3.6f && player.BulletLifeTime >= 3.6f;
+            //}
         }
 
         // ==================================================== //
@@ -60,11 +61,13 @@ namespace StardustDefender.Game.Entities.Bosses
         private readonly SAnimation A_Normal = new();
         private readonly SAnimation A_Shoot = new();
 
-        private const float HORIZONTAL_SPEED = 0.1f;
-        private const float VERTICAL_SPEED = 0.01f;
+        private float horizontalSpeed = 0.1f;
+        private float verticalSpeed = 0.01f;
 
         private const float BULLET_SPEED = 2.5f;
         private const float BULLET_LIFE_TIME = 40f;
+
+        private const float SHOT_DELAY = 0.05f;
 
         private State state;
 
@@ -76,6 +79,10 @@ namespace StardustDefender.Game.Entities.Bosses
 
         private readonly STimer verticalDirectionTimer = new(10f);
         private readonly STimer shootTimer = new(20f);
+
+        private int bulletsCount;
+        private int shotIndex;
+        private float timePassed;
 
         private Vector2 previousLocalPosition;
 
@@ -95,6 +102,10 @@ namespace StardustDefender.Game.Entities.Bosses
             // States
             this.verticalDirection = false;
             this.horizontalDirection = false;
+
+            this.bulletsCount = 20;
+            this.shotIndex = 0;
+            this.timePassed = 0f;
 
             // Animation
             this.texture = STextures.GetTexture("ENEMIES_Bosses");
@@ -166,6 +177,7 @@ namespace StardustDefender.Game.Entities.Bosses
                 this.previousLocalPosition = this.LocalPosition;
             }
 
+            // Shooting
             if (this.canShoot)
             {
                 this.shootTimer.Update();
@@ -200,7 +212,18 @@ namespace StardustDefender.Game.Entities.Bosses
         // Actions
         private void BOSS_Boost()
         {
-            this.HealthValue *= SLevelController.Player.AttackValue;
+            SPlayerEntity player = SLevelController.Player;
+
+            // Boost health and bullets
+            this.HealthValue *= player.AttackValue;
+            this.bulletsCount += (int)Math.Round(player.HealthValue + player.AttackValue / 2f);
+
+            // Boost movement
+            if (player.ShootDelay <= 1.5f)
+            {
+                this.horizontalSpeed = 0.2f;
+                this.verticalSpeed = 0.02f;
+            }
         }
         private void BOSS_Introduction()
         {
@@ -240,8 +263,8 @@ namespace StardustDefender.Game.Entities.Bosses
         {
             // MOVING
             this.LocalPosition = this.horizontalDirection
-                ? new(this.LocalPosition.X + HORIZONTAL_SPEED, this.LocalPosition.Y)
-                : new(this.LocalPosition.X - HORIZONTAL_SPEED, this.LocalPosition.Y);
+                ? new(this.LocalPosition.X + horizontalSpeed, this.LocalPosition.Y)
+                : new(this.LocalPosition.X - horizontalSpeed, this.LocalPosition.Y);
 
             if (this.previousLocalPosition.X == this.LocalPosition.X)
             {
@@ -252,8 +275,8 @@ namespace StardustDefender.Game.Entities.Bosses
         {
             // MOVING
             this.LocalPosition = this.verticalDirection
-                ? new(this.LocalPosition.X, this.LocalPosition.Y + VERTICAL_SPEED)
-                : new(this.LocalPosition.X, this.LocalPosition.Y - VERTICAL_SPEED);
+                ? new(this.LocalPosition.X, this.LocalPosition.Y + verticalSpeed)
+                : new(this.LocalPosition.X, this.LocalPosition.Y - verticalSpeed);
 
             // CHANGE DIRECTION
             if (this.verticalDirectionTimer.IsFinished)
@@ -264,16 +287,10 @@ namespace StardustDefender.Game.Entities.Bosses
         }
         private void ShootUpdate()
         {
-            if (this.isShooting)
-            {
-                return;
-            }
-
-            // Update Delay counters
             if (this.shootTimer.IsFinished)
             {
-
-                _ = Task.Run(StartShootingAsync);
+                if (!this.isShooting) { StartShooting(); }
+                if (this.isShooting) { ShootingUpdate(); }
             }
         }
 
@@ -284,7 +301,7 @@ namespace StardustDefender.Game.Entities.Bosses
         }
 
         // Actions
-        private async Task StartShootingAsync()
+        private void StartShooting()
         {
             this.A_Shoot.Reset();
             this.A_Shoot.SetMode(SAnimationMode.Once);
@@ -292,16 +309,14 @@ namespace StardustDefender.Game.Entities.Bosses
             this.state = State.SHOOTING;
             this.isShooting = true;
             this.canMove = false;
+        }
+        private void ShootingUpdate()
+        {
+            this.timePassed += 0.01f;
 
-            await Task.Delay(TimeSpan.FromSeconds(0.5f));
-
-            int shotBurstCount = SRandom.Range(25, 35);
-            for (int i = 0; i < shotBurstCount; i++)
+            if (this.timePassed >= SHOT_DELAY)
             {
-                if (this.IsDestroyed)
-                {
-                    break;
-                }
+                this.timePassed -= SHOT_DELAY;
 
                 Vector2 bulletSpeed = new(
                     BULLET_SPEED * (SRandom.Range(-1, 2) + -SRandom.NextFloat() / 1.5f),
@@ -321,14 +336,20 @@ namespace StardustDefender.Game.Entities.Bosses
                 });
                 _ = SSounds.Play("Shoot_05");
 
-                await Task.Delay(SRandom.Range(50, 100));
+                this.shotIndex++;
+
+                if (this.shotIndex >= this.bulletsCount)
+                {
+                    this.isShooting = false;
+                    this.canMove = true;
+                    this.state = State.NORMAL;
+                    this.shootTimer.Restart();
+
+                    this.timePassed = 0f;
+                    this.shotIndex = 0;
+                    return;
+                }
             }
-
-            this.isShooting = false;
-            this.canMove = true;
-            this.state = State.NORMAL;
-
-            this.shootTimer.Restart();
         }
     }
 }
