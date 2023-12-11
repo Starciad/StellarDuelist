@@ -47,8 +47,8 @@ namespace StardustDefender.Game.Entities.Enemies
         private const float SHOOT_SPEED = 2f;
         private const float SHOOT_LIFE_TIME = 25f;
 
-        private readonly STimer movementTimer = new(20f);
-        private readonly STimer shootTimer = new(35f);
+        private readonly STimer movementTimer = new(10f);
+        private readonly STimer shootTimer = new(17.5f);
 
         private Direction movementDirection;
 

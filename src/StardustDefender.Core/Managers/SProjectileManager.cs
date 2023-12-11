@@ -75,7 +75,6 @@ namespace StardustDefender.Core.Managers
 
             if (projectiles.Contains(projectile))
             {
-                Remove(projectile);
                 projectile = Activator.CreateInstance<SProjectile>();
             }
 

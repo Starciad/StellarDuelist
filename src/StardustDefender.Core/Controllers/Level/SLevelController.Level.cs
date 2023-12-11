@@ -96,11 +96,7 @@ namespace StardustDefender.Core.Controllers
                 await WaitForActivityAsync();
 
                 // Spawns enemies if the number of spawned enemies is less than the total.
-                if (spawnedEnemies < SDifficultyController.TotalEnemyCount)
-                {
-                    CreateEnemy();
-                    spawnedEnemies++;
-                }
+                SpawnEnemy();
 
                 // Wait for a delay before creating the next enemy.
                 if (SDifficultyController.EnemySpawnDelay > 0)

@@ -153,8 +153,11 @@ namespace StardustDefender.Game.Entities.Bosses
         {
             base.OnUpdate();
 
+            // Behaviour
+            CollideWithPlayer();
             AnimationUpdate();
 
+            // Movement
             if (this.canMove)
             {
                 this.verticalDirectionTimer.Update();

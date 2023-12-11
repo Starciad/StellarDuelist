@@ -37,7 +37,7 @@ namespace StardustDefender.Game.Entities.Enemies
 
         // ==================================================== //
 
-        private readonly STimer movementTimer = new(10f);
+        private readonly STimer movementTimer = new(5f);
 
         private Direction movementDirection;
 

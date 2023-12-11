@@ -204,6 +204,12 @@ namespace StardustDefender.Core.Managers
         {
             SEffect effect = effectPool.Get<SEffect>();
 
+            if (effects.Contains(effect))
+            {
+                effect = Activator.CreateInstance<SEffect>();
+                effect.Reset();
+            }
+
             effect.Build(templates[type].Animation);
             effect.Position = worldPosition;
             effect.Scale = scale;
