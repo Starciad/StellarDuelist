@@ -145,11 +145,6 @@ namespace StardustDefender.Core.Controllers
 
                 // Wait for a delay after boss defeat.
                 await Task.Delay(TimeSpan.FromSeconds(10.5f));
-
-                // Clearing boss variables.
-                bossTypeSelected = null;
-                bossAppeared = false;
-                bossIncoming = false;
             }
 
             // Task completion.
@@ -179,6 +174,11 @@ namespace StardustDefender.Core.Controllers
             {
                 return;
             }
+
+            // Clearing boss variables.
+            bossTypeSelected = null;
+            bossAppeared = false;
+            bossIncoming = false;
 
             // Perform the level transition and advance the difficulty.
             CleanProjectiles();
