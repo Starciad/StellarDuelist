@@ -6,6 +6,41 @@ Welcome to the Stardust Defender Game Changelog! Here, you will discover a metic
 
 Below you can find all versions of the game sorted in descending order.
 
+## Version 1.0.4.5 (11/12/2023)
+
+Welcome to the release of version 1.0.4.5 of Stardust Defender! With it we bring improvements and small corrections to improve the players' experience.
+
+### Improvements
+
+- **Player Movement**: Now the player has free control over the movement of their character, being able to move up, down, left and right; (#36)
+
+- **Collision system**: now all entities have box collisions instead of radial collisions. (#34)
+
+### Additions
+
+- **Native screen capture system**: When pressing the `F12` key, the game will capture the current state of the screen and store it as a `.png` image in the `Screenshots/` directory (within the files about the game). (#19)
+
+- **Integration with Discord**: Now, through Discord's `RPC` API, the game will show its current state on your profile when the program is open (valid only on the PC version). (#35)
+
+### Bug fixes
+
+- Fixed an issue where the boss's special victory music would be cut off and replaced with the normal level completion music. (#16)
+
+- Correction of the error where when the player died and restarted the game, he returned invulnerable for a brief moment. (#17)
+
+- Correction of the error that occurred in battles against Boss_01, which was unable to attack the player in later battles after their first defeat. (#15)
+
+### Conclusion
+
+We hope you like this version! We thank all our contributors for their hard work and dedication to making this game amazing. Feel free to check out the full changelog [here](https://github.com/Starciad/StardustDefender/releases/tag/v1.0.4.5) for all the details.
+
+Have fun playing and keep following our project for future updates and improvements!
+
+<br/>
+
+___
+<br/>
+
 ## Version 1.0.1.0 (09/10/2023)
 > **Source:** https://github.com/Starciad/StardustDefender/releases/tag/v1.0.1.0
 
