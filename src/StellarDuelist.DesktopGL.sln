@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StellarDuelist.DesktopGL", "StellarDuelist\StellarDuelist.DesktopGL.csproj", "{A1EDF45B-654A-4A93-8C7E-41C71F93B398}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StellarDuelist.DesktopGL.CaptureSystem", "StellarDuelist.CaptureSystem\StellarDuelist.DesktopGL.CaptureSystem.csproj", "{2A0D069A-2575-49B0-B115-4CE19DA7043A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StellarDuelist.DesktopGL.Core", "StellarDuelist.Core\StellarDuelist.DesktopGL.Core.csproj", "{D809E9E1-4AC4-4EA6-ADE3-03C7066C869E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StellarDuelist.DesktopGL.Discord", "StellarDuelist.Discord\StellarDuelist.DesktopGL.Discord.csproj", "{14D98780-760C-4416-999D-11295AE6266F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1EDF45B-654A-4A93-8C7E-41C71F93B398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EDF45B-654A-4A93-8C7E-41C71F93B398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EDF45B-654A-4A93-8C7E-41C71F93B398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EDF45B-654A-4A93-8C7E-41C71F93B398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A0D069A-2575-49B0-B115-4CE19DA7043A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A0D069A-2575-49B0-B115-4CE19DA7043A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A0D069A-2575-49B0-B115-4CE19DA7043A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A0D069A-2575-49B0-B115-4CE19DA7043A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D809E9E1-4AC4-4EA6-ADE3-03C7066C869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D809E9E1-4AC4-4EA6-ADE3-03C7066C869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D809E9E1-4AC4-4EA6-ADE3-03C7066C869E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D809E9E1-4AC4-4EA6-ADE3-03C7066C869E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14D98780-760C-4416-999D-11295AE6266F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14D98780-760C-4416-999D-11295AE6266F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14D98780-760C-4416-999D-11295AE6266F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14D98780-760C-4416-999D-11295AE6266F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF1C8898-E5B0-4316-9371-1D69044E2104}
+	EndGlobalSection
+EndGlobal

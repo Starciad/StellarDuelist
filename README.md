@@ -2,9 +2,9 @@
 	<img width="85%" src=".github/assets/imgs/logo/sd_logo.webp"/>
 </div>
 
-<h1 align="center">✨ ● STARDUST DEFENDER ● ✨</h1>
+<h1 align="center">✨ ● Stellar Duelist ● ✨</h1>
 
-Welcome to the exciting world of **Stardust Defender!** This is a **Shoot-Em-Up** game where you take control of a spaceship with the mission to exterminate malicious aliens and free space from their evil presence.
+Welcome to the exciting world of **Stellar Duelist!** This is a **Shoot-Em-Up** game where you take control of a spaceship with the mission to exterminate malicious aliens and free space from their evil presence.
 
 With engaging and straightforward gameplay, you will embark on an endless journey, facing dozens of waves of aliens until you reach the universe's major threats, known as "bosses." These challenges will test the skills you acquire throughout the game.
 
@@ -24,7 +24,7 @@ With engaging and straightforward gameplay, you will embark on an endless journe
 
 ## 📚 ➥ Description
 
-Stardust Defender unfolds in a space setting with infinite and procedural gameplay. Each enemy in the game is carefully selected and randomly positioned at the beginning of each level. Furthermore, players can acquire enhancements that strengthen them as they progress in the game.
+Stellar Duelist unfolds in a space setting with infinite and procedural gameplay. Each enemy in the game is carefully selected and randomly positioned at the beginning of each level. Furthermore, players can acquire enhancements that strengthen them as they progress in the game.
 
 Your sole objective is to survive as long as possible, facing threats in space. Get ready for an exciting and challenging journey!
 
@@ -33,7 +33,7 @@ Your sole objective is to survive as long as possible, facing threats in space. 
 You can find the latest versions of the game for download on the following platforms:
 
 [![Itch.io](.github/assets/imgs/buttons/b_itch.webp)](https://starciad.itch.io/stardust-defender)
-[![GitHub](.github/assets/imgs/buttons/b_github.webp)](https://github.com/Starciad/StardustDefender)
+[![GitHub](.github/assets/imgs/buttons/b_github.webp)](https://github.com/Starciad/StellarDuelist)
 
 # 🕹️ ➥​ Requirements
 Below you can find an overview of the requirements that are needed to make the game run correctly.

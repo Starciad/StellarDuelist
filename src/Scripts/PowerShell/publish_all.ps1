@@ -3,7 +3,7 @@
 #   This script aims to assist in     #
 # compiling all projects and creating #
 # standardized folders in accordance  #
-#   with Stardust Defender version    #
+#   with Stellar Duelist version    #
 #       publishing regulations.       #
 #                                     #
 # =================================== #
@@ -12,8 +12,8 @@
 Clear-Host
 
 # Define solutions and publishing directories
-$desktopGL = "..\..\StardustDefender\StardustDefender.DesktopGL.csproj"
-$windowsDX = "..\..\StardustDefender\StardustDefender.WindowsDX.csproj"
+$desktopGL = "..\..\StellarDuelist\StellarDuelist.DesktopGL.csproj"
+$windowsDX = "..\..\StellarDuelist\StellarDuelist.WindowsDX.csproj"
 $outputDirectory = "..\..\Publish"
 
 # List of target platforms
@@ -22,7 +22,7 @@ $platforms = @("win-x64", "linux-x64", "osx-x64")
 # Function to publish a project for a given platform
 function Publish-Project($projectName, $projectPath, $platform) {
     Write-Host "Publishing $projectPath for $platform..."
-    dotnet publish $projectPath -c Release -r $platform --output "$outputDirectory\stardust-defender-$projectName-v0.0.0.0-$platform"
+    dotnet publish $projectPath -c Release -r $platform --output "$outputDirectory\sd-$projectName-v0.0.0.0-$platform"
     Write-Host "Publishing to $platform completed."
 }
 
@@ -62,8 +62,8 @@ Write-Host "All publishing processes have been completed."
 # Copy content folder and delete specific subdirectories
 Write-Host "Copying content folder..."
 
-$source = "..\..\StardustDefender\Content"
-$destination = "$outputDirectory\stardust-defender-v0.0.0.0-assets-full\Content"
+$source = "..\..\StellarDuelist\Content"
+$destination = "$outputDirectory\sd-v0.0.0.0-assets-full\Content"
 $subdirectoriesToDelete = @("bin", "obj")
 
 # Copy the source folder to the destination

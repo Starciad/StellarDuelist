@@ -1,6 +1,6 @@
 ﻿<h1 align="center">✨ ● CONTRIBUTING ● ✨</h1>
 
-Welcome to the Stardust Defender project! We are excited to receive your contributions. However, it is important to follow some guidelines to ensure effective collaboration.
+Welcome to the Stellar Duelist project! We are excited to receive your contributions. However, it is important to follow some guidelines to ensure effective collaboration.
 
 ## Branch Selection
 
@@ -52,7 +52,7 @@ We use the [Microsoft C# coding conventions](https://docs.microsoft.com/en-us/do
 
 ### Key Preferences
 
-- Prefix `S` in file names in the `StardustDefender.Core` project.
+- Prefix `S` in file names in the `StellarDuelist.Core` project.
 - Use `this` to reference fields and properties.
 - Avoid asynchronous code in inappropriate contexts.
 
@@ -79,7 +79,7 @@ Maintain the ordering of code members as follows:
 
 ## Documenting
 
-When contributing to the Stardust Defender project, it's essential to provide clear and informative documentation for your code. Proper documentation helps other developers understand your changes and ensures the maintainability of the project. In C#, we use documentation comments with special tags to generate documentation automatically.
+When contributing to the Stellar Duelist project, it's essential to provide clear and informative documentation for your code. Proper documentation helps other developers understand your changes and ensures the maintainability of the project. In C#, we use documentation comments with special tags to generate documentation automatically.
 
 ### Documentation Tags
 
@@ -119,8 +119,8 @@ Each PR will be reviewed and analyzed very carefully in an attempt to check if e
 
 # Conclusion
 
-Thank you for dedicating your time and effort to contribute to Stardust Defender. Your contributions are essential to the success of this project. We hope these guidelines make the collaboration process smoother and result in robust, high-quality code.
+Thank you for dedicating your time and effort to contribute to Stellar Duelist. Your contributions are essential to the success of this project. We hope these guidelines make the collaboration process smoother and result in robust, high-quality code.
 
-If you have any questions or need further assistance, please do not hesitate to reach out to the Stardust Defender team or community. Together, we will continue to create an amazing, star-filled game!
+If you have any questions or need further assistance, please do not hesitate to reach out to the Stellar Duelist team or community. Together, we will continue to create an amazing, star-filled game!
 
-Let's build a bright future for Stardust Defender together. Thank you for being part of this journey!
+Let's build a bright future for Stellar Duelist together. Thank you for being part of this journey!

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- IMPORTS -->
+	<Import Project="../Targets/WindowsDX/Project_Compilation.targets" />
+	<Import Project="../Targets/WindowsDX/Project_Settings.targets" />
+	<Import Project="../Targets/WindowsDX/Project_Infos.targets" />
+
+	<!-- HEADER -->
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<RollForward>Major</RollForward>
+	</PropertyGroup>
+
+	<!-- SYSTEM -->
+	<PropertyGroup>
+		<AssemblyName>StellarDuelist.Discord</AssemblyName>
+		<RootNamespace>StellarDuelist.Discord</RootNamespace>
+	</PropertyGroup>
+
+	<!-- DEPENDENCIES -->
+	<ItemGroup>
+		<PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
+		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\StellarDuelist.Core\StellarDuelist.WindowsDX.Core.csproj" />
+	</ItemGroup>
+</Project>
