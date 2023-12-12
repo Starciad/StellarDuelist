@@ -2,11 +2,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<!-- INFORMATIONS -->
 	<PropertyGroup>
-		<Title>Stardust Defender</Title>
-		<Version>1.0.1.0</Version>
+		<Title>Stellar Duelist</Title>
+		<Version>1.0.4.5</Version>
 		<Authors>Starciad</Authors>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/Starciad/StardustDefender</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Starciad/StellarDuelist</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>

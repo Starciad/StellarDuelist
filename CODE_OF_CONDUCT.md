@@ -1,6 +1,6 @@
 ﻿<h2 align="center">✨ ● CODE OF CONDUCT ● ✨</h2>
 
-Welcome to the Stardust Defender code of conduct, in this document there is important information about how you (along with the community) should act during the development and interaction with the game.
+Welcome to the Stellar Duelist code of conduct, in this document there is important information about how you (along with the community) should act during the development and interaction with the game.
 
 <br/>
 
