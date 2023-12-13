@@ -35,7 +35,7 @@ namespace StellarDuelist.Core.Engine
             ("BACKGROUND_01", "Backgrounds/Background_01"),
 
             // UI
-            ("UI_Logo", "UI/Logo/StardustDefenderLogo"),
+            ("UI_Logo", "UI/Logo/StellarDuelistLogo"),
             ("UI_SolidBackground", "UI/Backgrounds/SolidBackground"),
 
             // TEXTS
