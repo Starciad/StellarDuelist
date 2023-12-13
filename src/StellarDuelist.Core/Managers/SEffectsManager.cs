@@ -79,7 +79,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SEffect effect in Effects)
             {
-                _ = effectPool.Add(effect);
+                effectPool.Add(effect);
             }
 
             effects.Clear();
@@ -202,7 +202,7 @@ namespace StellarDuelist.Core.Managers
         /// <returns>The created effect instance.</returns>
         public static SEffect Create(Type type, Vector2 worldPosition, Vector2 scale, float rotation, Color color)
         {
-            SEffect effect = effectPool.Get<SEffect>();
+            SEffect effect = effectPool.Get();
 
             if (effects.Contains(effect))
             {
@@ -227,7 +227,7 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SEffect effect)
         {
             _ = effects.Remove(effect);
-            _ = effectPool.Add(effect);
+            effectPool.Add(effect);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SItem item in Items)
             {
-                _ = itemPool.Add(item);
+                itemPool.Add(item);
             }
 
             items.Clear();
@@ -115,7 +115,7 @@ namespace StellarDuelist.Core.Managers
         /// <returns>The created item instance.</returns>
         internal static SItem Create(Type type, Vector2 position)
         {
-            SItem item = itemPool.Get<SItem>();
+            SItem item = itemPool.Get();
             SItemRegister template = templates[type];
 
             item.Build(template, template.Animation, position);
@@ -130,7 +130,7 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SItem item)
         {
             _ = items.Remove(item);
-            _ = itemPool.Add(item);
+            itemPool.Add(item);
         }
     }
 }

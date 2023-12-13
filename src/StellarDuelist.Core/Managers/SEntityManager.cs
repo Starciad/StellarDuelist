@@ -92,7 +92,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SEntity entity in Entities)
             {
-                _ = entityPool.Add(entity);
+                entityPool.Add(entity);
             }
 
             entities.Clear();
@@ -188,7 +188,7 @@ namespace StellarDuelist.Core.Managers
         /// <returns>The created entity instance.</returns>
         public static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get(type);
+            SEntity entity = entityPool.Get();
 
             entity.LocalPosition = position;
             entity.Scale = scale;
@@ -205,7 +205,7 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SEntity entity)
         {
             _ = entities.Remove(entity);
-            _ = entityPool.Add(entity);
+            entityPool.Add(entity);
         }
     }
 }

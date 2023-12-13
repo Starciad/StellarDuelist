@@ -9,57 +9,28 @@ namespace StellarDuelist.Core.Collections
     /// <typeparam name="TObject">The type of objects stored in the pool.</typeparam>
     public sealed class ObjectPool<TObject> where TObject : IPoolableObject
     {
-        private readonly Dictionary<Type, Queue<TObject>> _objectPool = new();
+        private readonly Queue<TObject> _pool = new();
 
-        /// <summary>
-        /// Gets an object of type <typeparamref name="TKey"/> from the pool.
-        /// </summary>
-        /// <typeparam name="TKey">The type of object to retrieve from the pool.</typeparam>
-        /// <returns>An object from the pool.</returns>
-        public TObject Get<TKey>() where TKey : TObject
-        {
-            return Get(typeof(TKey));
-        }
-
-        /// <summary>
-        /// Gets an object of the specified type from the pool.
-        /// </summary>
-        /// <param name="keyType">The type of object to retrieve from the pool.</param>
-        /// <returns>An object from the pool.</returns>
-        public TObject Get(Type keyType)
+        public TObject Get()
         {
             TObject value;
 
-            if (this._objectPool.ContainsKey(keyType))
+            if (this._pool.Count > 0)
             {
-                if (this._objectPool[keyType].Count > 0)
-                {
-                    value = this._objectPool[keyType].Dequeue();
-                    value.Reset();
-                    return value;
-                }
+                value = this._pool.Dequeue();
+            }
+            else
+            {
+                value = Activator.CreateInstance<TObject>();
             }
 
-            value = (TObject)Activator.CreateInstance(keyType);
             value.Reset();
             return value;
         }
 
-        /// <summary>
-        /// Adds an object to the pool for reuse.
-        /// </summary>
-        /// <param name="value">The object to add to the pool.</param>
-        public TObject Add(TObject value)
+        public void Add(TObject value)
         {
-            Type valueType = value.GetType();
-
-            if (!this._objectPool.ContainsKey(valueType))
-            {
-                this._objectPool.Add(valueType, new());
-            }
-
-            this._objectPool[valueType].Enqueue(value);
-            return value;
+            this._pool.Enqueue(value);
         }
     }
 }
