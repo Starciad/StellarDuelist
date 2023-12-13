@@ -9,6 +9,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.GUI;
+using StellarDuelist.Game.Entities.Player;
 
 using System.Text;
 
@@ -74,6 +75,8 @@ namespace StellarDuelist.Game.GUI
         }
         protected override void OnUpdate()
         {
+            SPlayer p = (SPlayer)SLevelController.Player;
+
             UpdateColors();
 
             _ = this.S_Difficulty.Clear();
@@ -89,9 +92,9 @@ namespace StellarDuelist.Game.GUI
             _ = this.S_Level.Append($"Level: {SLevelController.Level + 1}");
             _ = this.S_Health.Append($"Health: {SLevelController.Player.HealthValue}");
             _ = this.S_Damage.Append($"Damage: {SLevelController.Player.AttackValue}");
-            _ = this.S_BulletSpeed.Append($"Bullet Speed: {SLevelController.Player.BulletSpeed.ToString("#.0")}");
-            _ = this.S_BulletDelay.Append($"Shoot Delay: {SLevelController.Player.ShootDelay.ToString("#.0")}");
-            _ = this.S_BulletLife.Append($"Bullet Life: {SLevelController.Player.BulletLifeTime.ToString("#.0")}");
+            _ = this.S_BulletSpeed.Append($"Bullet Speed: {p.BulletSpeed.ToString("#.0")}");
+            _ = this.S_BulletDelay.Append($"Shoot Delay: {p.ShootDelay.ToString("#.0")}");
+            _ = this.S_BulletLife.Append($"Bullet Life: {p.BulletLifeTime.ToString("#.0")}");
             _ = this.S_TotalGameTime.Append($"{SLevelController.TotalGameTime.ToString(@"hh\:mm\:ss")}");
 
             if (!this.viewedTheTutorial)

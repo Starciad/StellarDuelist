@@ -1,5 +1,5 @@
 ﻿using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 
@@ -34,19 +34,19 @@ namespace StellarDuelist.Core.Controllers
         /// </summary>
         internal static void Initialize()
         {
-            foreach (SEntityHeader header in SEntityManager.EntityHeaders)
+            foreach (SEntityDefinition definition in SEntityManager.EntityDefinitions)
             {
-                switch (header.Classification)
+                switch (definition.Classification)
                 {
                     case SEntityClassification.None:
                         continue;
 
                     case SEntityClassification.Enemy:
-                        enemies.Add(header);
+                        enemies.Add(definition);
                         continue;
 
                     case SEntityClassification.Boss:
-                        remainingBosses.Add(header);
+                        remainingBosses.Add(definition);
                         continue;
 
                     default:

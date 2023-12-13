@@ -6,9 +6,9 @@ namespace StellarDuelist.Core.Effects
     /// Base model for registering visual effects.
     /// </summary>
     /// <remarks>
-    /// <see cref="SEffectRegister"/> is used to define new effects automatically. These effects are loaded during the game's initialization and are subsequently used to invoke effects on the screen.
+    /// <see cref="SEffectDefinition"/> is used to define new effects automatically. These effects are loaded during the game's initialization and are subsequently used to invoke effects on the screen.
     /// </remarks>
-    public abstract class SEffectRegister
+    public abstract class SEffectDefinition
     {
         /// <summary>
         /// The animation used by instances of the effect.

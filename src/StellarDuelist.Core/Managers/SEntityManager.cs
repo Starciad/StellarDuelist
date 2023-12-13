@@ -2,7 +2,7 @@
 
 using StellarDuelist.Core.Collections;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities.Attributes;
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace StellarDuelist.Core.Managers
         /// <summary>
         /// Gets an array of all entity headers.
         /// </summary>
-        public static SEntityHeader[] EntityHeaders => entityHeaders.Values.ToArray();
+        public static SEntityDefinition[] EntityDefinitions => entityDefinitions.Values.ToArray();
 
         /// <summary>
         /// Gets an array of all active entities.
@@ -27,10 +27,10 @@ namespace StellarDuelist.Core.Managers
         public static SEntity[] Entities => entities.ToArray();
 
         // Templates
-        private static readonly Dictionary<Type, SEntityHeader> entityHeaders = new();
+        private static readonly Dictionary<Type, SEntityDefinition> entityDefinitions = new();
 
         // Pool
-        private static readonly ObjectPool<SEntity> entityPool = new();
+        private static readonly Dictionary<Type, ObjectPool<SEntity>> entityPool = new();
         private static readonly List<SEntity> entities = new();
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace StellarDuelist.Core.Managers
                     continue;
                 }
 
-                SEntityHeader header = registerAttribute.CreateHeader();
-                header.Build(type);
+                SEntityDefinition definition = registerAttribute.GetEntityDefinition();
+                definition.Build(type);
 
-                entityHeaders.Add(type, header);
+                entityDefinitions.Add(type, definition);
             }
         }
 
@@ -92,7 +92,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SEntity entity in Entities)
             {
-                entityPool.Add(entity);
+                AddEntityToObjectPool(entity);
             }
 
             entities.Clear();
@@ -184,12 +184,12 @@ namespace StellarDuelist.Core.Managers
         /// <param name="position">The position of the entity.</param>
         /// <param name "scale">The scale of the entity.</param>
         /// <param name "rotation">The rotation of the entity.</param>
-        /// <param name "color">The color of the entity.</param>
         /// <returns>The created entity instance.</returns>
         public static SEntity Create(Type type, Vector2 position, Vector2 scale, float rotation)
         {
-            SEntity entity = entityPool.Get();
+            SEntity entity = GetEntityFromObjectPool(type);
 
+            entity.EntityDefinition = entityDefinitions[type];
             entity.LocalPosition = position;
             entity.Scale = scale;
             entity.Rotation = rotation;
@@ -205,7 +205,29 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SEntity entity)
         {
             _ = entities.Remove(entity);
-            entityPool.Add(entity);
+            AddEntityToObjectPool(entity);
+        }
+
+        private static void AddEntityToObjectPool(SEntity entity)
+        {
+            Type type = entity.GetType();
+
+            if (!entityPool.ContainsKey(type))
+            {
+                entityPool.Add(type, new());
+            }
+
+            entityPool[type].Add(entity);
+        }
+
+        private static SEntity GetEntityFromObjectPool(Type entityType)
+        {
+            if (!entityPool.ContainsKey(entityType))
+            {
+                entityPool.Add(entityType, new());
+            }
+
+            return entityPool[entityType].Get();
         }
     }
 }

@@ -3,8 +3,8 @@
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Register;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
@@ -24,21 +24,20 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// <br/><br/>
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Enemy_06 : SEnemyEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed class Enemy_06 : SEntity
     {
         // ==================================================== //
 
-        private sealed class Header : SEntityHeader
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Enemy;
-            }
-
-            protected override bool OnSpawningCondition()
-            {
-                return SDifficultyController.DifficultyRate >= 11;
+                this.classification = SEntityClassification.Enemy;
+                this.canSpawn = new(() =>
+                {
+                    return SDifficultyController.DifficultyRate >= 11;
+                });
             }
         }
 
@@ -84,8 +83,12 @@ namespace StellarDuelist.Game.Entities.Enemies
 
             TimersUpdate();
 
-            // Behaviour
-            CollideWithPlayer();
+            // Collision
+            if (SEntityUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+                Destroy();
+            }
 
             // AI
             MovementUpdate();

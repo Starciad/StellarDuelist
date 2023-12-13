@@ -2,12 +2,14 @@
 
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
 using StellarDuelist.Game.Effects;
+using StellarDuelist.Game.Entities.Player;
 
 using System.Threading.Tasks;
 
@@ -21,21 +23,20 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// <br/><br/>
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Enemy_05 : SEnemyEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed class Enemy_05 : SEntity
     {
         // ==================================================== //
 
-        private sealed class Header : SEntityHeader
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Enemy;
-            }
-
-            protected override bool OnSpawningCondition()
-            {
-                return SDifficultyController.DifficultyRate >= 9;
+                this.classification = SEntityClassification.Enemy;
+                this.canSpawn = new(() =>
+                {
+                    return SDifficultyController.DifficultyRate >= 9;
+                });
             }
         }
 
@@ -49,7 +50,7 @@ namespace StellarDuelist.Game.Entities.Enemies
         private readonly STimer intervalBetweenShots = new(1f);
         private readonly STimer movementTimer = new(20f);
 
-        private SPlayerEntity player;
+        private SPlayer player;
 
         private int currentBullet;
         private bool canShoot;
@@ -85,7 +86,7 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.shootTimer.Restart();
             this.intervalBetweenShots.Start();
 
-            this.player = SLevelController.Player;
+            this.player = (SPlayer)SLevelController.Player;
         }
         protected override void OnUpdate()
         {
@@ -94,8 +95,12 @@ namespace StellarDuelist.Game.Entities.Enemies
             // Timers
             TimersUpdate();
 
-            // Behaviour
-            CollideWithPlayer();
+            // Collision
+            if (SEntityUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+                Destroy();
+            }
 
             // AI (Move + Shoot)
             ShootingUpdate();

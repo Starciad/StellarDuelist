@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Register;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
@@ -16,20 +15,37 @@ using System;
 
 namespace StellarDuelist.Game.Entities.Player
 {
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Player : SPlayerEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed class SPlayer : SEntity
     {
         // ==================================================== //
 
-        private sealed class Header : SEntityHeader
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Player;
+                this.classification = SEntityClassification.Player;
             }
         }
 
         // ==================================================== //
+
+        public bool CanShoot => this.ShootTimer.IsFinished;
+        public float BulletLifeTime { get; set; }
+        public float BulletSpeed { get; set; }
+        public float ShootDelay
+        {
+            get => this.shootDelay;
+            set
+            {
+                this.shootDelay = value;
+                this.ShootTimer.SetDelay(value);
+            }
+        }
+
+        private STimer ShootTimer = new();
+
+        private float shootDelay;
 
         private readonly STimer invincibilityTimer = new(10f);
         private bool isHurt;

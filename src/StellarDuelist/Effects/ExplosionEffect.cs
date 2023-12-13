@@ -3,7 +3,7 @@ using StellarDuelist.Core.Engine;
 
 namespace StellarDuelist.Game.Effects
 {
-    internal sealed class ExplosionEffect : SEffectRegister
+    internal sealed class ExplosionEffect : SEffectDefinition
     {
         protected override void OnBuild()
         {

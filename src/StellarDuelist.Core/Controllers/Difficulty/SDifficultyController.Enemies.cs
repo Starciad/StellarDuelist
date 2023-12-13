@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Register;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
@@ -13,7 +12,7 @@ namespace StellarDuelist.Core.Controllers
 {
     public static partial class SDifficultyController
     {
-        private static readonly List<SEntityHeader> enemies = new();
+        private static readonly List<SEntityDefinition> enemies = new();
 
         /// <summary>
         /// Creates a random enemy entity at the specified position.
@@ -31,7 +30,7 @@ namespace StellarDuelist.Core.Controllers
         /// <returns>The retrieved enemy type.</returns>
         private static Type GetRandomEnemyType()
         {
-            return enemies.Where(x => x.CanSpawn).SelectRandom().EntityType;
+            return enemies.Where(x => x.CanSpawn).SelectRandom().EntityTargetType;
         }
     }
 }

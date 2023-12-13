@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
@@ -17,8 +16,8 @@ namespace StellarDuelist.Core.Controllers
         private static float delayForNextBoss = 3;
         private static float currentDelayForNextBoss = 0;
 
-        private static SEntityHeader[] allBosses = Array.Empty<SEntityHeader>();
-        private static readonly List<SEntityHeader> remainingBosses = new();
+        private static SEntityDefinition[] allBosses = Array.Empty<SEntityDefinition>();
+        private static readonly List<SEntityDefinition> remainingBosses = new();
 
         /// <summary>
         /// Attempts to retrieve a random boss type for spawning.
@@ -45,16 +44,16 @@ namespace StellarDuelist.Core.Controllers
                 remainingBosses.AddRange(allBosses);
             }
 
-            SEntityHeader entityHeader = remainingBosses.Where(x => x.CanSpawn).SelectRandom() ?? default;
+            SEntityDefinition definition = remainingBosses.Where(x => x.CanSpawn).SelectRandom() ?? default;
 
-            if (entityHeader == null)
+            if (definition == null)
             {
                 bossType = default;
                 return false;
             }
 
-            _ = remainingBosses.Remove(entityHeader);
-            bossType = entityHeader.EntityType;
+            _ = remainingBosses.Remove(definition);
+            bossType = definition.EntityTargetType;
             return true;
         }
 
@@ -64,12 +63,12 @@ namespace StellarDuelist.Core.Controllers
         /// <param name="bossType">The type of boss entity to create.</param>
         /// <param name="position">The position at which to create the boss.</param>
         /// <returns>The created boss entity.</returns>
-        internal static SBossEntity CreateBossOfType(Type bossType, Vector2 position)
+        internal static SEntity CreateBossOfType(Type bossType, Vector2 position)
         {
             delayForNextBoss = SRandom.Range(3, 7);
             currentDelayForNextBoss = delayForNextBoss;
 
-            return (SBossEntity)SEntityManager.Create(bossType, position);
+            return SEntityManager.Create(bossType, position);
         }
     }
 }

@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
 using StellarDuelist.Game.Effects;
+using StellarDuelist.Game.Entities.Player;
 
 using System;
 using System.Threading.Tasks;
@@ -22,24 +24,23 @@ namespace StellarDuelist.Game.Entities.Bosses
     /// <remarks>
     /// He moves nimbly left and right, changing his direction by jumping around the corners of the screen, and also moves slightly up and down. At certain time intervals, it stops moving and begins to launch a volley of projectiles that follow random linear directions, when finished, it returns to moving normally.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Boss_01 : SBossEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed class Boss_01 : SEntity
     {
         // ==================================================== //
 
-        private sealed class Header : SEntityHeader
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Boss;
-            }
+                this.classification = SEntityClassification.Boss;
+                this.canSpawn = new(() =>
+                {
+                    SPlayer player = (SPlayer)SLevelController.Player;
 
-            protected override bool OnSpawningCondition()
-            {
-                SPlayerEntity player = SLevelController.Player;
-
-                return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                       player.HealthValue >= 2 && player.HealthValue >= 3.5f && player.BulletLifeTime >= 3.5f;
+                    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                           player.HealthValue >= 2 && player.HealthValue >= 3.5f && player.BulletLifeTime >= 3.5f;
+                });
             }
         }
 
@@ -163,8 +164,13 @@ namespace StellarDuelist.Game.Entities.Bosses
         {
             base.OnUpdate();
 
+            // Collision
+            if (SEntityUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+            }
+
             // Behaviour
-            CollideWithPlayer();
             AnimationUpdate();
 
             // Movement
@@ -211,14 +217,14 @@ namespace StellarDuelist.Game.Entities.Bosses
         // Actions
         private void BOSS_Boost()
         {
-            SPlayerEntity player = SLevelController.Player;
+            SPlayer p = (SPlayer)SLevelController.Player;
 
             // Boost health and bullets
-            this.HealthValue *= player.AttackValue;
-            this.bulletsCount += (int)Math.Round(player.HealthValue + (player.AttackValue / 2f));
+            this.HealthValue *= p.AttackValue;
+            this.bulletsCount += (int)Math.Round(p.HealthValue + (p.AttackValue / 2f));
 
             // Boost movement
-            if (player.ShootDelay <= 1.5f)
+            if (p.ShootDelay <= 1.5f)
             {
                 this.horizontalSpeed = 0.2f;
                 this.verticalSpeed = 0.02f;

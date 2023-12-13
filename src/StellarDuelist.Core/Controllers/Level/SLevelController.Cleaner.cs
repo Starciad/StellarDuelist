@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Items;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Projectiles;
 using StellarDuelist.Core.World;
+using StellarDuelist.Core.Enums;
 
 namespace StellarDuelist.Core.Controllers
 {
@@ -27,7 +27,7 @@ namespace StellarDuelist.Core.Controllers
 
                 if (IsPositionOutOfBounds(entity.LocalPosition, minLimit, maxLimit))
                 {
-                    if (entity is SPlayerEntity)
+                    if (entity.EntityDefinition.Classification == SEntityClassification.Player)
                     {
                         continue;
                     }

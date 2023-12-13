@@ -19,6 +19,11 @@ namespace StellarDuelist.Core.Entities
     {
         #region General
         /// <summary>
+        ///
+        /// </summary>
+        public SEntityDefinition EntityDefinition { get; internal set; }
+
+        /// <summary>
         /// Gets the unique identifier of the entity.
         /// </summary>
         public string Id { get; internal set; }

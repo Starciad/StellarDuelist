@@ -21,7 +21,7 @@ namespace StellarDuelist.Core.Managers
         public static SItem[] Items => items.ToArray();
 
         // Templates
-        private static readonly Dictionary<Type, SItemRegister> templates = new();
+        private static readonly Dictionary<Type, SItemDefinition> templates = new();
 
         // Pool
         private static readonly ObjectPool<SItem> itemPool = new();
@@ -32,9 +32,9 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Initialize()
         {
-            foreach (Type itemTemplateType in SGame.Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(SItemRegister))))
+            foreach (Type itemTemplateType in SGame.Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(SItemDefinition))))
             {
-                SItemRegister template = (SItemRegister)Activator.CreateInstance(itemTemplateType);
+                SItemDefinition template = (SItemDefinition)Activator.CreateInstance(itemTemplateType);
                 template.Initialize();
 
                 templates.Add(itemTemplateType, template);
@@ -102,7 +102,7 @@ namespace StellarDuelist.Core.Managers
         /// <typeparam name="T">The type of item to create.</typeparam>
         /// <param name="position">The position where the item will be created.</param>
         /// <returns>The created item instance.</returns>
-        internal static SItem Create<T>(Vector2 position) where T : SItemRegister
+        internal static SItem Create<T>(Vector2 position) where T : SItemDefinition
         {
             return Create(typeof(T), position);
         }
@@ -116,7 +116,7 @@ namespace StellarDuelist.Core.Managers
         internal static SItem Create(Type type, Vector2 position)
         {
             SItem item = itemPool.Get();
-            SItemRegister template = templates[type];
+            SItemDefinition template = templates[type];
 
             item.Build(template, template.Animation, position);
             items.Add(item);
