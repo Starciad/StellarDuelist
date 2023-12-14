@@ -148,6 +148,7 @@ namespace StellarDuelist.Core.Entities
 
             this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
             this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
 
             OnUpdate();
         }
@@ -255,7 +256,15 @@ namespace StellarDuelist.Core.Entities
             this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
             this.Color = Color.White;
 
-            this.Animation = new();
+            if (this.Animation == null)
+            {
+                this.Animation = new();
+            }
+            else
+            {
+                this.Animation.ClearFrames();
+                this.Animation.Reset();
+            }
         }
 
         /// <summary>
@@ -271,10 +280,7 @@ namespace StellarDuelist.Core.Entities
         /// <summary>
         /// Invoked at every fixed frame update.
         /// </summary>
-        protected virtual void OnUpdate()
-        {
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
-        }
+        protected virtual void OnUpdate() { }
 
         /// <summary>
         /// Invoked when the entity is damaged.

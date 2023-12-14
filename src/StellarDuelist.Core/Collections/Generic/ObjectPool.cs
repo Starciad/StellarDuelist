@@ -10,10 +10,17 @@ namespace StellarDuelist.Core.Collections.Generic
     /// <typeparam name="TObject">The type of objects stored in the pool.</typeparam>
     public sealed class ObjectPool<TObject> where TObject : IPoolableObject
     {
+        /// <summary>
+        /// Gets the number of objects currently in the pool.
+        /// </summary>
         public int Count => _pool.Count;
 
         private readonly Queue<TObject> _pool = new();
 
+        /// <summary>
+        /// Retrieves an object from the pool.
+        /// </summary>
+        /// <returns>The retrieved object.</returns>
         public TObject Get()
         {
             TObject value;
@@ -31,6 +38,10 @@ namespace StellarDuelist.Core.Collections.Generic
             return value;
         }
 
+        /// <summary>
+        /// Adds an object to the pool.
+        /// </summary>
+        /// <param name="value">The object to add to the pool.</param>
         public void Add(TObject value)
         {
             this._pool.Enqueue(value);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Collections
 {
@@ -9,10 +7,17 @@ namespace StellarDuelist.Core.Collections
     /// </summary>
     public sealed class ObjectPool
     {
+        /// <summary>
+        /// Gets the number of objects currently in the pool.
+        /// </summary>
         public int Count => _pool.Count;
 
         private readonly Queue<IPoolableObject> _pool = new();
 
+        /// <summary>
+        /// Retrieves an object from the pool.
+        /// </summary>
+        /// <returns>The retrieved object.</returns>
         public IPoolableObject Get()
         {
             IPoolableObject value;
@@ -27,6 +32,10 @@ namespace StellarDuelist.Core.Collections
             return default;
         }
 
+        /// <summary>
+        /// Adds an object to the pool.
+        /// </summary>
+        /// <param name="value">The object to add to the pool.</param>
         public void Add(IPoolableObject value)
         {
             _pool.Enqueue(value);
