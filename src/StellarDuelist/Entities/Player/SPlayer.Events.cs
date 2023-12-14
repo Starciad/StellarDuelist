@@ -11,6 +11,26 @@ namespace StellarDuelist.Game.Entities.Player
 {
     internal sealed partial class SPlayer
     {
+        protected override void OnSubscribeEvents()
+        {
+            this.OnDamaged += OnDamaged_Entity;
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_System;
+        }
+
+        protected override void OnUnsubscribeEvents()
+        {
+            this.OnDamaged -= OnDamaged_Entity;
+            this.OnDamaged -= OnDamaged_Effects;
+            this.OnDamaged -= OnDamaged_Colors;
+            this.OnDestroyed -= OnDestroyed_Entity;
+            this.OnDestroyed -= OnDestroyed_Effects;
+            this.OnDestroyed -= OnDestroyed_System;
+        }
+
         #region DAMAGED (EVENTS)
         private void OnDamaged_Entity(SEntityDamagedEventArgs e)
         {
@@ -45,16 +65,6 @@ namespace StellarDuelist.Game.Entities.Player
         {
             SGameController.SetGameState(SGameState.GameOver);
             SLevelController.GameOver();
-        }
-        private void OnDestroyed_Events()
-        {
-            this.OnDamaged -= OnDamaged_Entity;
-            this.OnDamaged -= OnDamaged_Effects;
-            this.OnDamaged -= OnDamaged_Colors;
-            this.OnDestroyed -= OnDestroyed_Entity;
-            this.OnDestroyed -= OnDestroyed_Effects;
-            this.OnDestroyed -= OnDestroyed_System;
-            this.OnDestroyed -= OnDestroyed_Events;
         }
         #endregion
     }

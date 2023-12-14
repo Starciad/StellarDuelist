@@ -159,15 +159,6 @@ namespace StellarDuelist.Game.Entities.Bosses
 
             this.Animation = this.A_Normal;
         }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_Drops;
-            this.OnDestroyed += OnDestroyed_Events;
-        }
         protected override void OnStart()
         {
             this.verticalDirectionTimer.Restart();

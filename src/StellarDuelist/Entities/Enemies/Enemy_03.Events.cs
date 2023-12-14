@@ -10,6 +10,26 @@ namespace StellarDuelist.Game.Entities.Enemies
 {
     internal sealed partial class Enemy_03
     {
+        protected override void OnSubscribeEvents()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Special;
+        }
+
+        protected override void OnUnsubscribeEvents()
+        {
+            this.OnDamaged -= OnDamaged_Effects;
+            this.OnDamaged -= OnDamaged_Colors;
+            this.OnDestroyed -= OnDestroyed_Entity;
+            this.OnDestroyed -= OnDestroyed_Effects;
+            this.OnDestroyed -= OnDestroyed_Drops;
+            this.OnDestroyed -= OnDestroyed_Special;
+        }
+
         #region DAMAGED (EVENTS)
         private void OnDamaged_Effects(SEntityDamagedEventArgs e)
         {
@@ -42,16 +62,6 @@ namespace StellarDuelist.Game.Entities.Enemies
         private void OnDestroyed_Special()
         {
             FlurryOfShots();
-        }
-        private void OnDestroyed_Events()
-        {
-            this.OnDamaged -= OnDamaged_Effects;
-            this.OnDamaged -= OnDamaged_Colors;
-            this.OnDestroyed -= OnDestroyed_Entity;
-            this.OnDestroyed -= OnDestroyed_Effects;
-            this.OnDestroyed -= OnDestroyed_Drops;
-            this.OnDestroyed -= OnDestroyed_Special;
-            this.OnDestroyed -= OnDestroyed_Events;
         }
         #endregion
     }

@@ -10,6 +10,24 @@ namespace StellarDuelist.Game.Entities.Enemies
 {
     internal sealed partial class Enemy_01
     {
+        protected override void OnSubscribeEvents()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+        }
+
+        protected override void OnUnsubscribeEvents()
+        {
+            this.OnDamaged -= OnDamaged_Effects;
+            this.OnDamaged -= OnDamaged_Colors;
+            this.OnDestroyed -= OnDestroyed_Entity;
+            this.OnDestroyed -= OnDestroyed_Effects;
+            this.OnDestroyed -= OnDestroyed_Drops;
+        }
+
         #region DAMAGED (EVENTS)
         private void OnDamaged_Effects(SEntityDamagedEventArgs e)
         {
@@ -39,15 +57,6 @@ namespace StellarDuelist.Game.Entities.Enemies
             {
                 _ = SItemsManager.CreateRandomItem(this.WorldPosition);
             }
-        }
-        private void OnDestroyed_Events()
-        {
-            this.OnDamaged -= OnDamaged_Effects;
-            this.OnDamaged -= OnDamaged_Colors;
-            this.OnDestroyed -= OnDestroyed_Entity;
-            this.OnDestroyed -= OnDestroyed_Effects;
-            this.OnDestroyed -= OnDestroyed_Drops;
-            this.OnDestroyed -= OnDestroyed_Events;
         }
         #endregion
     }

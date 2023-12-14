@@ -63,6 +63,23 @@ namespace StellarDuelist.Core.Projectiles
         private Rectangle collisionBox;
 
         /// <summary>
+        /// Resets the projectile's properties to their default values.
+        /// </summary>
+        public void Reset()
+        {
+            this.Animation.Reset();
+            this.Animation.ClearFrames();
+
+            this.Team = STeam.None;
+            this.SpriteId = 0;
+            this.Position = Vector2.Zero;
+            this.Speed = Vector2.Zero;
+            this.Range = 0;
+            this.Damage = 0;
+            this.LifeTime = 0f;
+        }
+
+        /// <summary>
         /// Builds the projectile using the specified builder.
         /// </summary>
         /// <param name="builder">The builder containing projectile information.</param>
@@ -96,9 +113,9 @@ namespace StellarDuelist.Core.Projectiles
         /// </summary>
         internal void Update()
         {
+            MovementUpdate();
             CollisionUpdate();
             LifeTimeUpdate();
-            MovementUpdate();
         }
 
         /// <summary>
@@ -115,23 +132,6 @@ namespace StellarDuelist.Core.Projectiles
         internal void Destroy()
         {
             SProjectileManager.Remove(this);
-        }
-
-        /// <summary>
-        /// Resets the projectile's properties to their default values.
-        /// </summary>
-        public void Reset()
-        {
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
-
-            this.Team = STeam.None;
-            this.SpriteId = 0;
-            this.Position = Vector2.Zero;
-            this.Speed = Vector2.Zero;
-            this.Range = 0;
-            this.Damage = 0;
-            this.LifeTime = 0f;
         }
 
         private void MovementUpdate()

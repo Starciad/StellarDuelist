@@ -35,8 +35,6 @@ namespace StellarDuelist.Game.Entities.Player
             base.Reset();
 
             // Animations
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
             this.Animation.SetTexture(STextures.GetTexture("PLAYER_Spaceship"));
             this.Animation.AddFrame(STextures.GetSprite(32, 0, 0));
 
@@ -59,16 +57,6 @@ namespace StellarDuelist.Game.Entities.Player
 
             // Timers
             this.ShootTimer.SetDelay(this.ShootDelay);
-        }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Entity;
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_System;
-            this.OnDestroyed += OnDestroyed_Events;
         }
         protected override void OnStart()
         {

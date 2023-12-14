@@ -165,6 +165,9 @@ namespace StellarDuelist.Core.Entities
                 this.Animation.ClearFrames();
                 this.Animation.Reset();
             }
+
+            OnUnsubscribeEvents();
+            OnSubscribeEvents();
         }
 
         /// <summary>
@@ -183,12 +186,10 @@ namespace StellarDuelist.Core.Entities
         /// </summary>
         internal void Update()
         {
-            this.Animation.Update();
-
-            this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
-            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
-
+            UpdateEntityAnimation();
+            UpdateEntityPosition();
+            UpdateEntityCollision();
+            UpdateHealthCheck();
             OnUpdate();
         }
 
@@ -216,6 +217,29 @@ namespace StellarDuelist.Core.Entities
         }
         #endregion
 
+        #region Updates
+        private void UpdateEntityAnimation()
+        {
+            this.Animation.Update();
+        }
+        private void UpdateEntityPosition()
+        {
+            this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
+            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
+        }
+        private void UpdateEntityCollision()
+        {
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
+        }
+        private void UpdateHealthCheck()
+        {
+            if (!this.IsInvincible && this.HealthValue <= 0)
+            {
+                Destroy();
+            }
+        }
+        #endregion
+
         #region Utilities
         /// <summary>
         /// Deals a certain amount of damage to the entity.
@@ -231,21 +255,16 @@ namespace StellarDuelist.Core.Entities
         /// <param name="value">The amount of damage inflicted on the entity.</param>
         public void Damage(int value)
         {
-            int damageValue = Math.Abs(value);
-
             if (this.IsInvincible)
             {
                 return;
             }
 
+            int damageValue = Math.Abs(value);
             this.HealthValue -= damageValue;
             OnDamaged?.Invoke(new(damageValue));
 
-            if (this.HealthValue <= 0)
-            {
-                Destroy();
-            }
-            else
+            if (this.HealthValue > 0)
             {
                 Knockback();
             }
@@ -264,7 +283,7 @@ namespace StellarDuelist.Core.Entities
         /// <summary>
         /// If <see cref="CanSufferKnockback" /> is true, the entity has a chance of being knocked back.
         /// </summary>
-        private void Knockback()
+        public void Knockback()
         {
             if (!this.CanSufferKnockback)
             {
@@ -307,6 +326,22 @@ namespace StellarDuelist.Core.Entities
         /// Invoked at every fixed frame update.
         /// </summary>
         protected virtual void OnUpdate() { }
+
+        /// <summary>
+        ///Invoked during entity initialization.
+        /// </summary>
+        /// <remarks>
+        /// Space reserved for the registration of inventions.
+        /// </remarks>
+        protected virtual void OnSubscribeEvents() { }
+
+        /// <summary>
+        /// Invoked during entity initialization.
+        /// </summary>
+        /// <remarks>
+        /// Space reserved for unregistering inventions.
+        /// </remarks>
+        protected virtual void OnUnsubscribeEvents() { }
         #endregion
     }
 }

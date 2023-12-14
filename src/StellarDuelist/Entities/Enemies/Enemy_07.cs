@@ -66,9 +66,6 @@ namespace StellarDuelist.Game.Entities.Enemies
 
             this.movementTimer.Start();
 
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
-
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             this.Animation.AddFrame(STextures.GetSprite(32, 0, 6));
@@ -84,15 +81,6 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.KnockbackForce = 0;
 
             this.currentBullet = TOTAL_ANGLES;
-        }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_Drops;
-            this.OnDestroyed += OnDestroyed_Events;
         }
         protected override void OnStart()
         {

@@ -1,7 +1,9 @@
 ﻿using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Projectiles;
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarDuelist.Core.Managers
 {
@@ -13,17 +15,17 @@ namespace StellarDuelist.Core.Managers
         /// <summary>
         /// Gets an array of all active projectiles.
         /// </summary>
-        internal static SProjectile[] Projectiles => projectiles.ToArray();
+        internal static SProjectile[] ActiveProjectiles => activeProjectiles.ToArray();
 
         private static readonly ObjectPool<SProjectile> projectilePool = new();
-        private static readonly List<SProjectile> projectiles = new();
+        private static readonly List<SProjectile> activeProjectiles = new();
 
         /// <summary>
         /// Updates all active projectiles.
         /// </summary>
         internal static void Update()
         {
-            foreach (SProjectile projectile in Projectiles)
+            foreach (SProjectile projectile in ActiveProjectiles)
             {
                 if (projectile == null)
                 {
@@ -39,7 +41,7 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Draw()
         {
-            foreach (SProjectile projectile in Projectiles)
+            foreach (SProjectile projectile in ActiveProjectiles)
             {
                 if (projectile == null)
                 {
@@ -55,12 +57,12 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Reset()
         {
-            foreach (SProjectile projectile in Projectiles)
+            foreach (SProjectile projectile in ActiveProjectiles)
             {
                 projectilePool.Add(projectile);
             }
 
-            projectiles.Clear();
+            activeProjectiles.Clear();
         }
 
         /// <summary>
@@ -69,13 +71,17 @@ namespace StellarDuelist.Core.Managers
         /// <param name="builder">The builder used to create the projectile.</param>
         public static void Create(SProjectileBuilder builder)
         {
-            SProjectile projectile = projectilePool.Get();
+            SProjectile projectile;
 
-            projectile.Reset();
-            projectile.Initialize();
+            do
+            {
+                projectile = projectilePool.Get();
+            } while (activeProjectiles.Contains(projectile));
+
             projectile.Build(builder);
+            projectile.Initialize();
 
-            projectiles.Add(projectile);
+            activeProjectiles.Add(projectile);
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace StellarDuelist.Core.Managers
         /// <param name="projectile">The projectile to remove.</param>
         internal static void Remove(SProjectile projectile)
         {
-            _ = projectiles.Remove(projectile);
+            _ = activeProjectiles.Remove(projectile);
             projectilePool.Add(projectile);
         }
     }
