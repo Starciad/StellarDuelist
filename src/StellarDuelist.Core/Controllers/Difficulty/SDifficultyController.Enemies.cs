@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
@@ -19,9 +20,9 @@ namespace StellarDuelist.Core.Controllers
         /// </summary>
         /// <param name="position">The position at which to create the enemy.</param>
         /// <returns>The created enemy entity.</returns>
-        internal static SEntity CreateRandomEnemy(Vector2 position)
+        internal static SEnemyEntity CreateRandomEnemy(Vector2 position)
         {
-            return SEntityManager.Create(GetRandomEnemyType(), position);
+            return (SEnemyEntity)SEntityManager.Create(GetRandomEnemyType(), position);
         }
 
         /// <summary>

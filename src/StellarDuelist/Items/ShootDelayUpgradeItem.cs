@@ -1,5 +1,6 @@
 ﻿using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Items;
 using StellarDuelist.Game.Entities.Player;
 
@@ -18,17 +19,15 @@ namespace StellarDuelist.Game.Items
             this.Animation.AddFrame(STextures.GetSprite(SPRITE_SCALE, 2, 0));
         }
 
-        protected override void OnEffect(SEntity player)
+        protected override void OnEffect(SPlayerEntity player)
         {
-            SPlayer p = (SPlayer)player;
-
-            p.ShootDelay -= 0.1f;
-            p.ShootDelay = Math.Clamp(p.ShootDelay, 0.1f, 100f);
+            player.ShootDelay -= 0.1f;
+            player.ShootDelay = Math.Clamp(player.ShootDelay, 0.1f, 100f);
         }
 
-        protected override bool SpawnCondition(SEntity player)
+        protected override bool SpawnCondition(SPlayerEntity player)
         {
-            return ((SPlayer)player).ShootDelay > 0.5f;
+            return player.ShootDelay > 0.5f;
         }
     }
 }

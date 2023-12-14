@@ -1,4 +1,5 @@
 ﻿using StellarDuelist.Core.Engine;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 
@@ -12,7 +13,7 @@ namespace StellarDuelist.Core.Controllers
         {
             Type playerType = Array.Find(SEntityManager.EntityDefinitions, x => x.Classification == SEntityClassification.Player).EntityTargetType;
 
-            player = SEntityManager.Create(playerType, playerPosition);
+            player = (SPlayerEntity)SEntityManager.Create(playerType, playerPosition);
             ResetPlayerPosition();
         }
         private static void SpawnEnemy()

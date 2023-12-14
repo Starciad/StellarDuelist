@@ -2,6 +2,7 @@
 
 using StellarDuelist.Core.Camera;
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.World;
 
@@ -18,7 +19,7 @@ namespace StellarDuelist.Core.Controllers
         /// <summary>
         /// Gets the player entity currently active in the level.
         /// </summary>
-        public static SEntity Player => player;
+        public static SPlayerEntity Player => player;
 
         /// <summary>
         /// Gets the current level number.
@@ -55,7 +56,7 @@ namespace StellarDuelist.Core.Controllers
         private const int ENEMY_SPAWN_RANGE = 4;
 
         // Entities
-        private static SEntity player;
+        private static SPlayerEntity player;
 
         // Entities (Boss)
         private static Type bossTypeSelected;

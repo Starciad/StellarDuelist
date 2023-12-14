@@ -15,18 +15,13 @@ namespace StellarDuelist.Core.Entities
     /// <summary>
     /// Represents a reusable instance of an entity.
     /// </summary>
-    public class SEntity : IPoolableObject
+    public abstract class SEntity : IPoolableObject
     {
         #region General
         /// <summary>
         ///
         /// </summary>
         public SEntityDefinition EntityDefinition { get; internal set; }
-
-        /// <summary>
-        /// Gets the unique identifier of the entity.
-        /// </summary>
-        public string Id { get; internal set; }
 
         /// <summary>
         /// Gets or sets the team to which the entity belongs.
@@ -158,7 +153,7 @@ namespace StellarDuelist.Core.Entities
         }
 
         /// <summary>
-        /// Render the entity.
+        /// Draw the entity.
         /// </summary>
         internal void Draw()
         {
@@ -249,8 +244,6 @@ namespace StellarDuelist.Core.Entities
         /// </summary>
         public virtual void Reset()
         {
-            this.Id = Guid.NewGuid().ToString();
-
             this.LocalPosition = Vector2.Zero;
             this.WorldPosition = Vector2.Zero;
             this.CurrentPosition = Vector2.Zero;

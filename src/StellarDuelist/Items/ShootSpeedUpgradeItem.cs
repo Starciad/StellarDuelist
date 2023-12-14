@@ -1,5 +1,6 @@
 ﻿using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Items;
 using StellarDuelist.Game.Entities.Player;
 
@@ -15,9 +16,9 @@ namespace StellarDuelist.Game.Items
             this.Animation.SetTexture(STextures.GetTexture("ITEMS_Upgrades"));
             this.Animation.AddFrame(STextures.GetSprite(SPRITE_SCALE, 4, 0));
         }
-        protected override void OnEffect(SEntity player)
+        protected override void OnEffect(SPlayerEntity player)
         {
-            ((SPlayer)player).BulletSpeed += 0.1f;
+            player.BulletSpeed += 0.1f;
         }
     }
 }

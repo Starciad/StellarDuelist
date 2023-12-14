@@ -2,6 +2,7 @@
 
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
@@ -63,12 +64,12 @@ namespace StellarDuelist.Core.Controllers
         /// <param name="bossType">The type of boss entity to create.</param>
         /// <param name="position">The position at which to create the boss.</param>
         /// <returns>The created boss entity.</returns>
-        internal static SEntity CreateBossOfType(Type bossType, Vector2 position)
+        internal static SBossEntity CreateBossOfType(Type bossType, Vector2 position)
         {
             delayForNextBoss = SRandom.Range(3, 7);
             currentDelayForNextBoss = delayForNextBoss;
 
-            return SEntityManager.Create(bossType, position);
+            return (SBossEntity)SEntityManager.Create(bossType, position);
         }
     }
 }

@@ -4,6 +4,7 @@ using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
@@ -24,7 +25,7 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
     [SEntityRegister(typeof(Definition))]
-    internal sealed class Enemy_07 : SEntity
+    internal sealed class Enemy_07 : SEnemyEntity
     {
         // ==================================================== //
 

@@ -1,4 +1,4 @@
-﻿using StellarDuelist.Core.Collections;
+﻿using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Projectiles;
 
 using System;

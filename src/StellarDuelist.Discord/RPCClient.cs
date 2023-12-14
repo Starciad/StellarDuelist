@@ -2,9 +2,11 @@
 
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace StellarDuelist.Discord
@@ -125,11 +127,17 @@ namespace StellarDuelist.Discord
 
             string GetStatusString()
             {
-                ReadOnlySpan<char> s_lvl = (SLevelController.Level + 1).ToString();
-                ReadOnlySpan<char> s_hp = SLevelController.Player.HealthValue.ToString();
-                ReadOnlySpan<char> s_atk = SLevelController.Player.AttackValue.ToString();
+                StringBuilder statusStr = new();
+                SPlayerEntity player = SLevelController.Player;
 
-                return $"LVL: {s_lvl} | HP: {s_hp} | ATK: {s_atk}";
+                statusStr.Append($"{SLevelController.Level + 1}");
+                if (player != null)
+                {
+                    statusStr.Append($"{SLevelController.Player.HealthValue}");
+                    statusStr.Append($"{SLevelController.Player.AttackValue}");
+                }
+
+                return statusStr.ToString();
             }
         }
     }

@@ -4,12 +4,12 @@ using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
 using StellarDuelist.Game.Effects;
-using StellarDuelist.Game.Entities.Player;
 
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
     [SEntityRegister(typeof(Definition))]
-    internal sealed class Enemy_05 : SEntity
+    internal sealed class Enemy_05 : SEnemyEntity
     {
         // ==================================================== //
 
@@ -50,7 +50,7 @@ namespace StellarDuelist.Game.Entities.Enemies
         private readonly STimer intervalBetweenShots = new(1f);
         private readonly STimer movementTimer = new(20f);
 
-        private SPlayer player;
+        private SPlayerEntity player;
 
         private int currentBullet;
         private bool canShoot;
@@ -86,7 +86,7 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.shootTimer.Restart();
             this.intervalBetweenShots.Start();
 
-            this.player = (SPlayer)SLevelController.Player;
+            this.player = SLevelController.Player;
         }
         protected override void OnUpdate()
         {

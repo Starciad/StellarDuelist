@@ -20,8 +20,8 @@ namespace StellarDuelist.Core.Entities
         /// </summary>
         public SEntityClassification Classification => classification;
 
-        protected Func<bool> canSpawn;
-        protected SEntityClassification classification;
+        protected Func<bool> canSpawn = new(() => { return false; });
+        protected SEntityClassification classification = SEntityClassification.None;
 
         internal void Build(Type entityType)
         {

@@ -5,6 +5,7 @@ using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
@@ -25,7 +26,7 @@ namespace StellarDuelist.Game.Entities.Bosses
     /// He moves nimbly left and right, changing his direction by jumping around the corners of the screen, and also moves slightly up and down. At certain time intervals, it stops moving and begins to launch a volley of projectiles that follow random linear directions, when finished, it returns to moving normally.
     /// </remarks>
     [SEntityRegister(typeof(Definition))]
-    internal sealed class Boss_01 : SEntity
+    internal sealed class Boss_01 : SBossEntity
     {
         // ==================================================== //
 
@@ -36,10 +37,10 @@ namespace StellarDuelist.Game.Entities.Bosses
                 this.classification = SEntityClassification.Boss;
                 this.canSpawn = new(() =>
                 {
-                    SPlayer player = (SPlayer)SLevelController.Player;
+                    SPlayerEntity p = SLevelController.Player;
 
                     return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                           player.HealthValue >= 2 && player.HealthValue >= 3.5f && player.BulletLifeTime >= 3.5f;
+                           p.HealthValue >= 2 && p.HealthValue >= 3.5f && p.BulletLifeTime >= 3.5f;
                 });
             }
         }
@@ -217,7 +218,7 @@ namespace StellarDuelist.Game.Entities.Bosses
         // Actions
         private void BOSS_Boost()
         {
-            SPlayer p = (SPlayer)SLevelController.Player;
+            SPlayerEntity p = SLevelController.Player;
 
             // Boost health and bullets
             this.HealthValue *= p.AttackValue;

@@ -1,36 +1,35 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Collections
 {
     /// <summary>
-    /// A generic object pool for managing reusable objects that implement the <see cref="IPoolableObject"/> interface.
+    /// An object pool for managing reusable objects that implement the IPoolableObject interface.
     /// </summary>
-    /// <typeparam name="TObject">The type of objects stored in the pool.</typeparam>
-    public sealed class ObjectPool<TObject> where TObject : IPoolableObject
+    public sealed class ObjectPool
     {
-        private readonly Queue<TObject> _pool = new();
+        public int Count => _pool.Count;
 
-        public TObject Get()
+        private readonly Queue<IPoolableObject> _pool = new();
+
+        public IPoolableObject Get()
         {
-            TObject value;
+            IPoolableObject value;
 
-            if (this._pool.Count > 0)
+            if (_pool.Count > 0)
             {
-                value = this._pool.Dequeue();
-            }
-            else
-            {
-                value = Activator.CreateInstance<TObject>();
+                value = _pool.Dequeue();
+                value.Reset();
+                return value;
             }
 
-            value.Reset();
-            return value;
+            return default;
         }
 
-        public void Add(TObject value)
+        public void Add(IPoolableObject value)
         {
-            this._pool.Enqueue(value);
+            _pool.Enqueue(value);
         }
     }
 }

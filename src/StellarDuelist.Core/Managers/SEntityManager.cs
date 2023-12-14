@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace StellarDuelist.Core.Managers
 {
@@ -17,21 +18,21 @@ namespace StellarDuelist.Core.Managers
     public static class SEntityManager
     {
         /// <summary>
-        /// Gets an array of all entity headers.
+        /// Gets an array of all entity definitions.
         /// </summary>
         public static SEntityDefinition[] EntityDefinitions => entityDefinitions.Values.ToArray();
 
         /// <summary>
         /// Gets an array of all active entities.
         /// </summary>
-        public static SEntity[] Entities => entities.ToArray();
+        public static SEntity[] ActiveEntities => activeEntities.ToArray();
 
         // Templates
         private static readonly Dictionary<Type, SEntityDefinition> entityDefinitions = new();
 
         // Pool
-        private static readonly Dictionary<Type, ObjectPool<SEntity>> entityPool = new();
-        private static readonly List<SEntity> entities = new();
+        private static readonly Dictionary<Type, ObjectPool> entityPool = new();
+        private static readonly List<SEntity> activeEntities = new ();
 
         /// <summary>
         /// Initializes the entity manager by loading entity templates.
@@ -58,7 +59,7 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Update()
         {
-            foreach (SEntity entity in Entities)
+            foreach (SEntity entity in ActiveEntities)
             {
                 if (entity == null)
                 {
@@ -74,7 +75,7 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Draw()
         {
-            foreach (SEntity entity in Entities)
+            foreach (SEntity entity in ActiveEntities)
             {
                 if (entity == null)
                 {
@@ -90,12 +91,12 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Reset()
         {
-            foreach (SEntity entity in Entities)
+            foreach (SEntity entity in ActiveEntities)
             {
                 AddEntityToObjectPool(entity);
             }
 
-            entities.Clear();
+            activeEntities.Clear();
         }
 
         /// <summary>
@@ -195,7 +196,8 @@ namespace StellarDuelist.Core.Managers
             entity.Rotation = rotation;
 
             entity.Initialize();
-            entities.Add(entity);
+            activeEntities.Add(entity);
+
             return entity;
         }
 
@@ -204,30 +206,47 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Remove(SEntity entity)
         {
-            _ = entities.Remove(entity);
+            _ = activeEntities.Remove(entity);
             AddEntityToObjectPool(entity);
         }
 
         private static void AddEntityToObjectPool(SEntity entity)
         {
-            Type type = entity.GetType();
+            Type type = entity.EntityDefinition.EntityTargetType;
 
-            if (!entityPool.ContainsKey(type))
+            // Check if the entity type exists in the object pool dictionary.
+            if (!entityPool.TryGetValue(type, out ObjectPool value))
             {
-                entityPool.Add(type, new());
+                // If it doesn't exist, create a new object pool and add it to the dictionary.
+                value = new();
+                entityPool.Add(type, value);
             }
 
-            entityPool[type].Add(entity);
+            // Add the entity to the object pool.
+            value.Add(entity);
         }
 
         private static SEntity GetEntityFromObjectPool(Type entityType)
         {
-            if (!entityPool.ContainsKey(entityType))
+            // Check if the entity type exists in the object pool dictionary.
+            if (!entityPool.TryGetValue(entityType, out ObjectPool value))
             {
-                entityPool.Add(entityType, new());
+                // If it doesn't exist, create a new object pool and add it to the dictionary.
+                value = new();
+                entityPool.Add(entityType, value);
             }
 
-            return entityPool[entityType].Get();
+            // Get an entity from the object pool.
+            SEntity entity = (SEntity)value.Get();
+
+            // If the entity retrieved is null, create a new instance and reset it.
+            if (entity == null)
+            {
+                entity = (SEntity)Activator.CreateInstance(entityType);
+                entity.Reset();
+            }
+
+            return entity;
         }
     }
 }

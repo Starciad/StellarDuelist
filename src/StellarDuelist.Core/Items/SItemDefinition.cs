@@ -1,6 +1,6 @@
 ﻿using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Controllers;
-using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Templates;
 
 namespace StellarDuelist.Core.Items
 {
@@ -51,13 +51,13 @@ namespace StellarDuelist.Core.Items
         /// Called to apply the item's effect to the player.
         /// </summary>
         /// <param name="player">The player entity that the effect is applied to.</param>
-        protected abstract void OnEffect(SEntity player);
+        protected abstract void OnEffect(SPlayerEntity player);
 
         /// <summary>
         /// Determines whether the item can spawn based on certain conditions. Override this method to implement custom spawn conditions.
         /// </summary>
         /// <param name="player">The player entity.</param>
         /// <returns><c>true</c> if the item can spawn; otherwise, <c>false</c>.</returns>
-        protected virtual bool SpawnCondition(SEntity player) { return true; }
+        protected virtual bool SpawnCondition(SPlayerEntity player) { return true; }
     }
 }

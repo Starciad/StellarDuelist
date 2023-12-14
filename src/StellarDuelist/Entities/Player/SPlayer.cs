@@ -5,6 +5,7 @@ using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
@@ -16,7 +17,7 @@ using System;
 namespace StellarDuelist.Game.Entities.Player
 {
     [SEntityRegister(typeof(Definition))]
-    internal sealed class SPlayer : SEntity
+    internal sealed class SPlayer : SPlayerEntity
     {
         // ==================================================== //
 
@@ -29,23 +30,6 @@ namespace StellarDuelist.Game.Entities.Player
         }
 
         // ==================================================== //
-
-        public bool CanShoot => this.ShootTimer.IsFinished;
-        public float BulletLifeTime { get; set; }
-        public float BulletSpeed { get; set; }
-        public float ShootDelay
-        {
-            get => this.shootDelay;
-            set
-            {
-                this.shootDelay = value;
-                this.ShootTimer.SetDelay(value);
-            }
-        }
-
-        private STimer ShootTimer = new();
-
-        private float shootDelay;
 
         private readonly STimer invincibilityTimer = new(10f);
         private bool isHurt;
@@ -202,7 +186,7 @@ namespace StellarDuelist.Game.Entities.Player
         {
             if (SInput.Started(Keys.D0))
             {
-                foreach (SEntity entity in SEntityManager.Entities)
+                foreach (SEntity entity in SEntityManager.ActiveEntities)
                 {
                     if (entity == this)
                     {

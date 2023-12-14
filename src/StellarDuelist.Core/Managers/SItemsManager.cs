@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Items;
 

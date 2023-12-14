@@ -6,10 +6,10 @@ using StellarDuelist.Core.Camera;
 using StellarDuelist.Core.Colors;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
+using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.GUI;
-using StellarDuelist.Game.Entities.Player;
 
 using System.Text;
 
@@ -75,7 +75,7 @@ namespace StellarDuelist.Game.GUI
         }
         protected override void OnUpdate()
         {
-            SPlayer p = (SPlayer)SLevelController.Player;
+            SPlayerEntity p = SLevelController.Player;
 
             UpdateColors();
 

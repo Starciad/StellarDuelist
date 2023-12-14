@@ -13,7 +13,7 @@ namespace StellarDuelist.Core.Controllers
     {
         private static void RemoveObjectsOffScreen()
         {
-            RemoveEntitiesOutOfRange(SEntityManager.Entities, minEntityDespawnLimit, maxEntityDespawnLimit);
+            RemoveEntitiesOutOfRange(SEntityManager.ActiveEntities, minEntityDespawnLimit, maxEntityDespawnLimit);
             RemoveItemsOutOfRange(SItemsManager.Items, minEntityDespawnLimit * SWorld.GridScale, maxEntityDespawnLimit * SWorld.GridScale);
         }
         private static void RemoveEntitiesOutOfRange(SEntity[] entities, Vector2 minLimit, Vector2 maxLimit)
