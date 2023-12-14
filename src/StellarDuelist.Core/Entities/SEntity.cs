@@ -203,7 +203,7 @@ namespace StellarDuelist.Core.Entities
                 return;
             }
 
-            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.CurrentPosition, this.Animation.Frame, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.CurrentPosition, this.Animation.Frame, this.Color, this.Rotation, new Vector2(this.Animation.SpriteScale / 2), this.Scale, SpriteEffects.None, 0f);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace StellarDuelist.Core.Entities
         private void UpdateEntityCollision()
         {
             this.CollisionBox = new(
-                new((int)this.WorldPosition.X - (this.CollisionBox.Size.X / 2), (int)this.WorldPosition.Y - (this.CollisionBox.Size.X / 2)),
+                new((int)this.CurrentPosition.X - (this.CollisionBox.Size.X / 2), (int)this.CurrentPosition.Y - (this.CollisionBox.Size.X / 2)),
                 this.CollisionBox.Size
             );
         }

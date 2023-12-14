@@ -320,7 +320,7 @@ namespace StellarDuelist.Game.Entities.Bosses
                 {
                     SpriteId = 1,
                     Team = STeam.Bad,
-                    Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
+                    Position = new(this.CurrentPosition.X, this.CurrentPosition.Y),
                     Speed = bulletSpeed,
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,

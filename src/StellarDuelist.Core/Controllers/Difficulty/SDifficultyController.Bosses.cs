@@ -28,7 +28,7 @@ namespace StellarDuelist.Core.Controllers
         internal static bool TryGetRandomBossType(out Type bossType)
         {
             // === DEBUG (FORCE A BOSS TO APPEAR) ===
-            // bossType = typeof(SBoss_01);
+            // bossType = remainingBosses.First().EntityTargetType;
             // return true;
 
             // === APPLY DELAY ===
