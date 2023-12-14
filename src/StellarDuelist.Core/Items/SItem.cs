@@ -102,7 +102,10 @@ namespace StellarDuelist.Core.Items
         }
         private void CollisionUpdate()
         {
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
+            this.collisionBox = new(
+                new((int)this.Position.X - (this.collisionBox.Size.X / 2), (int)this.Position.Y - (this.collisionBox.Size.X / 2)),
+                this.collisionBox.Size
+            );
         }
         private void MovementUpdate()
         {

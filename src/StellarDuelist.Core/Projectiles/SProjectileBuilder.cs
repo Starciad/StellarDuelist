@@ -30,9 +30,9 @@ namespace StellarDuelist.Core.Projectiles
         public Vector2 Speed { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum range the projectile can travel.
+        /// Gets or sets the maximum size of projectile.
         /// </summary>
-        public int Range { get; set; }
+        public Point Size { get; set; }
 
         /// <summary>
         /// Gets or sets the damage inflicted by the projectile on impact.

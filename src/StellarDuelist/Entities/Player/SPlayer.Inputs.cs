@@ -88,7 +88,7 @@ namespace StellarDuelist.Game.Entities.Player
                     Speed = new(0, this.BulletSpeed * -1),
                     Damage = this.AttackValue,
                     LifeTime = this.BulletLifeTime,
-                    Range = 10
+                    Size = new(9, 20)
                 });
             }
         }

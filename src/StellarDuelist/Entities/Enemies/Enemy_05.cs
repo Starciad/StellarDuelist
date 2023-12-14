@@ -174,7 +174,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 Speed = direction,
                 Damage = this.AttackValue,
                 LifeTime = BULLET_LIFE_TIME,
-                Range = 10,
+                Size = new(10, 10),
                 Color = Color.White,
             });
 

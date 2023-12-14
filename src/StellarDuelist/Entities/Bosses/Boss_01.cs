@@ -324,7 +324,7 @@ namespace StellarDuelist.Game.Entities.Bosses
                     Speed = bulletSpeed,
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
-                    Range = 10,
+                    Size = new(10, 10),
                     Color = new Color(255, 0, 0, 255),
                 });
                 _ = SSounds.Play("Shoot_05");

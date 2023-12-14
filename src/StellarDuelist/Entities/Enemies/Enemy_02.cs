@@ -138,7 +138,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 Speed = new(0, SHOOT_SPEED),
                 Damage = this.AttackValue,
                 LifeTime = SHOOT_LIFE_TIME,
-                Range = 10
+                Size = new(5, 18),
             });
         }
     }

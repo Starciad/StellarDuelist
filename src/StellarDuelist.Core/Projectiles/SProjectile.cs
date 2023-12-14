@@ -41,9 +41,9 @@ namespace StellarDuelist.Core.Projectiles
         public Vector2 Speed { get; private set; }
 
         /// <summary>
-        /// Gets the maximum range the projectile can travel.
+        /// Gets the maximum size the projectile can travel.
         /// </summary>
-        public int Range { get; private set; }
+        public Point Size { get; private set; }
 
         /// <summary>
         /// Gets the damage inflicted by the projectile on impact.
@@ -74,7 +74,7 @@ namespace StellarDuelist.Core.Projectiles
             this.SpriteId = 0;
             this.Position = Vector2.Zero;
             this.Speed = Vector2.Zero;
-            this.Range = 0;
+            this.Size = Point.Zero;
             this.Damage = 0;
             this.LifeTime = 0f;
         }
@@ -89,11 +89,11 @@ namespace StellarDuelist.Core.Projectiles
             this.SpriteId = builder.SpriteId;
             this.Position = builder.Position;
             this.Speed = builder.Speed;
-            this.Range = builder.Range;
+            this.Size = builder.Size;
             this.Damage = builder.Damage;
             this.LifeTime = builder.LifeTime;
             this.Color = builder.Color;
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), new(this.Range));
+            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.Size);
 
             this.Animation.AddFrame(STextures.GetSprite(32, this.SpriteId, 0));
             this.Animation.Initialize();
@@ -153,7 +153,10 @@ namespace StellarDuelist.Core.Projectiles
 
         private void CollisionUpdate()
         {
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
+            this.collisionBox = new(
+                new((int)this.Position.X - (this.collisionBox.Size.X / 2), (int)this.Position.Y - (this.collisionBox.Size.Y / 2)),
+                this.collisionBox.Size
+            );
 
             foreach (SEntity entity in SEntityManager.ActiveEntities)
             {

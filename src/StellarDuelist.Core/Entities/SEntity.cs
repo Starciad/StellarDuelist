@@ -229,7 +229,10 @@ namespace StellarDuelist.Core.Entities
         }
         private void UpdateEntityCollision()
         {
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
+            this.CollisionBox = new(
+                new((int)this.WorldPosition.X - (this.CollisionBox.Size.X / 2), (int)this.WorldPosition.Y - (this.CollisionBox.Size.X / 2)),
+                this.CollisionBox.Size
+            );
         }
         private void UpdateHealthCheck()
         {

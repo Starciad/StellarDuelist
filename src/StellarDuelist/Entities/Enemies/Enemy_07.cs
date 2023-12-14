@@ -154,7 +154,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
                 Damage = this.AttackValue,
                 LifeTime = BULLET_LIFE_TIME,
-                Range = 7
+                Size = new(5),
             });
 
             _ = SSounds.Play("Shoot_04");
