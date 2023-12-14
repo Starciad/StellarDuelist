@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-using StellarDuelist.Core.Controllers;
+﻿using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
@@ -9,11 +7,7 @@ using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
-using StellarDuelist.Game.Effects;
 using StellarDuelist.Game.Enums;
-
-using System;
-using System.Threading.Tasks;
 
 namespace StellarDuelist.Game.Entities.Enemies
 {
@@ -28,10 +22,9 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
     [SEntityRegister(typeof(Definition))]
-    internal sealed class Enemy_02 : SEnemyEntity
+    internal sealed partial class Enemy_02 : SEnemyEntity
     {
-        // ==================================================== //
-
+        #region Definition
         private sealed class Definition : SEntityDefinition
         {
             protected override void OnBuild()
@@ -43,19 +36,20 @@ namespace StellarDuelist.Game.Entities.Enemies
                 });
             }
         }
+        #endregion
 
         // ==================================================== //
 
         private const float SHOOT_SPEED = 2f;
         private const float SHOOT_LIFE_TIME = 25f;
 
-        private readonly STimer movementTimer = new(10f);
-        private readonly STimer shootTimer = new(17.5f);
+        private readonly STimer actionTimer = new(10f);
 
         private Direction movementDirection;
+        private bool action;
 
         // ==================================================== //
-        // RESET
+        // SYSTEM
         public override void Reset()
         {
             base.Reset();
@@ -77,88 +71,70 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
-
-        // OVERRIDE
+        protected override void OnAwake()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Events;
+        }
         protected override void OnStart()
         {
-            this.movementTimer.Restart();
-            this.shootTimer.Restart();
+            this.actionTimer.Restart();
         }
         protected override void OnUpdate()
         {
-            base.OnUpdate();
-
             TimersUpdate();
 
             // Collision
-            if (SEntityUtilities.IsColliding(this, SLevelController.Player))
+            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
             {
                 SLevelController.Player.Damage(1);
                 Destroy();
             }
 
             // AI
-            MovementUpdate();
-            ShootUpdate();
-        }
-        protected override void OnDamaged(int value)
-        {
-            _ = SSounds.Play("Damage_02");
-            _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
-
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
-
-            _ = SSounds.Play("Explosion_01");
-            _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
-
-            // Drop
-            if (SRandom.Chance(20, 100))
-            {
-                _ = SItemsManager.CreateRandomItem(this.WorldPosition);
-            }
+            ActionUpdate();
         }
 
         // UPDATE
         private void TimersUpdate()
         {
-            this.movementTimer.Update();
-            this.shootTimer.Update();
+            this.actionTimer.Update();
         }
-        private void MovementUpdate()
+        private void ActionUpdate()
         {
-            if (this.movementTimer.IsFinished)
+            if (this.actionTimer.IsFinished)
             {
-                this.movementTimer.Restart();
-                switch (this.movementDirection)
-                {
-                    case Direction.Horizontal:
-                        int direction = SRandom.Chance(50, 100) ? -1 : 1;
-                        this.LocalPosition = new(this.LocalPosition.X + direction, this.LocalPosition.Y);
-                        this.movementDirection = Direction.Vertical;
-                        break;
+                this.actionTimer.Restart();
 
-                    case Direction.Vertical:
-                        this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + 1);
-                        this.movementDirection = Direction.Horizontal;
-                        break;
+                // Action (true) = Random Movement
+                // Action (false) = Shoot
+
+                if (action)
+                {
+                    switch (this.movementDirection)
+                    {
+                        case Direction.Horizontal:
+                            int direction = SRandom.Chance(50, 100) ? -1 : 1;
+                            this.LocalPosition = new(this.LocalPosition.X + direction, this.LocalPosition.Y);
+                            this.movementDirection = Direction.Vertical;
+                            break;
+
+                        case Direction.Vertical:
+                            this.LocalPosition = new(this.LocalPosition.X, this.LocalPosition.Y + 1);
+                            this.movementDirection = Direction.Horizontal;
+                            break;
+                    }
                 }
-            }
-        }
-        private void ShootUpdate()
-        {
-            if (this.shootTimer.IsFinished)
-            {
-                this.shootTimer.Restart();
-                Shoot();
+                else
+                {
+                    Shoot();
+                }
+
+                action = !action;
             }
         }
 

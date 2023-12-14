@@ -10,7 +10,7 @@ namespace StellarDuelist.Core.Collections
         /// <summary>
         /// Gets the number of objects currently in the pool.
         /// </summary>
-        public int Count => _pool.Count;
+        public int Count => this._pool.Count;
 
         private readonly Queue<IPoolableObject> _pool = new();
 
@@ -22,9 +22,9 @@ namespace StellarDuelist.Core.Collections
         {
             IPoolableObject value;
 
-            if (_pool.Count > 0)
+            if (this._pool.Count > 0)
             {
-                value = _pool.Dequeue();
+                value = this._pool.Dequeue();
                 value.Reset();
                 return value;
             }
@@ -38,7 +38,7 @@ namespace StellarDuelist.Core.Collections
         /// <param name="value">The object to add to the pool.</param>
         public void Add(IPoolableObject value)
         {
-            _pool.Enqueue(value);
+            this._pool.Enqueue(value);
         }
     }
 }

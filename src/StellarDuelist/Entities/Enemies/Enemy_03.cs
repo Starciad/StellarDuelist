@@ -8,10 +8,8 @@ using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
-using StellarDuelist.Game.Effects;
 
 using System;
-using System.Threading.Tasks;
 
 namespace StellarDuelist.Game.Entities.Enemies
 {
@@ -24,10 +22,9 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
     [SEntityRegister(typeof(Definition))]
-    internal sealed class Enemy_03 : SEnemyEntity
+    internal sealed partial class Enemy_03 : SEnemyEntity
     {
-        // ==================================================== //
-
+        #region Definition
         private sealed class Definition : SEntityDefinition
         {
             protected override void OnBuild()
@@ -39,20 +36,18 @@ namespace StellarDuelist.Game.Entities.Enemies
                 });
             }
         }
+        #endregion
 
         // ==================================================== //
 
         private const float SPEED = 0.5f;
-
-        // Bullets
         private const float BULLET_SPEED = 1f;
         private const float BULLET_LIFE_TIME = 50f;
-
         private const int NUMBER_OF_BULLETS = 12;
         private const float SPREAD_ANGLE_DEGRESS = 360f;
 
         // ==================================================== //
-        // RESET
+        // SYSTEM
         public override void Reset()
         {
             base.Reset();
@@ -74,14 +69,20 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
-
-        // OVERRIDE
+        protected override void OnAwake()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Special;
+            this.OnDestroyed += OnDestroyed_Events;
+        }
         protected override void OnUpdate()
         {
-            base.OnUpdate();
-
             // Collision
-            if (SEntityUtilities.IsColliding(this, SLevelController.Player))
+            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
             {
                 SLevelController.Player.Damage(1);
                 Destroy();
@@ -89,34 +90,6 @@ namespace StellarDuelist.Game.Entities.Enemies
 
             // AI
             MovementUpdate();
-        }
-        protected override void OnDamaged(int value)
-        {
-            _ = SSounds.Play("Damage_04");
-            _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
-
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
-
-            _ = SSounds.Play("Explosion_02");
-            _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
-
-            // Drop
-            if (SRandom.Chance(20, 100))
-            {
-                _ = SItemsManager.CreateRandomItem(this.WorldPosition);
-            }
-
-            // Shoot
-            FlurryOfShots();
         }
 
         // UPDATE

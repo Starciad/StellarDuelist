@@ -130,11 +130,11 @@ namespace StellarDuelist.Discord
                 StringBuilder statusStr = new();
                 SPlayerEntity player = SLevelController.Player;
 
-                statusStr.Append($"{SLevelController.Level + 1}");
+                _ = statusStr.Append($"{SLevelController.Level + 1}");
                 if (player != null)
                 {
-                    statusStr.Append($"{SLevelController.Player.HealthValue}");
-                    statusStr.Append($"{SLevelController.Player.AttackValue}");
+                    _ = statusStr.Append($"{SLevelController.Player.HealthValue}");
+                    _ = statusStr.Append($"{SLevelController.Player.AttackValue}");
                 }
 
                 return statusStr.ToString();

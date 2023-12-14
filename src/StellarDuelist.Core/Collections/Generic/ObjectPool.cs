@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Collections.Generic
@@ -13,7 +12,7 @@ namespace StellarDuelist.Core.Collections.Generic
         /// <summary>
         /// Gets the number of objects currently in the pool.
         /// </summary>
-        public int Count => _pool.Count;
+        public int Count => this._pool.Count;
 
         private readonly Queue<TObject> _pool = new();
 
@@ -23,16 +22,7 @@ namespace StellarDuelist.Core.Collections.Generic
         /// <returns>The retrieved object.</returns>
         public TObject Get()
         {
-            TObject value;
-
-            if (this._pool.Count > 0)
-            {
-                value = this._pool.Dequeue();
-            }
-            else
-            {
-                value = Activator.CreateInstance<TObject>();
-            }
+            TObject value = this._pool.Count > 0 ? this._pool.Dequeue() : Activator.CreateInstance<TObject>();
 
             value.Reset();
             return value;

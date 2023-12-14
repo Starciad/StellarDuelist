@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Camera;
-using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.World;

@@ -1,7 +1,6 @@
 ﻿using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Projectiles;
 
-using System;
 using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Managers

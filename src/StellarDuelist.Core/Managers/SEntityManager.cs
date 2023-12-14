@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace StellarDuelist.Core.Managers
 {
@@ -32,7 +31,7 @@ namespace StellarDuelist.Core.Managers
 
         // Pool
         private static readonly Dictionary<Type, ObjectPool> entityPool = new();
-        private static readonly List<SEntity> activeEntities = new ();
+        private static readonly List<SEntity> activeEntities = new();
 
         /// <summary>
         /// Initializes the entity manager by loading entity templates.

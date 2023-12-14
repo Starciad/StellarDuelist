@@ -6,6 +6,7 @@ using StellarDuelist.Core.Collections;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
+using StellarDuelist.Core.SEventArgs.Entities;
 using StellarDuelist.Core.World;
 
 using System;
@@ -19,7 +20,7 @@ namespace StellarDuelist.Core.Entities
     {
         #region General
         /// <summary>
-        ///
+        /// Gets the definition information for the current entity.
         /// </summary>
         public SEntityDefinition EntityDefinition { get; internal set; }
 
@@ -128,6 +129,44 @@ namespace StellarDuelist.Core.Entities
         public bool IsInvincible { get; set; }
         #endregion
 
+        #region Events
+        public delegate void DamagedEventHandler(SEntityDamagedEventArgs e);
+        public delegate void HealedEventHandler(SEntityHealedEventArgs e);
+        public delegate void DestroyedEventHandler();
+
+        public event DamagedEventHandler OnDamaged;
+        public event HealedEventHandler OnHealed;
+        public event DestroyedEventHandler OnDestroyed;
+        #endregion
+
+        #region System
+        /// <summary>
+        /// Resets the current entity to default settings.
+        /// </summary>
+        public virtual void Reset()
+        {
+            this.LocalPosition = Vector2.Zero;
+            this.WorldPosition = Vector2.Zero;
+            this.CurrentPosition = Vector2.Zero;
+            this.SmoothScale = SWorld.SmoothScale;
+            this.Scale = Vector2.One;
+            this.Rotation = 0f;
+            this.CanSufferKnockback = true;
+
+            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
+            this.Color = Color.White;
+
+            if (this.Animation == null)
+            {
+                this.Animation = new();
+            }
+            else
+            {
+                this.Animation.ClearFrames();
+                this.Animation.Reset();
+            }
+        }
+
         /// <summary>
         /// Initializes the initial components of the entity.
         /// </summary>
@@ -173,9 +212,11 @@ namespace StellarDuelist.Core.Entities
         {
             this.IsDestroyed = true;
             SEntityManager.Remove(this);
-            OnDestroy();
+            OnDestroyed?.Invoke();
         }
+        #endregion
 
+        #region Utilities
         /// <summary>
         /// Deals a certain amount of damage to the entity.
         /// </summary>
@@ -190,15 +231,15 @@ namespace StellarDuelist.Core.Entities
         /// <param name="value">The amount of damage inflicted on the entity.</param>
         public void Damage(int value)
         {
-            int temp = Math.Abs(value);
+            int damageValue = Math.Abs(value);
 
             if (this.IsInvincible)
             {
                 return;
             }
 
-            this.HealthValue -= temp;
-            OnDamaged(temp);
+            this.HealthValue -= damageValue;
+            OnDamaged?.Invoke(new(damageValue));
 
             if (this.HealthValue <= 0)
             {
@@ -208,6 +249,16 @@ namespace StellarDuelist.Core.Entities
             {
                 Knockback();
             }
+        }
+
+        /// <summary>
+        ///Adds health to the current entity.
+        /// </summary>
+        /// <param name="value">The health value that will be added to the current entity.</param>
+        public void Heal(int value)
+        {
+            this.HealthValue += value;
+            OnHealed?.Invoke(new(value));
         }
 
         /// <summary>
@@ -239,34 +290,9 @@ namespace StellarDuelist.Core.Entities
                     break;
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Resets the current entity to default settings.
-        /// </summary>
-        public virtual void Reset()
-        {
-            this.LocalPosition = Vector2.Zero;
-            this.WorldPosition = Vector2.Zero;
-            this.CurrentPosition = Vector2.Zero;
-            this.SmoothScale = SWorld.SmoothScale;
-            this.Scale = Vector2.One;
-            this.Rotation = 0f;
-            this.CanSufferKnockback = true;
-
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
-            this.Color = Color.White;
-
-            if (this.Animation == null)
-            {
-                this.Animation = new();
-            }
-            else
-            {
-                this.Animation.ClearFrames();
-                this.Animation.Reset();
-            }
-        }
-
+        #region Events (Methods)
         /// <summary>
         /// Invoked during the initialization of the entity, just before <see cref="OnStart"/>.
         /// </summary>
@@ -281,16 +307,6 @@ namespace StellarDuelist.Core.Entities
         /// Invoked at every fixed frame update.
         /// </summary>
         protected virtual void OnUpdate() { }
-
-        /// <summary>
-        /// Invoked when the entity is damaged.
-        /// </summary>
-        /// <param name="value">The total damage value in the context of the call.</param>
-        protected virtual void OnDamaged(int value) { }
-
-        /// <summary>
-        /// Invoked when the entity is destroyed.
-        /// </summary>
-        protected virtual void OnDestroy() { }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using StellarDuelist.Core.Enums;
+
 using System;
 
 namespace StellarDuelist.Core.Entities
@@ -13,19 +14,19 @@ namespace StellarDuelist.Core.Entities
         /// <summary>
         /// Gets a value indicating whether the entity can spawn.
         /// </summary>
-        internal bool CanSpawn => canSpawn.Invoke();
+        internal bool CanSpawn => this.canSpawn.Invoke();
 
         /// <summary>
         /// Gets or sets the classification of the entity header.
         /// </summary>
-        public SEntityClassification Classification => classification;
+        public SEntityClassification Classification => this.classification;
 
         protected Func<bool> canSpawn = new(() => { return false; });
         protected SEntityClassification classification = SEntityClassification.None;
 
         internal void Build(Type entityType)
         {
-            EntityTargetType = entityType;
+            this.EntityTargetType = entityType;
             OnBuild();
         }
 

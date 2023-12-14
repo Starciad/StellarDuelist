@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Items;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Projectiles;
 using StellarDuelist.Core.World;
-using StellarDuelist.Core.Enums;
 
 namespace StellarDuelist.Core.Controllers
 {

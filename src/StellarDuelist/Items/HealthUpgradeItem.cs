@@ -1,5 +1,4 @@
 ﻿using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Items;
 
@@ -17,7 +16,7 @@ namespace StellarDuelist.Game.Items
         }
         protected override void OnEffect(SPlayerEntity player)
         {
-            player.HealthValue += 1;
+            player.Heal(1);
         }
     }
 }

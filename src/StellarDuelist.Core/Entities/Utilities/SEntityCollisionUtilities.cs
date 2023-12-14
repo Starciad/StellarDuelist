@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace StellarDuelist.Core.Entities.Utilities
+﻿namespace StellarDuelist.Core.Entities.Utilities
 {
-    public static class SEntityUtilities
+    public static class SEntityCollisionUtilities
     {
         public static bool IsColliding(SEntity target1, SEntity target2)
         {

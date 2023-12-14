@@ -1,5 +1,4 @@
 ﻿using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Items;
 
