@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Templates;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
@@ -17,8 +17,8 @@ namespace StellarDuelist.Core.Controllers
         private static float delayForNextBoss = 3;
         private static float currentDelayForNextBoss = 0;
 
-        private static SEntityHeader[] allBosses = Array.Empty<SEntityHeader>();
-        private static readonly List<SEntityHeader> remainingBosses = new();
+        private static SEntityDefinition[] allBosses = Array.Empty<SEntityDefinition>();
+        private static readonly List<SEntityDefinition> remainingBosses = new();
 
         /// <summary>
         /// Attempts to retrieve a random boss type for spawning.
@@ -45,16 +45,16 @@ namespace StellarDuelist.Core.Controllers
                 remainingBosses.AddRange(allBosses);
             }
 
-            SEntityHeader entityHeader = remainingBosses.Where(x => x.CanSpawn).SelectRandom() ?? default;
+            SEntityDefinition definition = remainingBosses.Where(x => x.CanSpawn).SelectRandom() ?? default;
 
-            if (entityHeader == null)
+            if (definition == null)
             {
                 bossType = default;
                 return false;
             }
 
-            _ = remainingBosses.Remove(entityHeader);
-            bossType = entityHeader.EntityType;
+            _ = remainingBosses.Remove(definition);
+            bossType = definition.EntityTargetType;
             return true;
         }
 

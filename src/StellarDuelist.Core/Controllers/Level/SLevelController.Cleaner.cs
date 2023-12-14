@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Items;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Projectiles;
@@ -13,7 +13,7 @@ namespace StellarDuelist.Core.Controllers
     {
         private static void RemoveObjectsOffScreen()
         {
-            RemoveEntitiesOutOfRange(SEntityManager.Entities, minEntityDespawnLimit, maxEntityDespawnLimit);
+            RemoveEntitiesOutOfRange(SEntityManager.ActiveEntities, minEntityDespawnLimit, maxEntityDespawnLimit);
             RemoveItemsOutOfRange(SItemsManager.Items, minEntityDespawnLimit * SWorld.GridScale, maxEntityDespawnLimit * SWorld.GridScale);
         }
         private static void RemoveEntitiesOutOfRange(SEntity[] entities, Vector2 minLimit, Vector2 maxLimit)
@@ -27,7 +27,7 @@ namespace StellarDuelist.Core.Controllers
 
                 if (IsPositionOutOfBounds(entity.LocalPosition, minLimit, maxLimit))
                 {
-                    if (entity is SPlayerEntity)
+                    if (entity.EntityDefinition.Classification == SEntityClassification.Player)
                     {
                         continue;
                     }

@@ -7,7 +7,7 @@ namespace StellarDuelist.Game.Items
     /// <summary>
     /// Upgrade item to increase the durability of the player's bullets.
     /// </summary>
-    internal sealed class ShootLifeTimeUpgradeItem : SItemRegister
+    internal sealed class ShootLifeTimeUpgradeItem : SItemDefinition
     {
         protected override void OnInitialize()
         {

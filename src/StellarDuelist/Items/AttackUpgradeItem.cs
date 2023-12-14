@@ -7,7 +7,7 @@ namespace StellarDuelist.Game.Items
     /// <summary>
     /// Upgrade item for the player's attack.
     /// </summary>
-    internal sealed class AttackUpgradeItem : SItemRegister
+    internal sealed class AttackUpgradeItem : SItemDefinition
     {
         protected override void OnInitialize()
         {

@@ -3,16 +3,15 @@
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
-using StellarDuelist.Game.Effects;
 
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace StellarDuelist.Game.Entities.Enemies
 {
@@ -24,23 +23,22 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// <br/><br/>
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Enemy_06 : SEnemyEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed partial class Enemy_06 : SEnemyEntity
     {
-        // ==================================================== //
-
-        private sealed class Header : SEntityHeader
+        #region Definition
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Enemy;
-            }
-
-            protected override bool OnSpawningCondition()
-            {
-                return SDifficultyController.DifficultyRate >= 11;
+                this.classification = SEntityClassification.Enemy;
+                this.canSpawn = new(() =>
+                {
+                    return SDifficultyController.DifficultyRate >= 11;
+                });
             }
         }
+        #endregion
 
         // ==================================================== //
 
@@ -48,7 +46,7 @@ namespace StellarDuelist.Game.Entities.Enemies
         private SEntity targetToBeDefended;
 
         // ==================================================== //
-        // RESET
+        // SYSTEM
         public override void Reset()
         {
             base.Reset();
@@ -72,49 +70,32 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
-
-        // OVERRIDE
+        protected override void OnAwake()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Events;
+        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();
         }
         protected override void OnUpdate()
         {
-            base.OnUpdate();
-
             TimersUpdate();
 
-            // Behaviour
-            CollideWithPlayer();
+            // Collision
+            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+                Destroy();
+            }
 
             // AI
             MovementUpdate();
-        }
-        protected override void OnDamaged(int value)
-        {
-            _ = SSounds.Play("Damage_08");
-            _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
-
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
-            this.movementTimer.Stop();
-
-            _ = SSounds.Play("Explosion_01");
-            _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
-
-            // Drop
-            if (SRandom.Chance(15, 100))
-            {
-                _ = SItemsManager.CreateRandomItem(this.WorldPosition);
-            }
         }
 
         // UPDATE
@@ -143,7 +124,7 @@ namespace StellarDuelist.Game.Entities.Enemies
         // SKILLS
         private void ChooseNewRandomTargetToDefend()
         {
-            this.targetToBeDefended = SEntityManager.Entities.Where(x => x.Team == STeam.Bad).SelectRandom();
+            this.targetToBeDefended = SEntityManager.ActiveEntities.Where(x => x.Team == STeam.Bad).SelectRandom();
         }
     }
 }

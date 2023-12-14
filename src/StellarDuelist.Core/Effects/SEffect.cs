@@ -10,7 +10,7 @@ using StellarDuelist.Core.Managers;
 namespace StellarDuelist.Core.Effects
 {
     /// <summary>
-    /// Reusable instance of an effect created from <see cref="SEffectRegister"/>.
+    /// Reusable instance of an effect created from <see cref="SEffectDefinition"/>.
     /// </summary>
     public sealed class SEffect : IPoolableObject
     {

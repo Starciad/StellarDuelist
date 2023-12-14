@@ -11,7 +11,7 @@ namespace StellarDuelist.Core.Controllers
     {
         private static void CreatePlayer()
         {
-            Type playerType = Array.Find(SEntityManager.EntityHeaders, x => x.Classification == SEntityClassification.Player).EntityType;
+            Type playerType = Array.Find(SEntityManager.EntityDefinitions, x => x.Classification == SEntityClassification.Player).EntityTargetType;
 
             player = (SPlayerEntity)SEntityManager.Create(playerType, playerPosition);
             ResetPlayerPosition();

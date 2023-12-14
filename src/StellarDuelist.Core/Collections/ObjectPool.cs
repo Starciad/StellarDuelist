@@ -1,65 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Collections
 {
     /// <summary>
-    /// A generic object pool for managing reusable objects that implement the <see cref="IPoolableObject"/> interface.
+    /// An object pool for managing reusable objects that implement the IPoolableObject interface.
     /// </summary>
-    /// <typeparam name="TObject">The type of objects stored in the pool.</typeparam>
-    public sealed class ObjectPool<TObject> where TObject : IPoolableObject
+    public sealed class ObjectPool
     {
-        private readonly Dictionary<Type, Queue<TObject>> _objectPool = new();
+        /// <summary>
+        /// Gets the number of objects currently in the pool.
+        /// </summary>
+        public int Count => this._pool.Count;
+
+        private readonly Queue<IPoolableObject> _pool = new();
 
         /// <summary>
-        /// Gets an object of type <typeparamref name="TKey"/> from the pool.
+        /// Retrieves an object from the pool.
         /// </summary>
-        /// <typeparam name="TKey">The type of object to retrieve from the pool.</typeparam>
-        /// <returns>An object from the pool.</returns>
-        public TObject Get<TKey>() where TKey : TObject
+        /// <returns>The retrieved object.</returns>
+        public IPoolableObject Get()
         {
-            return Get(typeof(TKey));
-        }
+            IPoolableObject value;
 
-        /// <summary>
-        /// Gets an object of the specified type from the pool.
-        /// </summary>
-        /// <param name="keyType">The type of object to retrieve from the pool.</param>
-        /// <returns>An object from the pool.</returns>
-        public TObject Get(Type keyType)
-        {
-            TObject value;
-
-            if (this._objectPool.ContainsKey(keyType))
+            if (this._pool.Count > 0)
             {
-                if (this._objectPool[keyType].Count > 0)
-                {
-                    value = this._objectPool[keyType].Dequeue();
-                    value.Reset();
-                    return value;
-                }
+                value = this._pool.Dequeue();
+                value.Reset();
+                return value;
             }
 
-            value = (TObject)Activator.CreateInstance(keyType);
-            value.Reset();
-            return value;
+            return default;
         }
 
         /// <summary>
-        /// Adds an object to the pool for reuse.
+        /// Adds an object to the pool.
         /// </summary>
         /// <param name="value">The object to add to the pool.</param>
-        public TObject Add(TObject value)
+        public void Add(IPoolableObject value)
         {
-            Type valueType = value.GetType();
-
-            if (!this._objectPool.ContainsKey(valueType))
-            {
-                this._objectPool.Add(valueType, new());
-            }
-
-            this._objectPool[valueType].Enqueue(value);
-            return value;
+            this._pool.Enqueue(value);
         }
     }
 }

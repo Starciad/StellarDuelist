@@ -24,7 +24,7 @@ namespace StellarDuelist.Core.Items
         private const float VERTICAL_SPEED = 1.5f;
         private const float COLOR_UPDATE_DELAY = 0.5f;
 
-        private SItemRegister _register;
+        private SItemDefinition _register;
         private SAnimation _animation;
 
         private float currentColorUpdateDelay;
@@ -38,7 +38,7 @@ namespace StellarDuelist.Core.Items
         /// <param name="register">The item's register.</param>
         /// <param name="animation">The item's animation.</param>
         /// <param name="position">The initial position of the item.</param>
-        internal void Build(SItemRegister register, SAnimation animation, Vector2 position)
+        internal void Build(SItemDefinition register, SAnimation animation, Vector2 position)
         {
             this._register = register;
             this._animation = animation;
@@ -75,7 +75,7 @@ namespace StellarDuelist.Core.Items
         /// </summary>
         internal void Draw()
         {
-            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.Frame, this.color, 0f, new Vector2(SItemRegister.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this._animation.Texture, this.Position, this._animation.Frame, this.color, 0f, new Vector2(SItemDefinition.SPRITE_SCALE / 2), 1f, SpriteEffects.None, 0f);
         }
 
         /// <summary>

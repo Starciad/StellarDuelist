@@ -2,13 +2,11 @@
 
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
-using StellarDuelist.Core.Managers;
-using StellarDuelist.Game.Effects;
-
-using System.Threading.Tasks;
 
 namespace StellarDuelist.Game.Entities.Enemies
 {
@@ -20,23 +18,22 @@ namespace StellarDuelist.Game.Entities.Enemies
     /// <br/><br/>
     /// Automatically dies when colliding with the <see cref="SPlayerEntity"/>.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Enemy_04 : SEnemyEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed partial class Enemy_04 : SEnemyEntity
     {
-        // ==================================================== //
-
-        private sealed class Header : SEntityHeader
+        #region Definition
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Enemy;
-            }
-
-            protected override bool OnSpawningCondition()
-            {
-                return SDifficultyController.DifficultyRate >= 7;
+                this.classification = SEntityClassification.Enemy;
+                this.canSpawn = new(() =>
+                {
+                    return SDifficultyController.DifficultyRate >= 7;
+                });
             }
         }
+        #endregion
 
         // ==================================================== //
 
@@ -44,11 +41,10 @@ namespace StellarDuelist.Game.Entities.Enemies
         private const float VERTICAL_SPEED = 0.01f;
 
         private bool horizontalDirection;
-
         private Vector2 previousLocalPosition;
 
         // ==================================================== //
-        // RESET
+        // SYSTEM
         public override void Reset()
         {
             base.Reset();
@@ -70,44 +66,28 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 25;
             this.KnockbackForce = 2;
         }
-
-        // OVERRIDE
+        protected override void OnAwake()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Events;
+        }
         protected override void OnUpdate()
         {
-            base.OnUpdate();
-
-            // Behaviour
-            CollideWithPlayer();
+            // Collision
+            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+                Destroy();
+            }
 
             // AI
             HorizontalMovementUpdate();
             VerticalMovementUpdate();
             this.previousLocalPosition = this.LocalPosition;
-        }
-        protected override void OnDamaged(int value)
-        {
-            _ = SSounds.Play("Damage_04");
-            _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition);
-
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.EnemyKilled();
-
-            _ = SSounds.Play("Explosion_03");
-            _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition);
-
-            // Drop
-            if (SRandom.Chance(15, 100))
-            {
-                _ = SItemsManager.CreateRandomItem(this.WorldPosition);
-            }
         }
 
         // UPDATE

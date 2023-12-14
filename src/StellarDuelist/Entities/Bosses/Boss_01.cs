@@ -4,12 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
-using StellarDuelist.Core.Entities.Register;
+using StellarDuelist.Core.Entities;
+using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
-using StellarDuelist.Game.Effects;
 
 using System;
 using System.Threading.Tasks;
@@ -22,26 +23,25 @@ namespace StellarDuelist.Game.Entities.Bosses
     /// <remarks>
     /// He moves nimbly left and right, changing his direction by jumping around the corners of the screen, and also moves slightly up and down. At certain time intervals, it stops moving and begins to launch a volley of projectiles that follow random linear directions, when finished, it returns to moving normally.
     /// </remarks>
-    [SEntityRegister(typeof(Header))]
-    internal sealed class Boss_01 : SBossEntity
+    [SEntityRegister(typeof(Definition))]
+    internal sealed partial class Boss_01 : SBossEntity
     {
-        // ==================================================== //
-
-        private sealed class Header : SEntityHeader
+        #region Definition
+        private sealed class Definition : SEntityDefinition
         {
-            protected override void OnProcess()
+            protected override void OnBuild()
             {
-                this.Classification = SEntityClassification.Boss;
-            }
+                this.classification = SEntityClassification.Boss;
+                this.canSpawn = new(() =>
+                {
+                    SPlayerEntity p = SLevelController.Player;
 
-            protected override bool OnSpawningCondition()
-            {
-                SPlayerEntity player = SLevelController.Player;
-
-                return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
-                       player.HealthValue >= 2 && player.HealthValue >= 3.5f && player.BulletLifeTime >= 3.5f;
+                    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                           p.HealthValue >= 2 && p.HealthValue >= 3.5f && p.BulletLifeTime >= 3.5f;
+                });
             }
         }
+        #endregion
 
         // ==================================================== //
 
@@ -55,37 +55,47 @@ namespace StellarDuelist.Game.Entities.Bosses
 
         private Texture2D texture;
 
+        #region Animation
         private readonly SAnimation A_Idle = new();
         private readonly SAnimation A_Intro = new();
         private readonly SAnimation A_Normal = new();
         private readonly SAnimation A_Shoot = new();
+        #endregion
 
-        private float horizontalSpeed = 0.1f;
-        private float verticalSpeed = 0.01f;
-
+        #region Bullets
         private const float BULLET_SPEED = 2.5f;
         private const float BULLET_LIFE_TIME = 40f;
-
         private const float SHOT_DELAY = 0.05f;
 
-        private State state;
+        private int bulletsCount;
+        private int shotIndex;
+        private float timePassed;
+        #endregion
 
+        #region States
+        private State state;
         private bool isShooting;
         private bool canMove;
         private bool canShoot;
         private bool horizontalDirection;
         private bool verticalDirection;
+        #endregion
 
+        #region Timers
         private readonly STimer verticalDirectionTimer = new(10f);
         private readonly STimer shootTimer = new(20f);
+        #endregion
 
-        private int bulletsCount;
-        private int shotIndex;
-        private float timePassed;
-
+        #region Movement
+        private float horizontalSpeed = 0.1f;
+        private float verticalSpeed = 0.01f;
         private Vector2 previousLocalPosition;
+        #endregion
 
-        // RESET
+        // ========================================== //
+        // CODE
+
+        #region System
         public override void Reset()
         {
             base.Reset();
@@ -149,8 +159,15 @@ namespace StellarDuelist.Game.Entities.Bosses
 
             this.Animation = this.A_Normal;
         }
-
-        // Override
+        protected override void OnAwake()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+            this.OnDestroyed += OnDestroyed_Events;
+        }
         protected override void OnStart()
         {
             this.verticalDirectionTimer.Restart();
@@ -161,10 +178,13 @@ namespace StellarDuelist.Game.Entities.Bosses
         }
         protected override void OnUpdate()
         {
-            base.OnUpdate();
+            // Collision
+            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            {
+                SLevelController.Player.Damage(1);
+            }
 
             // Behaviour
-            CollideWithPlayer();
             AnimationUpdate();
 
             // Movement
@@ -183,42 +203,19 @@ namespace StellarDuelist.Game.Entities.Bosses
                 ShootUpdate();
             }
         }
-        protected override void OnDamaged(int value)
-        {
-            _ = SSounds.Play("Damage_05");
-            _ = SEffectsManager.Create<ImpactEffect>(this.WorldPosition, new(2f));
+        #endregion
 
-            _ = Task.Run(async () =>
-            {
-                this.Color = Color.Red;
-                await Task.Delay(235);
-                this.Color = Color.White;
-            });
-        }
-        protected override void OnDestroy()
-        {
-            SLevelController.BossKilled();
-
-            _ = SSounds.Play("Explosion_05");
-            _ = SEffectsManager.Create<ExplosionEffect>(this.WorldPosition, new(2f));
-
-            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X, this.WorldPosition.Y + 16));
-            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X, this.WorldPosition.Y - 16));
-            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X + 16, this.WorldPosition.Y));
-            _ = SItemsManager.CreateRandomItem(new(this.WorldPosition.X - 16, this.WorldPosition.Y));
-        }
-
-        // Actions
+        #region Actions
         private void BOSS_Boost()
         {
-            SPlayerEntity player = SLevelController.Player;
+            SPlayerEntity p = SLevelController.Player;
 
             // Boost health and bullets
-            this.HealthValue *= player.AttackValue;
-            this.bulletsCount += (int)Math.Round(player.HealthValue + (player.AttackValue / 2f));
+            this.HealthValue *= p.AttackValue;
+            this.bulletsCount += (int)Math.Round(p.HealthValue + (p.AttackValue / 2f));
 
             // Boost movement
-            if (player.ShootDelay <= 1.5f)
+            if (p.ShootDelay <= 1.5f)
             {
                 this.horizontalSpeed = 0.2f;
                 this.verticalSpeed = 0.02f;
@@ -243,8 +240,9 @@ namespace StellarDuelist.Game.Entities.Bosses
                 this.canShoot = true;
             });
         }
+        #endregion
 
-        // Update
+        #region AI
         private void AnimationUpdate()
         {
             this.Animation = this.state switch
@@ -295,14 +293,16 @@ namespace StellarDuelist.Game.Entities.Bosses
                 { ShootingUpdate(); }
             }
         }
+        #endregion
 
-        // Utilities
+        #region Utilities
         private void SetState(State state)
         {
             this.state = state;
         }
+        #endregion
 
-        // Actions
+        #region Shooting
         private void StartShooting()
         {
             this.A_Shoot.Reset();
@@ -342,16 +342,21 @@ namespace StellarDuelist.Game.Entities.Bosses
 
                 if (this.shotIndex >= this.bulletsCount)
                 {
-                    this.isShooting = false;
-                    this.canMove = true;
-                    this.state = State.NORMAL;
-                    this.shootTimer.Restart();
-
-                    this.timePassed = 0f;
-                    this.shotIndex = 0;
+                    EndShooting();
                     return;
                 }
             }
         }
+        private void EndShooting()
+        {
+            this.isShooting = false;
+            this.canMove = true;
+            this.state = State.NORMAL;
+            this.shootTimer.Restart();
+
+            this.timePassed = 0f;
+            this.shotIndex = 0;
+        }
+        #endregion
     }
 }

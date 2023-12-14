@@ -1,7 +1,6 @@
-﻿using StellarDuelist.Core.Collections;
+﻿using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Projectiles;
 
-using System;
 using System.Collections.Generic;
 
 namespace StellarDuelist.Core.Managers
@@ -58,7 +57,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SProjectile projectile in Projectiles)
             {
-                _ = projectilePool.Add(projectile);
+                projectilePool.Add(projectile);
             }
 
             projectiles.Clear();
@@ -70,12 +69,7 @@ namespace StellarDuelist.Core.Managers
         /// <param name="builder">The builder used to create the projectile.</param>
         public static void Create(SProjectileBuilder builder)
         {
-            SProjectile projectile = projectilePool.Get<SProjectile>();
-
-            if (projectiles.Contains(projectile))
-            {
-                projectile = Activator.CreateInstance<SProjectile>();
-            }
+            SProjectile projectile = projectilePool.Get();
 
             projectile.Reset();
             projectile.Initialize();
@@ -91,7 +85,7 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SProjectile projectile)
         {
             _ = projectiles.Remove(projectile);
-            _ = projectilePool.Add(projectile);
+            projectilePool.Add(projectile);
         }
     }
 }

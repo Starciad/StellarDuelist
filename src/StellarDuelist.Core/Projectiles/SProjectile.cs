@@ -155,7 +155,7 @@ namespace StellarDuelist.Core.Projectiles
         {
             this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
 
-            foreach (SEntity entity in SEntityManager.Entities)
+            foreach (SEntity entity in SEntityManager.ActiveEntities)
             {
                 if (entity == null || entity.Team == this.Team || !this.collisionBox.Intersects(entity.CollisionBox))
                 {

@@ -7,7 +7,7 @@ namespace StellarDuelist.Core.Items
     /// <summary>
     /// Represents a base class for registering game items.
     /// </summary>
-    public abstract class SItemRegister
+    public abstract class SItemDefinition
     {
         /// <summary>
         /// Gets the animation associated with the item.

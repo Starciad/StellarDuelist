@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collections.Generic;
 using StellarDuelist.Core.Effects;
 
 using System;
@@ -20,7 +20,7 @@ namespace StellarDuelist.Core.Managers
         public static SEffect[] Effects => effects.ToArray();
 
         // Templates
-        private static readonly Dictionary<Type, SEffectRegister> templates = new();
+        private static readonly Dictionary<Type, SEffectDefinition> templates = new();
 
         // Pool
         private static readonly ObjectPool<SEffect> effectPool = new();
@@ -31,9 +31,9 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         internal static void Initialize()
         {
-            foreach (Type type in SGame.Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(SEffectRegister))))
+            foreach (Type type in SGame.Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(SEffectDefinition))))
             {
-                SEffectRegister template = (SEffectRegister)Activator.CreateInstance(type);
+                SEffectDefinition template = (SEffectDefinition)Activator.CreateInstance(type);
                 template.Initialize();
 
                 templates.Add(type, template);
@@ -79,7 +79,7 @@ namespace StellarDuelist.Core.Managers
         {
             foreach (SEffect effect in Effects)
             {
-                _ = effectPool.Add(effect);
+                effectPool.Add(effect);
             }
 
             effects.Clear();
@@ -90,7 +90,7 @@ namespace StellarDuelist.Core.Managers
         /// </summary>
         /// <typeparam name="T">The type of effect to create.</typeparam>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>() where T : SEffectRegister
+        public static SEffect Create<T>() where T : SEffectDefinition
         {
             return Create<T>(Vector2.Zero);
         }
@@ -101,7 +101,7 @@ namespace StellarDuelist.Core.Managers
         /// <typeparam name="T">The type of effect to create.</typeparam>
         /// <param name="worldPosition">The world position of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 worldPosition) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition) where T : SEffectDefinition
         {
             return Create<T>(worldPosition, Vector2.One);
         }
@@ -113,7 +113,7 @@ namespace StellarDuelist.Core.Managers
         /// <param name="worldPosition">The world position of the effect.</param>
         /// <param name="scale">The scale of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale) where T : SEffectDefinition
         {
             return Create<T>(worldPosition, scale, 0f, Color.White);
         }
@@ -126,7 +126,7 @@ namespace StellarDuelist.Core.Managers
         /// <param name="scale">The scale of the effect.</param>
         /// <param name="rotation">The rotation of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation) where T : SEffectDefinition
         {
             return Create(typeof(T), worldPosition, scale, rotation, Color.White);
         }
@@ -140,7 +140,7 @@ namespace StellarDuelist.Core.Managers
         /// <param name="rotation">The rotation of the effect.</param>
         /// <param name="color">The color of the effect.</param>
         /// <returns>The created effect instance.</returns>
-        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation, Color color) where T : SEffectRegister
+        public static SEffect Create<T>(Vector2 worldPosition, Vector2 scale, float rotation, Color color) where T : SEffectDefinition
         {
             return Create(typeof(T), worldPosition, scale, rotation, color);
         }
@@ -202,7 +202,7 @@ namespace StellarDuelist.Core.Managers
         /// <returns>The created effect instance.</returns>
         public static SEffect Create(Type type, Vector2 worldPosition, Vector2 scale, float rotation, Color color)
         {
-            SEffect effect = effectPool.Get<SEffect>();
+            SEffect effect = effectPool.Get();
 
             if (effects.Contains(effect))
             {
@@ -227,7 +227,7 @@ namespace StellarDuelist.Core.Managers
         internal static void Remove(SEffect effect)
         {
             _ = effects.Remove(effect);
-            _ = effectPool.Add(effect);
+            effectPool.Add(effect);
         }
     }
 }

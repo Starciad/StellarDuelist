@@ -1,6 +1,4 @@
-﻿using StellarDuelist.Core.Controllers;
-
-namespace StellarDuelist.Core.Entities.Templates
+﻿namespace StellarDuelist.Core.Entities.Templates
 {
     /// <summary>
     /// Base class template for creating enemies entities.
@@ -8,15 +6,5 @@ namespace StellarDuelist.Core.Entities.Templates
     /// <remarks>
     /// With this template, a variety of functions, properties, and attributes are provided to automate certain processes and have references for internal work/configurations.
     /// </remarks>
-    public abstract class SEnemyEntity : SEntity
-    {
-        protected void CollideWithPlayer()
-        {
-            if (this.CollisionBox.Intersects(SLevelController.Player.CollisionBox))
-            {
-                SLevelController.Player.Damage(1);
-                Destroy();
-            }
-        }
-    }
+    public abstract class SEnemyEntity : SEntity { }
 }

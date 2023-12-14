@@ -3,7 +3,7 @@ using StellarDuelist.Core.Engine;
 
 namespace StellarDuelist.Game.Effects
 {
-    internal sealed class ImpactEffect : SEffectRegister
+    internal sealed class ImpactEffect : SEffectDefinition
     {
         protected override void OnBuild()
         {

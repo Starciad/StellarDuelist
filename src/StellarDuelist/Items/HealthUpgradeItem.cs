@@ -7,7 +7,7 @@ namespace StellarDuelist.Game.Items
     /// <summary>
     /// Upgrade item for the player's health.
     /// </summary>
-    internal sealed class HealthUpgradeItem : SItemRegister
+    internal sealed class HealthUpgradeItem : SItemDefinition
     {
         protected override void OnInitialize()
         {
@@ -16,7 +16,7 @@ namespace StellarDuelist.Game.Items
         }
         protected override void OnEffect(SPlayerEntity player)
         {
-            player.HealthValue += 1;
+            player.Heal(1);
         }
     }
 }
