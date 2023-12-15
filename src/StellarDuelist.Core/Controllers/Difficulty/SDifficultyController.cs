@@ -3,31 +3,61 @@ using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 
+using System;
+
 namespace StellarDuelist.Core.Controllers
 {
+    public struct DifficultySettings
+    {
+        /// <summary>
+        /// Gets the delay for enemy spawn.
+        /// </summary>
+        public float EnemySpawnDelay { get; internal set; }
+
+        /// <summary>
+        /// Gets the total number of enemies to be spawned.
+        /// </summary>
+        public int TotalEnemyCount { get; internal set; }
+
+        /// <summary>
+        /// Gets the current difficulty rate.
+        /// </summary>
+        public float DifficultyRate { get; internal set; }
+
+        internal void Clamp()
+        {
+            if (DifficultyRate < 0)
+            {
+                DifficultyRate = 0;
+            }
+
+            if (TotalEnemyCount < 5)
+            {
+                TotalEnemyCount = 5;
+            }
+
+            if (EnemySpawnDelay < 0)
+            {
+                EnemySpawnDelay = 0;
+            }
+        }
+    }
+
     /// <summary>
     /// Manages the difficulty of the game.
     /// </summary>
     public static partial class SDifficultyController
     {
-        /// <summary>
-        /// Gets the current difficulty rate.
-        /// </summary>
-        public static float DifficultyRate => difficultyRate;
+        public static DifficultySettings DifficultySettings => currentDifficultySettings;
 
-        /// <summary>
-        /// Gets the total number of enemies to be spawned.
-        /// </summary>
-        public static int TotalEnemyCount => totalEnemyCount;
+        private static readonly DifficultySettings baseDifficultySettings = new()
+        {
+            EnemySpawnDelay = 2.5f,
+            TotalEnemyCount = SRandom.Range(3, 7), // (3 - 6)
+            DifficultyRate = 1f
+        };
 
-        /// <summary>
-        /// Gets the delay for enemy spawn.
-        /// </summary>
-        internal static float EnemySpawnDelay => enemySpawnDelay + SRandom.NextFloat();
-
-        private static float difficultyRate = 0;
-        private static float enemySpawnDelay = 0;
-        private static int totalEnemyCount = 0;
+        private static DifficultySettings currentDifficultySettings;
 
         /// <summary>
         /// Initializes the difficulty controller.
@@ -69,36 +99,28 @@ namespace StellarDuelist.Core.Controllers
         /// <summary>
         /// Adjusts the game's difficulty based on player performance.
         /// </summary>
-        internal static void Next()
+        internal static void Next(float playerPerformance)
         {
-            // Easy
-            if (SLevelController.PlayerCumulativeDamage <= 0)
+            float n_enemySpawnDelay = SRandom.NextFloat() / 2f;
+            int n_totalEnemyCount = SRandom.Range(2, 5); // (2 - 4)
+            float n_difficultyRate = SRandom.NextFloat() + SRandom.NextFloat();
+
+            if (playerPerformance <= 0)
             {
-                difficultyRate += 1 + SRandom.NextFloat();
-                enemySpawnDelay -= SRandom.Range(0, 2);
-                totalEnemyCount += SRandom.Range(5, 11);
+                // Increase difficulty
+                currentDifficultySettings.EnemySpawnDelay -= n_enemySpawnDelay / 2f;
+                currentDifficultySettings.TotalEnemyCount += n_totalEnemyCount;
+                currentDifficultySettings.DifficultyRate += n_difficultyRate;
             }
-            else // Hard
+            else
             {
-                difficultyRate -= SRandom.NextFloat();
-                enemySpawnDelay += SRandom.Range(0, 2) * SRandom.NextFloat();
-                totalEnemyCount -= SRandom.Range(1, 7);
+                // Decrease difficulty
+                currentDifficultySettings.EnemySpawnDelay += n_enemySpawnDelay / 4f;
+                currentDifficultySettings.TotalEnemyCount -= (int)Math.Round(n_totalEnemyCount / 2f);
+                currentDifficultySettings.DifficultyRate -= n_difficultyRate / 4f;
             }
 
-            if (difficultyRate < 0)
-            {
-                difficultyRate = 0;
-            }
-
-            if (totalEnemyCount < 5)
-            {
-                totalEnemyCount = 5;
-            }
-
-            if (enemySpawnDelay < 0)
-            {
-                enemySpawnDelay = 0;
-            }
+            currentDifficultySettings.Clamp();
         }
 
         /// <summary>
@@ -106,9 +128,7 @@ namespace StellarDuelist.Core.Controllers
         /// </summary>
         internal static void Reset()
         {
-            difficultyRate = 1f;
-            enemySpawnDelay = 2.5f;
-            totalEnemyCount = SRandom.Range(5, 11);
+            currentDifficultySettings = baseDifficultySettings;
         }
 
         /// <summary>
@@ -117,7 +137,7 @@ namespace StellarDuelist.Core.Controllers
         /// <returns>A string indicating the difficulty level.</returns>
         public static string GetDifficultyLabel()
         {
-            return difficultyRate switch
+            return currentDifficultySettings.DifficultyRate switch
             {
                 <= 1 => "VERY EASY",
                 <= 2 => "EASY",

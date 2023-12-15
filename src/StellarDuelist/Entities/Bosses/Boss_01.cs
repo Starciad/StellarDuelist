@@ -36,7 +36,7 @@ namespace StellarDuelist.Game.Entities.Bosses
                 {
                     SPlayerEntity p = SLevelController.Player;
 
-                    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                    return SDifficultyController.DifficultySettings.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
                            p.HealthValue >= 2 && p.HealthValue >= 3.5f && p.BulletLifeTime >= 3.5f;
                 });
             }

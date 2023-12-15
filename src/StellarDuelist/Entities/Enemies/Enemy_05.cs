@@ -31,7 +31,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 this.classification = SEntityClassification.Enemy;
                 this.canSpawn = new(() =>
                 {
-                    return SDifficultyController.DifficultyRate >= 9;
+                    return SDifficultyController.DifficultySettings.DifficultyRate >= 9;
                 });
             }
         }

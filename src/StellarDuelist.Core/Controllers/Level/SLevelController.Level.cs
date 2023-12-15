@@ -85,7 +85,7 @@ namespace StellarDuelist.Core.Controllers
             }
 
             // Wait until the number of enemies killed equals the total number of enemies in the level.
-            while (enemiesKilled < SDifficultyController.TotalEnemyCount)
+            while (enemiesKilled < SDifficultyController.DifficultySettings.TotalEnemyCount)
             {
                 // Checks if the game ended prematurely.
                 if (gameEnded)
@@ -99,9 +99,9 @@ namespace StellarDuelist.Core.Controllers
                 SpawnEnemy();
 
                 // Wait for a delay before creating the next enemy.
-                if (SDifficultyController.EnemySpawnDelay > 0)
+                if (SDifficultyController.DifficultySettings.EnemySpawnDelay > 0)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(SDifficultyController.EnemySpawnDelay));
+                    await Task.Delay(TimeSpan.FromSeconds(SDifficultyController.DifficultySettings.EnemySpawnDelay));
                 }
             }
 
@@ -183,7 +183,7 @@ namespace StellarDuelist.Core.Controllers
             // Perform the level transition and advance the difficulty.
             CleanProjectiles();
             await LevelTransitionAsync();
-            SDifficultyController.Next();
+            SDifficultyController.Next(playerCumulativeDamage);
 
             // Increments the level number and resets the level information.
             level++;
