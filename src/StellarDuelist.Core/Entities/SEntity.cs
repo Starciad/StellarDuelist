@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collision;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
@@ -100,9 +101,9 @@ namespace StellarDuelist.Core.Entities
 
         #region Collision
         /// <summary>
-        /// Gets or sets the collision box of the entity.
+        /// Gets or sets the collision of the entity.
         /// </summary>
-        public Rectangle CollisionBox { get; set; }
+        public SCollision Collision { get; private set; } = new();
         #endregion
 
         #region Knockback
@@ -129,6 +130,11 @@ namespace StellarDuelist.Core.Entities
         public bool IsInvincible { get; set; }
         #endregion
 
+        #region Consts
+        public const int DEFAULT_ENTITY_SIZE = 22;
+        public const int DEFAULT_BOSS_SIZE = 55;
+        #endregion
+
         #region Events
         public delegate void DamagedEventHandler(SEntityDamagedEventArgs e);
         public delegate void HealedEventHandler(SEntityHealedEventArgs e);
@@ -152,19 +158,13 @@ namespace StellarDuelist.Core.Entities
             this.Scale = Vector2.One;
             this.Rotation = 0f;
             this.CanSufferKnockback = true;
-
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
             this.Color = Color.White;
 
-            if (this.Animation == null)
-            {
-                this.Animation = new();
-            }
-            else
-            {
-                this.Animation.ClearFrames();
-                this.Animation.Reset();
-            }
+            this.Collision.SetSize(new(DEFAULT_ENTITY_SIZE));
+
+            this.Animation ??= new();
+            this.Animation?.ClearFrames();
+            this.Animation?.Reset();
 
             OnUnsubscribeEvents();
             OnSubscribeEvents();
@@ -229,10 +229,7 @@ namespace StellarDuelist.Core.Entities
         }
         private void UpdateEntityCollision()
         {
-            this.CollisionBox = new(
-                new((int)this.CurrentPosition.X - (this.CollisionBox.Size.X / 2), (int)this.CurrentPosition.Y - (this.CollisionBox.Size.X / 2)),
-                this.CollisionBox.Size
-            );
+            this.Collision.SetPosition(this.CurrentPosition.ToPoint());
         }
         private void UpdateHealthCheck()
         {

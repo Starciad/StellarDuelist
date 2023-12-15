@@ -3,7 +3,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
-using StellarDuelist.Core.Entities.Utilities;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Utilities;
 using StellarDuelist.Game.Enums;
@@ -68,7 +68,7 @@ namespace StellarDuelist.Game.Entities.Enemies
             TimersUpdate();
 
             // Collision
-            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            if (IsCollidingWithThePlayer())
             {
                 SLevelController.Player.Damage(1);
                 Destroy();

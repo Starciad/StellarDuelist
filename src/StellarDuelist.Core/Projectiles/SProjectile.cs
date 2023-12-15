@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collision;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Enums;
@@ -60,7 +61,7 @@ namespace StellarDuelist.Core.Projectiles
         /// </summary>
         public Color Color { get; private set; }
 
-        private Rectangle collisionBox;
+        private readonly SCollision _collision = new();
 
         /// <summary>
         /// Resets the projectile's properties to their default values.
@@ -93,7 +94,9 @@ namespace StellarDuelist.Core.Projectiles
             this.Damage = builder.Damage;
             this.LifeTime = builder.LifeTime;
             this.Color = builder.Color;
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.Size);
+
+            this._collision.SetPosition(this.Position.ToPoint());
+            this._collision.SetSize(builder.Size);
 
             this.Animation.AddFrame(STextures.GetSprite(32, this.SpriteId, 0));
             this.Animation.Initialize();
@@ -141,26 +144,21 @@ namespace StellarDuelist.Core.Projectiles
 
         private void LifeTimeUpdate()
         {
-            if (this.LifeTime > 0)
-            {
-                this.LifeTime -= 0.1f;
-            }
-            else
+            if (this.LifeTime <= 0)
             {
                 Destroy();
             }
+
+            this.LifeTime -= 0.1f;
         }
 
         private void CollisionUpdate()
         {
-            this.collisionBox = new(
-                new((int)this.Position.X - (this.collisionBox.Size.X / 2), (int)this.Position.Y - (this.collisionBox.Size.Y / 2)),
-                this.collisionBox.Size
-            );
+            this._collision.SetPosition(this.Position.ToPoint());
 
             foreach (SEntity entity in SEntityManager.ActiveEntities)
             {
-                if (entity == null || entity.Team == this.Team || !this.collisionBox.Intersects(entity.CollisionBox))
+                if (entity == null || entity.Team == this.Team || !this._collision.IsColliding(entity.Collision))
                 {
                     continue;
                 }

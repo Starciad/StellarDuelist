@@ -41,7 +41,7 @@ namespace StellarDuelist.Core.Camera
         internal static void Initialize()
         {
             Rotation = 0;
-            Zoom = 1.5f;
+            Zoom = 2.5f;
             Origin = new Vector2(SScreen.Width / 2f, SScreen.Height / 2f);
             Position = Vector2.Zero;
         }

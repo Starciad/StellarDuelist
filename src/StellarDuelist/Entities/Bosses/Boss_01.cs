@@ -7,7 +7,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
-using StellarDuelist.Core.Entities.Utilities;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
@@ -103,7 +103,7 @@ namespace StellarDuelist.Game.Entities.Bosses
             // Attributes
             this.HealthValue = 50;
             this.AttackValue = 1;
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(55));
+            this.Collision.SetSize(new(DEFAULT_BOSS_SIZE));
 
             // Team
             this.Team = STeam.Bad;
@@ -170,7 +170,7 @@ namespace StellarDuelist.Game.Entities.Bosses
         protected override void OnUpdate()
         {
             // Collision
-            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            if (IsCollidingWithThePlayer())
             {
                 SLevelController.Player.Damage(1);
             }

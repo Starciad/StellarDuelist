@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collision;
 using StellarDuelist.Core.Colors;
 using StellarDuelist.Core.Controllers;
 using StellarDuelist.Core.Engine;
@@ -21,6 +22,7 @@ namespace StellarDuelist.Core.Items
         /// </summary>
         internal Vector2 Position { get; set; }
 
+        private const int DEFAULT_ITEM_COLLISION = 18;
         private const float VERTICAL_SPEED = 1.5f;
         private const float COLOR_UPDATE_DELAY = 0.5f;
 
@@ -30,7 +32,19 @@ namespace StellarDuelist.Core.Items
         private float currentColorUpdateDelay;
         private int colorIndex;
         private Color color;
-        private Rectangle collisionBox;
+
+        private readonly SCollision _collision = new();
+
+        /// <summary>
+        /// Resets the item's properties to their initial state.
+        /// </summary>
+        public void Reset()
+        {
+            this.Position = Vector2.Zero;
+            this.currentColorUpdateDelay = 0f;
+            this.colorIndex = 0;
+            this.color = Color.White;
+        }
 
         /// <summary>
         /// Builds the item with the provided register, animation, and position.
@@ -45,18 +59,9 @@ namespace StellarDuelist.Core.Items
             this._animation.SetMode(SAnimationMode.Disable);
 
             this.Position = position;
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), new(18));
-        }
 
-        /// <summary>
-        /// Resets the item's properties to their initial state.
-        /// </summary>
-        public void Reset()
-        {
-            this.Position = Vector2.Zero;
-            this.currentColorUpdateDelay = 0f;
-            this.colorIndex = 0;
-            this.color = Color.White;
+            this._collision.SetPosition(this.Position.ToPoint());
+            this._collision.SetSize(new(DEFAULT_ITEM_COLLISION));
         }
 
         /// <summary>
@@ -102,10 +107,7 @@ namespace StellarDuelist.Core.Items
         }
         private void CollisionUpdate()
         {
-            this.collisionBox = new(
-                new((int)this.Position.X - (this.collisionBox.Size.X / 2), (int)this.Position.Y - (this.collisionBox.Size.X / 2)),
-                this.collisionBox.Size
-            );
+            this._collision.SetPosition(this.Position.ToPoint());
         }
         private void MovementUpdate()
         {
@@ -116,7 +118,7 @@ namespace StellarDuelist.Core.Items
         }
         private void CollisionCheckUpdate()
         {
-            if (this.collisionBox.Intersects(SLevelController.Player.CollisionBox))
+            if (this._collision.IsColliding(SLevelController.Player.Collision))
             {
                 this._register.ApplyEffect();
                 Destroy();

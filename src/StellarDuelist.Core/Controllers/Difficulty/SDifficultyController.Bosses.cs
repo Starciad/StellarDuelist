@@ -2,7 +2,7 @@
 
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
