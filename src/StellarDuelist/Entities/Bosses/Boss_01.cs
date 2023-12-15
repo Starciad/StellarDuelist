@@ -7,7 +7,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
-using StellarDuelist.Core.Entities.Utilities;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 using StellarDuelist.Core.Utilities;
@@ -36,7 +36,7 @@ namespace StellarDuelist.Game.Entities.Bosses
                 {
                     SPlayerEntity p = SLevelController.Player;
 
-                    return SDifficultyController.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
+                    return SDifficultyController.DifficultySettings.DifficultyRate >= 2.5f && SLevelController.Level >= 5 &&
                            p.HealthValue >= 2 && p.HealthValue >= 3.5f && p.BulletLifeTime >= 3.5f;
                 });
             }
@@ -103,7 +103,7 @@ namespace StellarDuelist.Game.Entities.Bosses
             // Attributes
             this.HealthValue = 50;
             this.AttackValue = 1;
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(55));
+            this.Collision.SetSize(new(DEFAULT_BOSS_SIZE));
 
             // Team
             this.Team = STeam.Bad;
@@ -159,15 +159,6 @@ namespace StellarDuelist.Game.Entities.Bosses
 
             this.Animation = this.A_Normal;
         }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_Drops;
-            this.OnDestroyed += OnDestroyed_Events;
-        }
         protected override void OnStart()
         {
             this.verticalDirectionTimer.Restart();
@@ -179,7 +170,7 @@ namespace StellarDuelist.Game.Entities.Bosses
         protected override void OnUpdate()
         {
             // Collision
-            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            if (IsCollidingWithThePlayer())
             {
                 SLevelController.Player.Damage(1);
             }
@@ -329,11 +320,11 @@ namespace StellarDuelist.Game.Entities.Bosses
                 {
                     SpriteId = 1,
                     Team = STeam.Bad,
-                    Position = new(this.WorldPosition.X + 16, this.WorldPosition.Y + 16),
+                    Position = new(this.CurrentPosition.X, this.CurrentPosition.Y),
                     Speed = bulletSpeed,
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
-                    Range = 10,
+                    Size = new(10, 10),
                     Color = new Color(255, 0, 0, 255),
                 });
                 _ = SSounds.Play("Shoot_05");

@@ -19,10 +19,10 @@ namespace StellarDuelist.Core.Controllers
         private static void SpawnEnemy()
         {
             // Spawns enemies if the number of spawned enemies is less than the total.
-            if (spawnedEnemies < SDifficultyController.TotalEnemyCount)
+            if (spawnedEnemies < SDifficultyController.DifficultySettings.TotalEnemyCount)
             {
-                CreateEnemy();
                 spawnedEnemies++;
+                CreateEnemy();
             }
         }
         private static void CreateEnemy()

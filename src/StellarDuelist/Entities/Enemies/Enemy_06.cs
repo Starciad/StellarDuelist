@@ -5,6 +5,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Entities.Utilities;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Extensions;
@@ -34,7 +35,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 this.classification = SEntityClassification.Enemy;
                 this.canSpawn = new(() =>
                 {
-                    return SDifficultyController.DifficultyRate >= 11;
+                    return SDifficultyController.DifficultySettings.DifficultyRate >= 11;
                 });
             }
         }
@@ -53,9 +54,6 @@ namespace StellarDuelist.Game.Entities.Enemies
 
             this.movementTimer.Start();
 
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
-
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             this.Animation.AddFrame(STextures.GetSprite(32, 0, 5));
@@ -70,15 +68,6 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_Drops;
-            this.OnDestroyed += OnDestroyed_Events;
-        }
         protected override void OnStart()
         {
             this.movementTimer.Restart();
@@ -88,7 +77,7 @@ namespace StellarDuelist.Game.Entities.Enemies
             TimersUpdate();
 
             // Collision
-            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            if (IsCollidingWithThePlayer())
             {
                 SLevelController.Player.Damage(1);
                 Destroy();

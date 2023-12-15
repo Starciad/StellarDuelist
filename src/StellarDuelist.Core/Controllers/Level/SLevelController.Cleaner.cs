@@ -59,7 +59,7 @@ namespace StellarDuelist.Core.Controllers
 
         private static void CleanProjectiles()
         {
-            foreach (SProjectile projectile in SProjectileManager.Projectiles)
+            foreach (SProjectile projectile in SProjectileManager.ActiveProjectiles)
             {
                 if (projectile == null)
                 {

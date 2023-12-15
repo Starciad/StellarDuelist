@@ -102,8 +102,8 @@ namespace StellarDuelist.Core.Controllers
         {
             centerPosition = SWorld.GetLocalPosition(SCamera.Center);
             playerPosition = new(centerPosition.X, centerPosition.Y + 4);
-            enemyPosition = new(centerPosition.X, centerPosition.Y - 6);
-            bossPosition = new(centerPosition.X - 0.5f, centerPosition.Y - 2f);
+            enemyPosition = new(centerPosition.X, centerPosition.Y - 5);
+            bossPosition = new(centerPosition.X, centerPosition.Y - 2f);
 
             minEntityDespawnLimit = new(centerPosition.X - 10, centerPosition.Y - 10);
             maxEntityDespawnLimit = new(centerPosition.X + 10, centerPosition.Y + 5);

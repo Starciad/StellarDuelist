@@ -12,6 +12,24 @@ namespace StellarDuelist.Game.Entities.Bosses
 {
     internal sealed partial class Boss_01
     {
+        protected override void OnSubscribeEvents()
+        {
+            this.OnDamaged += OnDamaged_Effects;
+            this.OnDamaged += OnDamaged_Colors;
+            this.OnDestroyed += OnDestroyed_Entity;
+            this.OnDestroyed += OnDestroyed_Effects;
+            this.OnDestroyed += OnDestroyed_Drops;
+        }
+
+        protected override void OnUnsubscribeEvents()
+        {
+            this.OnDamaged -= OnDamaged_Effects;
+            this.OnDamaged -= OnDamaged_Colors;
+            this.OnDestroyed -= OnDestroyed_Entity;
+            this.OnDestroyed -= OnDestroyed_Effects;
+            this.OnDestroyed -= OnDestroyed_Drops;
+        }
+
         #region DAMAGED (EVENTS)
         private void OnDamaged_Effects(SEntityDamagedEventArgs e)
         {
@@ -54,15 +72,6 @@ namespace StellarDuelist.Game.Entities.Bosses
                     _ = SItemsManager.CreateRandomItem(dropPosition);
                 }
             }
-        }
-        private void OnDestroyed_Events()
-        {
-            this.OnDamaged -= OnDamaged_Effects;
-            this.OnDamaged -= OnDamaged_Colors;
-            this.OnDestroyed -= OnDestroyed_Entity;
-            this.OnDestroyed -= OnDestroyed_Effects;
-            this.OnDestroyed -= OnDestroyed_Drops;
-            this.OnDestroyed -= OnDestroyed_Events;
         }
         #endregion
     }

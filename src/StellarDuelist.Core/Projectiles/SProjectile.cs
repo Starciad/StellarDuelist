@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collision;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Enums;
@@ -41,9 +42,9 @@ namespace StellarDuelist.Core.Projectiles
         public Vector2 Speed { get; private set; }
 
         /// <summary>
-        /// Gets the maximum range the projectile can travel.
+        /// Gets the maximum size the projectile can travel.
         /// </summary>
-        public int Range { get; private set; }
+        public Point Size { get; private set; }
 
         /// <summary>
         /// Gets the damage inflicted by the projectile on impact.
@@ -60,7 +61,24 @@ namespace StellarDuelist.Core.Projectiles
         /// </summary>
         public Color Color { get; private set; }
 
-        private Rectangle collisionBox;
+        private readonly SCollision _collision = new();
+
+        /// <summary>
+        /// Resets the projectile's properties to their default values.
+        /// </summary>
+        public void Reset()
+        {
+            this.Animation.Reset();
+            this.Animation.ClearFrames();
+
+            this.Team = STeam.None;
+            this.SpriteId = 0;
+            this.Position = Vector2.Zero;
+            this.Speed = Vector2.Zero;
+            this.Size = Point.Zero;
+            this.Damage = 0;
+            this.LifeTime = 0f;
+        }
 
         /// <summary>
         /// Builds the projectile using the specified builder.
@@ -72,11 +90,13 @@ namespace StellarDuelist.Core.Projectiles
             this.SpriteId = builder.SpriteId;
             this.Position = builder.Position;
             this.Speed = builder.Speed;
-            this.Range = builder.Range;
+            this.Size = builder.Size;
             this.Damage = builder.Damage;
             this.LifeTime = builder.LifeTime;
             this.Color = builder.Color;
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), new(this.Range));
+
+            this._collision.SetPosition(this.Position.ToPoint());
+            this._collision.SetSize(builder.Size);
 
             this.Animation.AddFrame(STextures.GetSprite(32, this.SpriteId, 0));
             this.Animation.Initialize();
@@ -96,9 +116,9 @@ namespace StellarDuelist.Core.Projectiles
         /// </summary>
         internal void Update()
         {
+            MovementUpdate();
             CollisionUpdate();
             LifeTimeUpdate();
-            MovementUpdate();
         }
 
         /// <summary>
@@ -117,23 +137,6 @@ namespace StellarDuelist.Core.Projectiles
             SProjectileManager.Remove(this);
         }
 
-        /// <summary>
-        /// Resets the projectile's properties to their default values.
-        /// </summary>
-        public void Reset()
-        {
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
-
-            this.Team = STeam.None;
-            this.SpriteId = 0;
-            this.Position = Vector2.Zero;
-            this.Speed = Vector2.Zero;
-            this.Range = 0;
-            this.Damage = 0;
-            this.LifeTime = 0f;
-        }
-
         private void MovementUpdate()
         {
             this.Position = new(this.Position.X + this.Speed.X, this.Position.Y + this.Speed.Y);
@@ -141,23 +144,21 @@ namespace StellarDuelist.Core.Projectiles
 
         private void LifeTimeUpdate()
         {
-            if (this.LifeTime > 0)
-            {
-                this.LifeTime -= 0.1f;
-            }
-            else
+            if (this.LifeTime <= 0)
             {
                 Destroy();
             }
+
+            this.LifeTime -= 0.1f;
         }
 
         private void CollisionUpdate()
         {
-            this.collisionBox = new(new((int)this.Position.X, (int)this.Position.Y), this.collisionBox.Size);
+            this._collision.SetPosition(this.Position.ToPoint());
 
             foreach (SEntity entity in SEntityManager.ActiveEntities)
             {
-                if (entity == null || entity.Team == this.Team || !this.collisionBox.Intersects(entity.CollisionBox))
+                if (entity == null || entity.Team == this.Team || !this._collision.IsColliding(entity.Collision))
                 {
                     continue;
                 }

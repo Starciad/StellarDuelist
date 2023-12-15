@@ -96,7 +96,7 @@ namespace StellarDuelist.Discord
                     }
                     else
                     {
-                        this.details = $"Battling {SDifficultyController.TotalEnemyCount - SLevelController.EnemiesKilled} enemies.";
+                        this.details = $"Battling {SDifficultyController.DifficultySettings.TotalEnemyCount - SLevelController.EnemiesKilled} enemies.";
                         this.state = GetStatusString();
                     }
 

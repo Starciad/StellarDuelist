@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using StellarDuelist.Core.Animation;
 using StellarDuelist.Core.Collections;
+using StellarDuelist.Core.Collision;
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
@@ -100,9 +101,9 @@ namespace StellarDuelist.Core.Entities
 
         #region Collision
         /// <summary>
-        /// Gets or sets the collision box of the entity.
+        /// Gets or sets the collision of the entity.
         /// </summary>
-        public Rectangle CollisionBox { get; set; }
+        public SCollision Collision { get; private set; } = new();
         #endregion
 
         #region Knockback
@@ -129,6 +130,11 @@ namespace StellarDuelist.Core.Entities
         public bool IsInvincible { get; set; }
         #endregion
 
+        #region Consts
+        public const int DEFAULT_ENTITY_SIZE = 22;
+        public const int DEFAULT_BOSS_SIZE = 55;
+        #endregion
+
         #region Events
         public delegate void DamagedEventHandler(SEntityDamagedEventArgs e);
         public delegate void HealedEventHandler(SEntityHealedEventArgs e);
@@ -152,19 +158,16 @@ namespace StellarDuelist.Core.Entities
             this.Scale = Vector2.One;
             this.Rotation = 0f;
             this.CanSufferKnockback = true;
-
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), new(22));
             this.Color = Color.White;
 
-            if (this.Animation == null)
-            {
-                this.Animation = new();
-            }
-            else
-            {
-                this.Animation.ClearFrames();
-                this.Animation.Reset();
-            }
+            this.Collision.SetSize(new(DEFAULT_ENTITY_SIZE));
+
+            this.Animation ??= new();
+            this.Animation?.ClearFrames();
+            this.Animation?.Reset();
+
+            OnUnsubscribeEvents();
+            OnSubscribeEvents();
         }
 
         /// <summary>
@@ -183,12 +186,10 @@ namespace StellarDuelist.Core.Entities
         /// </summary>
         internal void Update()
         {
-            this.Animation.Update();
-
-            this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
-            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
-            this.CollisionBox = new(new((int)this.WorldPosition.X, (int)this.WorldPosition.Y), this.CollisionBox.Size);
-
+            UpdateEntityAnimation();
+            UpdateEntityPosition();
+            UpdateEntityCollision();
+            UpdateHealthCheck();
             OnUpdate();
         }
 
@@ -202,7 +203,7 @@ namespace StellarDuelist.Core.Entities
                 return;
             }
 
-            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.CurrentPosition, this.Animation.Frame, this.Color, this.Rotation, new Vector2(32 / 2), this.Scale, SpriteEffects.None, 0f);
+            SGraphics.SpriteBatch.Draw(this.Animation.Texture, this.CurrentPosition, this.Animation.Frame, this.Color, this.Rotation, new Vector2(this.Animation.SpriteScale / 2), this.Scale, SpriteEffects.None, 0f);
         }
 
         /// <summary>
@@ -213,6 +214,29 @@ namespace StellarDuelist.Core.Entities
             this.IsDestroyed = true;
             SEntityManager.Remove(this);
             OnDestroyed?.Invoke();
+        }
+        #endregion
+
+        #region Updates
+        private void UpdateEntityAnimation()
+        {
+            this.Animation.Update();
+        }
+        private void UpdateEntityPosition()
+        {
+            this.CurrentPosition = Vector2.Lerp(this.CurrentPosition, this.WorldPosition, this.SmoothScale);
+            this.LocalPosition = SWorld.ClampHorizontalPosition(this.LocalPosition);
+        }
+        private void UpdateEntityCollision()
+        {
+            this.Collision.SetPosition(this.CurrentPosition.ToPoint());
+        }
+        private void UpdateHealthCheck()
+        {
+            if (!this.IsInvincible && this.HealthValue <= 0)
+            {
+                Destroy();
+            }
         }
         #endregion
 
@@ -231,21 +255,16 @@ namespace StellarDuelist.Core.Entities
         /// <param name="value">The amount of damage inflicted on the entity.</param>
         public void Damage(int value)
         {
-            int damageValue = Math.Abs(value);
-
             if (this.IsInvincible)
             {
                 return;
             }
 
+            int damageValue = Math.Abs(value);
             this.HealthValue -= damageValue;
             OnDamaged?.Invoke(new(damageValue));
 
-            if (this.HealthValue <= 0)
-            {
-                Destroy();
-            }
-            else
+            if (this.HealthValue > 0)
             {
                 Knockback();
             }
@@ -264,7 +283,7 @@ namespace StellarDuelist.Core.Entities
         /// <summary>
         /// If <see cref="CanSufferKnockback" /> is true, the entity has a chance of being knocked back.
         /// </summary>
-        private void Knockback()
+        public void Knockback()
         {
             if (!this.CanSufferKnockback)
             {
@@ -307,6 +326,22 @@ namespace StellarDuelist.Core.Entities
         /// Invoked at every fixed frame update.
         /// </summary>
         protected virtual void OnUpdate() { }
+
+        /// <summary>
+        ///Invoked during entity initialization.
+        /// </summary>
+        /// <remarks>
+        /// Space reserved for the registration of inventions.
+        /// </remarks>
+        protected virtual void OnSubscribeEvents() { }
+
+        /// <summary>
+        /// Invoked during entity initialization.
+        /// </summary>
+        /// <remarks>
+        /// Space reserved for unregistering inventions.
+        /// </remarks>
+        protected virtual void OnUnsubscribeEvents() { }
         #endregion
     }
 }

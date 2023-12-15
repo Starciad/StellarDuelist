@@ -2,7 +2,7 @@
 
 using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
-using StellarDuelist.Core.Entities.Templates;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Extensions;
 using StellarDuelist.Core.Managers;
 
@@ -28,7 +28,7 @@ namespace StellarDuelist.Core.Controllers
         internal static bool TryGetRandomBossType(out Type bossType)
         {
             // === DEBUG (FORCE A BOSS TO APPEAR) ===
-            // bossType = typeof(SBoss_01);
+            // bossType = remainingBosses.First().EntityTargetType;
             // return true;
 
             // === APPLY DELAY ===

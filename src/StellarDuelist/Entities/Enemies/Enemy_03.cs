@@ -5,7 +5,7 @@ using StellarDuelist.Core.Engine;
 using StellarDuelist.Core.Entities;
 using StellarDuelist.Core.Entities.Attributes;
 using StellarDuelist.Core.Entities.Templates;
-using StellarDuelist.Core.Entities.Utilities;
+using StellarDuelist.Core.Entities.Templates.Dangerous;
 using StellarDuelist.Core.Enums;
 using StellarDuelist.Core.Managers;
 
@@ -32,7 +32,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                 this.classification = SEntityClassification.Enemy;
                 this.canSpawn = new(() =>
                 {
-                    return SDifficultyController.DifficultyRate >= 5;
+                    return SDifficultyController.DifficultySettings.DifficultyRate >= 5;
                 });
             }
         }
@@ -52,9 +52,6 @@ namespace StellarDuelist.Game.Entities.Enemies
         {
             base.Reset();
 
-            this.Animation.Reset();
-            this.Animation.ClearFrames();
-
             this.Animation.SetMode(SAnimationMode.Forward);
             this.Animation.SetTexture(STextures.GetTexture("ENEMIES_Aliens"));
             this.Animation.AddFrame(STextures.GetSprite(32, 0, 2));
@@ -69,20 +66,10 @@ namespace StellarDuelist.Game.Entities.Enemies
             this.ChanceOfKnockback = 0;
             this.KnockbackForce = 0;
         }
-        protected override void OnAwake()
-        {
-            this.OnDamaged += OnDamaged_Effects;
-            this.OnDamaged += OnDamaged_Colors;
-            this.OnDestroyed += OnDestroyed_Entity;
-            this.OnDestroyed += OnDestroyed_Effects;
-            this.OnDestroyed += OnDestroyed_Drops;
-            this.OnDestroyed += OnDestroyed_Special;
-            this.OnDestroyed += OnDestroyed_Events;
-        }
         protected override void OnUpdate()
         {
             // Collision
-            if (SEntityCollisionUtilities.IsColliding(this, SLevelController.Player))
+            if (IsCollidingWithThePlayer())
             {
                 SLevelController.Player.Damage(1);
                 Destroy();
@@ -119,7 +106,7 @@ namespace StellarDuelist.Game.Entities.Enemies
                     Speed = new(BULLET_SPEED * direction.X, BULLET_SPEED * direction.Y),
                     Damage = this.AttackValue,
                     LifeTime = BULLET_LIFE_TIME,
-                    Range = 3
+                    Size = new(5, 5)
                 });
 
                 currentAngle += angleIncrement;
