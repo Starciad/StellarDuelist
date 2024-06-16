@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 	<img width="85%" src=".github/assets/imgs/logo/sd_logo.webp"/>
 </div>
 
@@ -36,6 +36,7 @@ You can find the latest versions of the game for download on the following platf
 [![GitHub](.github/assets/imgs/buttons/b_github.webp)](https://github.com/Starciad/StellarDuelist)
 
 # 🕹️ ➥​ Requirements
+
 Below you can find an overview of the requirements that are needed to make the game run correctly.
 
 > Building the source code will also require the same requirements.
@@ -48,13 +49,67 @@ Below you can find an overview of the requirements that are needed to make the g
 - **System Architecture:** x64 (64-bit);
 - **.NET Runtime:** Required for the game to run.
 
-# 📖 ➥ Documentation
-
-If you want to understand how the code works, check out the [Project Wiki](LINK_TO_WIKI) (under construction).
-
 # 🛠 ➥ Compilation/Building
 
-To learn how to compile the project with all the assets, refer to the [Compilation Articles in the Wiki](LINK_TO_WIKI) (under construction).
+To compile the project, follow the steps below. Ensure that all prerequisites are met before starting.
+
+## Prerequisites
+
+1. **Install .NET SDK 7.0**: Download and install the [SDK 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) for .NET on your operating system.
+2. **Install Git**: Ensure Git is installed on your environment.
+
+## Cloning the Repository
+
+Open the terminal and clone the repository using the following command:
+
+```bash
+git clone https://github.com/Starciad/StellarDuelist.git
+```
+
+Once the process is complete, you will have access to all the project's source files.
+
+## Downloading the Assets
+
+To obtain the game assets, follow these steps:
+
+1. Go to the [game page on Itch.io](https://starciad.itch.io/stellar-duelist).
+2. Download the file `sd-{version}-assets-full.tar.7z`.
+3. Extract the contents of the downloaded file to a directory of your choice.
+4. Navigate to the extracted directory and locate the `Content` folder.
+
+## Configuring the Assets
+
+Copy the `Content` directory into the main project directory at the following path:
+
+```txt
+{your_project_path}\src\StellarDuelist\
+```
+
+## Building the Project
+
+Make sure you are in the directory where the project files (`StellarDuelist.DesktopGL.csproj` and `StellarDuelist.WindowsDX.csproj`) are located:
+
+```txt
+{your_project_path}\src\StellarDuelist\
+```
+
+To build the project, use the terminal and run the following command:
+
+```bash
+dotnet build --project StellarDuelist.{platform}.csproj
+```
+
+To build and run the project, use the command:
+
+```bash
+dotnet run --project StellarDuelist.{platform}.csproj
+```
+
+> **Note**: Replace `{platform}` with the desired platform (`DesktopGL` or `WindowsDX`), according to your operating system or preference.
+
+## Running the Game
+
+If all steps are followed correctly, the game should start without any issues.
 
 # 📜 ➥ Changelog
 
@@ -79,7 +134,6 @@ For more details about the credits, [click here](CREDITS.md).
 # 📄 ➥ License
 
 This project is under the MIT license. See the [LICENSE](LICENSE.txt) file for more details.
-
 
 <br/>
 <div align="center">
